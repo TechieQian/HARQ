@@ -5,6 +5,7 @@ const morgan = require('morgan')
 const PORT = process.env.PORT || 3000 
 const app = express()
 const path = require('path')
+const bodyParser = require('body-parser')
 
 //TODO: Rav Integration
 //1. Create seed file.

@@ -2,7 +2,7 @@
 
 const express = require('express')
 const morgan = require('morgan')
-const PORT = process.env.PORT || 3000 
+const PORT = process.env.PORT || 3000
 const app = express()
 const path = require('path')
 
@@ -11,7 +11,8 @@ const path = require('path')
 //2. Create npm seed in package.json
 //3. Uncomment db
 //4. Verify seeding works
-//const db = require('./db')
+const db = require('./db')
+const { Product, Category } = db.models;
 
 app.listen(PORT, (req,res)=> {
 	console.log(`listening on ${PORT}`)
@@ -21,7 +22,7 @@ app.listen(PORT, (req,res)=> {
 app.use(morgan('dev'))
 
 //TODO: Annie Integration
-//1. Uncomment api 
+//1. Uncomment api
 //2. do curl commands to test out routes and verify json
 //app.use('/api', require('./api'))
 

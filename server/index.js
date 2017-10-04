@@ -26,6 +26,10 @@ app.use(morgan('dev'))
 //2. do curl commands to test out routes and verify json
 //app.use('/api', require('./api'))
 
+// body parsing middleware
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
 // static middleware
 app.use(express.static(path.join(__dirname, '..', 'node_modules')))
 app.use(express.static(path.join(__dirname, '..', 'public')))

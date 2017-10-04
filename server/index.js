@@ -5,6 +5,7 @@ const morgan = require('morgan')
 const PORT = process.env.PORT || 3000 
 const app = express()
 const path = require('path')
+const bodyParser = require('body-parser')
 
 //TODO: Rav Integration
 //1. Create seed file.
@@ -24,6 +25,10 @@ app.use(morgan('dev'))
 //1. Uncomment api 
 //2. do curl commands to test out routes and verify json
 //app.use('/api', require('./api'))
+
+// body parsing middleware
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 // static middleware
 app.use(express.static(path.join(__dirname, '..', 'node_modules')))

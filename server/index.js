@@ -13,6 +13,8 @@ const path = require('path')
 //4. Verify seeding works
 const db = require('./db')
 const { Product, Category } = db.models;
+Product.create({name: 'Product1'})
+	.then(product=>product.save())
 
 app.listen(PORT, (req,res)=> {
 	console.log(`listening on ${PORT}`)

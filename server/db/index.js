@@ -9,9 +9,7 @@ const Order = require('./Order');
 //Associations
 LineItem.belongsTo(Product);
 LineItem.belongsTo(Order);
-
-db.sync({ force:true })
-
+Order.hasMany(LineItem);
 
 
 module.exports = db;

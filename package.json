@@ -6,8 +6,7 @@
   "scripts": {
     "test": "webpack -w & nodemon server --ignore /client --ignore /public",
     "start": "node server.js",
-    "start:dev": "nodemon ./server",
-    "seed": "node ./server/db/seed"
+    "start:dev": "nodemon ./server & node ./server/db/seed"
   },
   "repository": {
     "type": "git",

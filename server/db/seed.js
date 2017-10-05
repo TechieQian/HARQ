@@ -7,11 +7,11 @@ const LineItem = require('./LineItem');
 const Order = require('./Order');
 
 Product.bulkCreate([
-  { name: 'Happy' },
-  { name: 'Sad' },
-  { name: 'Angry' },
-  { name: 'Jealous' },
-  { name: 'Anxious' }
+  { name: 'Anger' },
+  { name: 'Joy' },
+  { name: 'Sadness' },
+  { name: 'Disgust' },
+  { name: 'Fear' }
 ], {
   returning: true
 })

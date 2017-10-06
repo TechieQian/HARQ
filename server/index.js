@@ -2,7 +2,7 @@
 
 const express = require('express')
 const morgan = require('morgan')
-const PORT = process.env.PORT || 3000 
+const PORT = process.env.PORT || 1337
 const app = express()
 const path = require('path')
 const bodyParser = require('body-parser')
@@ -12,17 +12,26 @@ const bodyParser = require('body-parser')
 //2. Create npm seed in package.json
 //3. Uncomment db
 //4. Verify seeding works
-//const db = require('./db')
+const db = require('./db');
+const Product = require('./db/Product');
+const seed = require('./db/Seed');
 
-app.listen(PORT, (req,res)=> {
-	console.log(`listening on ${PORT}`)
-})
+db.sync({ force: true })
+	.then(()=>{
+		seed();
+	})
+	.then(() => {
+		app.listen(PORT, (req,res)=> {
+			console.log(`listening on ${PORT}`)
+		})
+	})
+
 
 //Logging
 app.use(morgan('dev'))
 
 //TODO: Annie Integration
-//1. Uncomment api 
+//1. Uncomment api
 //2. do curl commands to test out routes and verify json
 //app.use('/api', require('./api'))
 

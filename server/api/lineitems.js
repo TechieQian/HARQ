@@ -10,5 +10,9 @@ router.post('/', (req, res, next) => {
             })
 });
 
-router.delete('/', (req, res) => {
+router.delete('/:id', (req, res, next) => {
+    LineItems.removeItemFromCart(req.params.id *1)
+                .catch(err => {
+                    next(err);
+                })
 });

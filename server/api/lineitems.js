@@ -11,7 +11,7 @@ router.post('/', (req, res, next) => {
 });
 
 router.delete('/:id', (req, res, next) => {
-    LineItems.removeItemFromCart(req.params.id *1)
+    LineItem.removeItemFromCart(req.params.id *1)
                 .catch(err => {
                     next(err);
                 })

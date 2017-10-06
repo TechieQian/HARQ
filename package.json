@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "webpack -w & nodemon server --ignore /client --ignore /public",
-    "start": "node server.js",
-    "start:dev": "nodemon ./server & node ./server/db/seed"
+    "start:dev": "webpack -w & nodemon server --ignore /client --ignore /public",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",

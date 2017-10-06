@@ -2,7 +2,7 @@
 
 const express = require('express')
 const morgan = require('morgan')
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 1337
 const app = express()
 const path = require('path')
 
@@ -11,13 +11,20 @@ const path = require('path')
 //2. Create npm seed in package.json
 //3. Uncomment db
 //4. Verify seeding works
-const db = require('./db')
+const db = require('./db');
+const Product = require('./db/Product');
+const seed = require('./db/Seed');
 
+db.sync({ force: true })
+	.then(()=>{
+		seed();
+	})
+	.then(() => {
+		app.listen(PORT, (req,res)=> {
+			console.log(`listening on ${PORT}`)
+		})
+	})
 
-
-app.listen(PORT, (req,res)=> {
-	console.log(`listening on ${PORT}`)
-})
 
 //Logging
 app.use(morgan('dev'))

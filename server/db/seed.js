@@ -6,18 +6,22 @@ const Product = require('./Product');
 const LineItem = require('./LineItem');
 const Order = require('./Order');
 
-db.sync({ force:true })
-  .then(() => {
-    Product.bulkCreate([
-      { name: 'Anger' },
-      { name: 'Joy' },
-      { name: 'Sadness' },
-      { name: 'Disgust' },
-      { name: 'Fear' }
-    ], {
-      returning: true
+const seed = () => {
+    return Promise.all([
+    Product.create({ name: 'Anger' }),
+    Product.create({ name: 'Joy' }),
+    Product.create({ name: 'Sadness' }),
+    Product.create({ name: 'Disgust' }),
+    Product.create({ name: 'Fear' }),
+    Order.create({name: 'Annie\'s Order'})
+  ])
+    .then(([anger, joy, sadness, disgust, fear, order]) => {
+      LineItem.create({ name: 'Annie\'s Cart'})
+              .then(cart => {
+                cart.setProduct(anger, joy)
+              })
     })
-      .then(([happy, sad, angry, jealous, anxious])=>{
-        console.log('seeded!');
-      })
-  })
+    .then(console.log('seeded!'))
+}
+
+module.exports = seed;

@@ -1,3 +1,20 @@
+<<<<<<< HEAD
 node_modules
 test/
 dist/
+=======
+# Ignore all node_modules
+node_modules/*
+
+# Compiled JS
+public/bundle.js
+public/bundle.js.map
+
+# qian vim swap files
+*.swp
+*.swo
+
+# han
+tests/*
+
+>>>>>>> b611ab890c2ca3ef98d2e78f2d07f22114cccef9

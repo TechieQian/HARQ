@@ -1,3 +1,14 @@
-node_modules
-test/
-dist/
+# Ignore all node_modules
+node_modules/*
+
+# Compiled JS
+public/bundle.js
+public/bundle.js.map
+
+# qian vim swap files
+*.swp
+*.swo
+
+# han
+tests/*
+

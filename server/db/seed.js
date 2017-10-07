@@ -5,6 +5,7 @@ const { Sequelize } = db;
 const Product = require('./Product');
 const LineItem = require('./LineItem');
 const Order = require('./Order');
+const User = require('./User');
 
 const seed = () => {
     return Promise.all([
@@ -13,15 +14,17 @@ const seed = () => {
     Product.create({ name: 'Sadness' }),
     Product.create({ name: 'Disgust' }),
     Product.create({ name: 'Fear' }),
-    Order.create({name: 'Annie\'s Order'})
+    Order.create(),
+    User.create({ name: 'Rav', email: 'ravsworld@gmail.com', password: 'password' }),
+    User.create({ name: 'Annie', email: 'annielovescode@gmail.com', password: 'password' })
   ])
-    .then(([anger, joy, sadness, disgust, fear, order]) => {
-      LineItem.create({ name: 'Annie\'s Cart'})
-              .then(cart => {
-                cart.setProduct(anger, joy)
-              })
+    .then(([anger, joy, sadness, disgust, fear, order, Rav, Annie]) => {
+          order.setUser(Rav)
+          Order.addLineItem({ userId: Rav.id, product: anger })
+          Order.addLineItem({ userId: Annie.id, product: disgust })
     })
     .then(console.log('seeded!'))
 }
+
 
 module.exports = seed;

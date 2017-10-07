@@ -9,9 +9,5 @@ const Product = db.define('product',{
   }
 })
 
-Product.addToCart = (productId) => {
-  Product.findById(productId)
-    .then(product => console.log(product.setLineItem))
-}
 
 module.exports = Product;

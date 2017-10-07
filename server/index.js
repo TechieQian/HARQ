@@ -14,7 +14,7 @@ const bodyParser = require('body-parser')
 //4. Verify seeding works
 const db = require('./db');
 const Product = require('./db/Product');
-const seed = require('./db/Seed');
+const seed = require('./db/seed');
 
 db.sync({ force: true })
 	.then(()=>{

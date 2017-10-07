@@ -14,14 +14,16 @@ const seed = () => {
     Product.create({ name: 'Disgust' }),
     Product.create({ name: 'Fear' }),
     Order.create({name: 'Annie\'s Order'})
-  ])
+    ])
     .then(([anger, joy, sadness, disgust, fear, order]) => {
       LineItem.create({ name: 'Annie\'s Cart'})
-              .then(cart => {
-                cart.setProduct(anger, joy)
+              .then(lineItem=> {
+                lineItem.setProduct(anger)
+                lineItem.setOrder(order)
               })
-    })
-    .then(console.log('seeded!'))
-}
+              .then(console.log('seeded!'))
+            }
+          )
+        };
 
 module.exports = seed;

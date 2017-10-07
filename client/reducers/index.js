@@ -8,3 +8,7 @@ export default combineReducers({
 	products,
 	users
 })
+
+export * from './cart'
+export * from './products'
+export * from './users'

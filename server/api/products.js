@@ -38,4 +38,18 @@ router.post('/', (req, res, next) => {
   // const productId = req.body.productId;
   return Product.addProductToCart(req.body)
     .catch(next);
+=======
+const models = require('../db').models
+const Products = models.product
+module.exports = router;
+
+//GET All products
+router.get('/', (req, res) => {
+	Products.findAll()
+		.then((products)=> {
+			res.json(products)
+		})
+});
+
+router.delete('/', (req, res) => {
 });

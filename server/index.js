@@ -7,13 +7,8 @@ const app = express()
 const path = require('path')
 const bodyParser = require('body-parser')
 
-//TODO: Rav Integration
-//1. Create seed file.
-//2. Create npm seed in package.json
-//3. Uncomment db
-//4. Verify seeding works
+// database
 const db = require('./db');
-const Product = require('./db/Product');
 const seed = require('./db/seed');
 
 db.sync({ force: true })
@@ -27,13 +22,8 @@ db.sync({ force: true })
 	})
 
 
-//Logging
+// logging
 app.use(morgan('dev'))
-
-//TODO: Annie Integration
-//1. Uncomment api
-//2. do curl commands to test out routes and verify json
-//app.use('/api', require('./api'))
 
 // body parsing middleware
 app.use(bodyParser.json())
@@ -43,8 +33,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, '..', 'node_modules')))
 app.use(express.static(path.join(__dirname, '..', 'public')))
 
+// api routing
+app.use('/api', require('./api'))
 
-app.use('/api', require('./api'));
 // send index html page
 app.use('*', (req, res, next) =>
   res.sendFile(path.join(__dirname, '..', 'public/index.html'))

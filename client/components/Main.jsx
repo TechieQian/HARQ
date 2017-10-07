@@ -6,9 +6,11 @@ import {connect} from 'react-redux'
 
 class Main extends Component {
 	render(){
-		<div>
-			We are react now
-		</div>
+		return (
+			<div>
+				We are react now
+			</div>
+		)
 	}
 }
 

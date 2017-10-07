@@ -2,6 +2,7 @@ const db = require('./conn');
 const { Sequelize } = db;
 const User = require('./User');
 const LineItem = require('./LineItem');
+const Product = require('./Product');
 
 const Order = db.define('order',{
   active: {
@@ -28,16 +29,39 @@ Order.getActiveOrderByUser = (userId) => {
   })
 }
 
-Order.addLineItem = ({userId, product}) => {
-  User.findById(userId, { include: Order })
+Order.createLineItem = ({orderId, productId}) => {
+  LineItem.findOne({
+    where: {
+      productId: productId
+    }
+  })
+    .then(lineItem => {
+      if(lineItem) {
+        lineItem.update({ qty: lineItem.increment() })
+      }
+      else {
+        LineItem.create()
+          .then(lineItem => {
+            Product.findById(productId)
+              .then(product => lineItem.setProduct(product))
+              .then(() => {
+                Order.findById(orderId)
+                  .then(order => lineItem.setOrder(order))
+              })
+          })
+      }
+    })
+}
+
+Order.addLineItem = ({userId, productId}) => {
+  return User.findById(userId, { include: Order })
       .then(user => {
-        Order.getActiveOrderByUser(user.id)
+        Order.getActiveOrderByUser(userId)
           .then(order => {
-            LineItem.create()
-              .then(lineItem => lineItem.setProduct(product))
-              .then(lineItem => {lineItem.setOrder(order)})
+            Order.createLineItem({ orderId: order.id, productId })
           })
       })
+      .then(() => { return Order.getActiveOrderByUser(userId) })
 }
 
 

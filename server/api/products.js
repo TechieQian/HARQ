@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Product = require('../db/Product');
+const Order = require('../db/Order');
 
 module.exports = router;
 
@@ -34,11 +35,15 @@ router.put('/', (req, res, next) => {
 
 // add new product to cart
 router.post('/', (req, res, next) => {
-  // const orderId = req.body.orderId;
-  // const productId = req.body.productId;
-  return Product.addProductToCart(req.body)
+	 const { userId, productId } = req.body;
+	 
+  Order.addLineItem({ userId, productId })
+		.then(order => res.send(order))
     .catch(next);
-=======
+})
+
+
+
 const models = require('../db').models
 const Products = models.product
 module.exports = router;

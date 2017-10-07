@@ -4,10 +4,7 @@ const { Sequelize } = db;
 // added quantity column
 // can we remove name column?
 const LineItem = db.define('lineitem', {
-  name: {
-    type: Sequelize.STRING
-  },
-  quantity: {
+  qty: {
     type: Sequelize.INTEGER,
     defaultValue: 1
   }

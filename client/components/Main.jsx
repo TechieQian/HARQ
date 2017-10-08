@@ -1,40 +1,21 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchProducts} from '../store.js'
-
-//This is going to start off as a complicated react component. 
-//We can make this dumb later on if needed.
+import {BrowserRouter, Route} from 'react-router-dom'
+import ProductList from './ProductList'
+import Product from './Product'
 
 class Main extends Component {
 
-	componentDidMount() {
-		this.props.getProducts()		
-	}
-
 	render(){
 		return (
-			<div>
-				We are react now. See dev console for product list
+			<div className='container'>
+				<h1> HARQ Store </h1>
+				<Route exact path='/' component={ProductList} />
+				<Route exact path='/products/:productId' component={Product} />
 			</div>
 		)
 	}
 }
 
-function mapState({cart, products, users }) {
-	console.log(`got products`, products)
-	return {
-		cart,
-		products,
-		users
-	}
-}
-
-//May need in future
-function mapDispatch(dispatch) {
-	return {
-		getProducts : ()=> { dispatch(fetchProducts())  }
-	}
-
-}
-
-export default connect(mapState, mapDispatch)(Main)
+export default Main

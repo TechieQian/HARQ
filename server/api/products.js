@@ -20,36 +20,11 @@ router.get('/:id', (req, res, next) => {
     .catch(next);
 });
 
-// delete product from cart
 router.delete('/', (req, res, next) => {
-  return Product.deleteProductFromCart(req.body)
-    .catch(next);
 });
 
-// update (+1) product in cart
 router.put('/', (req, res, next) => {
-  return Product.updateProductInCart(req.body)
-    .catch(next);
 });
 
-// add new product to cart
 router.post('/', (req, res, next) => {
-  // const orderId = req.body.orderId;
-  // const productId = req.body.productId;
-  return Product.addProductToCart(req.body)
-    .catch(next);
-=======
-const models = require('../db').models
-const Products = models.product
-module.exports = router;
-
-//GET All products
-router.get('/', (req, res) => {
-	Products.findAll()
-		.then((products)=> {
-			res.json(products)
-		})
-});
-
-router.delete('/', (req, res) => {
 });

@@ -1,20 +1,21 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchProducts} from '../store.js'
+import {BrowserRouter, Route} from 'react-router-dom'
+import ProductList from './ProductList'
 
 //This is going to start off as a complicated react component. 
 //We can make this dumb later on if needed.
 
 class Main extends Component {
 
-	componentDidMount() {
-		this.props.getProducts()		
-	}
-
 	render(){
 		return (
-			<div>
-				We are react now. See dev console for product list
+			<div className='container'>
+				<h1> HARQ Store </h1>
+				<BrowserRouter>
+					<Route path='/' component={ProductList} />
+				</BrowserRouter>
 			</div>
 		)
 	}

@@ -1,13 +1,13 @@
-import axios from 'axios'
+import axios from 'axios';
 
 //Actions Types
-const GET_PRODUCTS = 'GET_PRODUCTS'
+const GET_PRODUCTS = 'GET_PRODUCTS';
 
 //Action Creators
-const getProducts = (products) => ({
-	type 			: GET_PRODUCTS,
-	products 	: products
-})
+export function getProducts(products) {
+	type: GET_PRODUCTS,
+	products
+};
 
 //Thunk Creators
 export function fetchProducts() {
@@ -25,7 +25,7 @@ export function fetchProducts() {
 const productReducer = function(state=[], action) {
 	switch(action.type) {
 		case GET_PRODUCTS : 
-			return action.products
+			return action.products;
 		default: return state
 	}
 }

@@ -74,7 +74,7 @@ Order.deleteLineItem = (lineItemId) => {
       id: lineItemId
     }
   })
-    .then(lineItem => return lineItem )
+    .then(lineItem => { return lineItem } )
 }
 
 

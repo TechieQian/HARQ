@@ -35,11 +35,7 @@ router.put('/', (req, res, next) => {
 
 // add new product to cart
 router.post('/', (req, res, next) => {
-	 const { userId, productId } = req.body;
 	 
-  Order.addLineItem({ userId, productId })
-		.then(order => res.send(order))
-    .catch(next);
 })
 
 

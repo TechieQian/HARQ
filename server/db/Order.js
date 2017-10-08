@@ -17,7 +17,10 @@ Order.getActiveOrderByUser = (userId) => {
       userId: userId,
       active: true
     },
-    include: [LineItem]
+    include: [{
+      model: LineItem,
+      include: [Product]
+    }]
   })
   .then(order => {
     if(!order) {
@@ -30,9 +33,10 @@ Order.getActiveOrderByUser = (userId) => {
 }
 
 Order.createLineItem = ({orderId, productId}) => {
-  LineItem.findOne({
+  return LineItem.findOne({
     where: {
-      productId: productId
+      productId,
+      orderId
     }
   })
     .then(lineItem => {
@@ -56,12 +60,21 @@ Order.createLineItem = ({orderId, productId}) => {
 Order.addLineItem = ({userId, productId}) => {
   return User.findById(userId, { include: Order })
       .then(user => {
-        Order.getActiveOrderByUser(userId)
+        return Order.getActiveOrderByUser(userId)
           .then(order => {
-            Order.createLineItem({ orderId: order.id, productId })
+            return Order.createLineItem({ orderId: order.id, productId })
           })
       })
       .then(() => { return Order.getActiveOrderByUser(userId) })
+}
+
+Order.deleteLineItem = (lineItemId) => {
+  return LineItem.destroy({
+    where: {
+      id: lineItemId
+    }
+  })
+    .then(lineItem => return lineItem )
 }
 
 

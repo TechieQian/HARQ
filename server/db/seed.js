@@ -20,8 +20,8 @@ const seed = () => {
   ])
     .then(([anger, joy, sadness, disgust, fear, order, Rav, Annie]) => {
           order.setUser(Rav)
-          Order.addLineItem({ userId: Rav.id, product: anger })
-          Order.addLineItem({ userId: Annie.id, product: disgust })
+          Order.addLineItem({ userId: Rav.id, productId: fear.id })
+          Order.addLineItem({ userId: Annie.id, productId: disgust.id })
     })
     .then(console.log('seeded!'))
 }

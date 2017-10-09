@@ -2,6 +2,7 @@ const db = require('./conn');
 const { Sequelize } = db;
 const User = require('./User');
 const LineItem = require('./LineItem');
+const Product = require('./Product');
 
 const Order = db.define('order',{
   active: {
@@ -16,7 +17,10 @@ Order.getActiveOrderByUser = (userId) => {
       userId: userId,
       active: true
     },
-    include: [LineItem]
+    include: [{
+      model: LineItem,
+      include: [Product]
+    }]
   })
   .then(order => {
     if(!order) {
@@ -28,16 +32,49 @@ Order.getActiveOrderByUser = (userId) => {
   })
 }
 
-Order.addLineItem = ({userId, product}) => {
-  User.findById(userId, { include: Order })
+Order.createLineItem = ({orderId, productId}) => {
+  return LineItem.findOne({
+    where: {
+      productId,
+      orderId
+    }
+  })
+    .then(lineItem => {
+      if(lineItem) {
+        lineItem.update({ qty: lineItem.increment() })
+      }
+      else {
+        LineItem.create()
+          .then(lineItem => {
+            Product.findById(productId)
+              .then(product => lineItem.setProduct(product))
+              .then(() => {
+                Order.findById(orderId)
+                  .then(order => lineItem.setOrder(order))
+              })
+          })
+      }
+    })
+}
+
+Order.addLineItem = ({userId, productId}) => {
+  return User.findById(userId, { include: Order })
       .then(user => {
-        Order.getActiveOrderByUser(user.id)
+        return Order.getActiveOrderByUser(userId)
           .then(order => {
-            LineItem.create()
-              .then(lineItem => lineItem.setProduct(product))
-              .then(lineItem => {lineItem.setOrder(order)})
+            return Order.createLineItem({ orderId: order.id, productId })
           })
       })
+      .then(() => { return Order.getActiveOrderByUser(userId) })
+}
+
+Order.deleteLineItem = (lineItemId) => {
+  return LineItem.destroy({
+    where: {
+      id: lineItemId
+    }
+  })
+    .then(lineItem => { return lineItem } )
 }
 
 

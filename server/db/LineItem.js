@@ -10,6 +10,10 @@ const LineItem = db.define('lineitem', {
   }
 })
 
+LineItem.prototype.increment = function() {
+  this.qty++
+  return this.qty
+}
 // originally thought we could use a hook to update quantity
 // but realized that the only reason I am updating a lineItem
 // is when I update the quantity so seemed superfluous

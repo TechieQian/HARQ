@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux'
-import cart from './cart'
+import lineItems from './cart'
 import products from './products'
 import users from './users'
 
 export default combineReducers({
-	cart,
+	lineItems,
 	products,
 	users
 })

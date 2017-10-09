@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { verifyUser } from '../reducers';
+import { verifyUser, removeCurrentUser } from '../reducers';
 import { Redirect } from 'react-router-dom';
 
 /* -----------------    COMPONENT     ------------------ */
@@ -23,13 +23,32 @@ class Login extends React.Component {
     });
   }
 
+  onLoginSubmit(event) {
+    const { message, loginUser } = this.props;
+    event.preventDefault();
+    loginUser({name: this.state.userName})
+      .then(() => {
+        this.setState({userName: ''});
+      })
+      .catch(err => {
+        console.log('error occurred ', err.response.data);
+        this.setState({error: err.response.data});
+      });
+
+  }
+
   render() {
-    const { message, user } = this.props;
+    const { message, user, logoutUser } = this.props;
     const { error } = this.state;
     // If the user is already logged in, then redirect to home page
     if(user.id) {
       console.log("The logged in user is ", user);
-      return (<Redirect to="/" />);
+      return (
+              <div>
+                <h2>Welcome back {user.name}</h2>
+                <button onClick={logoutUser} className='btn btn-primary'>Logout</button>
+              </div>
+      );
     }
 
     return (
@@ -57,17 +76,6 @@ class Login extends React.Component {
       </div>
     );
   }
-
-  onLoginSubmit(event) {
-    const { message, loginUser } = this.props;
-    event.preventDefault();
-    loginUser({name: this.state.userName})
-      .catch(err => {
-        console.log('error occurred ', err.response.data);
-        this.setState({error: err.response.data});
-      });
-
-  }
 }
 
 /* -----------------    CONTAINER     ------------------ */
@@ -82,6 +90,10 @@ const mapDispatch = (dispatch) => {
   return {
     loginUser: function(credential){
       return dispatch(verifyUser(credential));
+    },
+
+    logoutUser: function(){
+      return dispatch(removeCurrentUser());
     }
   };
 };

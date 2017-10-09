@@ -22,7 +22,11 @@ class ProductList extends Component {
 									<Link to={{
 										pathname : `/products/${product.id}`
 									}}> Product Details </Link><br />
-									<button className='btn btn-primary' onClick={()=>{}}>
+								<button className='btn btn-primary' onClick={(e)=>{
+											e.preventDefault();
+											alert('clicked')
+									}
+								}>
 										Add to cart
 									</button>
 								</div>
@@ -36,6 +40,7 @@ class ProductList extends Component {
 }
 
 function mapState({products}) {
+	console.log('PRODUCTS', products)
 	return {
 		products
 	}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { verifyUser } from '../reducers';
+import { Redirect } from 'react-router-dom';
 
 /* -----------------    COMPONENT     ------------------ */
 
@@ -8,9 +9,11 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: ''
+      userName: '',
+      error: ''
     };
     this.onLoginSubmit = this.onLoginSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(event) {
@@ -21,13 +24,24 @@ class Login extends React.Component {
   }
 
   render() {
-    const { message } = this.props;
+    const { message, user } = this.props;
+    const { error } = this.state;
+    // If the user is already logged in, then redirect to home page
+    if(user.id) {
+      console.log("The logged in user is ", user);
+      return (<Redirect to="/" />);
+    }
+
     return (
       <div className="signin-container">
         <div className="buffer local">
           <form onSubmit={this.onLoginSubmit}>
+
             <div className="form-group">
-              <label>name</label>
+              <label>Name</label>
+              {
+                error.length > 0 ? <div className="form-group alert alert-danger">{error}</div> : <span></span>
+              }
               <input
                 name="userName"
                 type="userName"
@@ -50,6 +64,7 @@ class Login extends React.Component {
     loginUser({name: this.state.userName})
       .catch(err => {
         console.log('error occurred ', err.response.data);
+        this.setState({error: err.response.data});
       });
 
   }
@@ -57,7 +72,12 @@ class Login extends React.Component {
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = () => ({ message: 'Log in' });
+const mapState = (state) => {
+  return {
+    message: "Log in",
+    user: state.user
+  }
+}
 const mapDispatch = (dispatch) => {
   return {
     loginUser: function(credential){

@@ -15,14 +15,16 @@ export function setCurrentUser(user) {
 
 // THUNK
 export function verifyUser(credential){
-    return axios.post('/api/users/auth', credential)
-            .then(res => res.data)
-            .then(user => {
-                if (user) {
-                    dispatch(setCurrentUser(user));
-                }
-            })
-            .catch(err => { throw err; });
+    return function thunk (dispatch) {
+        return axios.post('/api/auth', credential)
+                .then(res => res.data)
+                .then(user => {
+                    if (user) {
+                        dispatch(setCurrentUser(user));
+                    }
+                })
+                .catch(err => { throw err; });
+    };
 }
 
 

@@ -5,6 +5,7 @@ import {BrowserRouter, Route, NavLink} from 'react-router-dom'
 import ProductList from './ProductList'
 import Product from './Product'
 import Cart from './Cart';
+import Login from './Login';
 
 class Main extends Component {
 
@@ -20,11 +21,15 @@ class Main extends Component {
 								<li>
 									<NavLink to="/yourCart" activeClassName="active">Your Cart</NavLink>
 								</li>
+								<li>
+									<NavLink to="/login" activeClassName="active">Login/Logout</NavLink>
+								</li>
 							</ul>
 					</div>
 				<Route exact path='/' component={ProductList} />
 				<Route exact path='/products/:productId' component={Product} />
-				<Cart user={{id: 1, name : 'qian' }} /> 
+				<Route path='/login' component={Login} />
+				<Cart user={{id: 1, name : 'qian' }} />
 			</div>
 		)
 	}

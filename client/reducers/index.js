@@ -8,7 +8,7 @@ export default combineReducers({
 	lineItems,
 	products,
 	users,
-    user
+  user
 })
 
 export * from './cart'

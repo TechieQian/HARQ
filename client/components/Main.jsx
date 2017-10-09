@@ -24,7 +24,7 @@ class Main extends Component {
 					</div>
 				<Route exact path='/' component={ProductList} />
 				<Route exact path='/products/:productId' component={Product} />
-				<Route exact path='/yourCart' component={ Cart } />
+				<Cart user={{id: 1, name : 'qian' }} /> 
 			</div>
 		)
 	}

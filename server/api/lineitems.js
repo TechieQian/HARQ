@@ -8,13 +8,6 @@ router.get('/', (req, res, next) => {
     .then(order => res.send(order))
 })
 
-router.post('/', (req, res, next) => {
-  const { userId, productId } = req.body;
-
- Order.addLineItem({ userId, productId })
-   .then(order => res.send(order))
-   .catch(next);
-});
 
 router.delete('/:lineItemId', (req, res, next) => {
   Order.deleteLineItem(req.params.lineItemId)

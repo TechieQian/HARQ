@@ -57,9 +57,10 @@ Order.createLineItem = ({orderId, productId}) => {
     })
 }
 
-Order.addLineItem = ({userId, productId}) => {
+Order.addProductToCart = ({userId, productId}) => {
   return User.findById(userId, { include: Order })
-      .then(user => {
+		.then(user => {
+			console.log('found user', user.id)
         return Order.getActiveOrderByUser(userId)
           .then(order => {
             return Order.createLineItem({ orderId: order.id, productId })

@@ -2,8 +2,20 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchProducts} from '../store.js'
 import {Link} from 'react-router-dom'
+import axios from 'axios'
 
 class ProductList extends Component {
+
+	constructor() {
+		super()
+		this.handleAddProduct = this.handleAddProduct.bind(this)
+	}
+
+	handleAddProduct (payload) {
+		axios.post(`api/products/${payload.productId}/lineitems`, {
+			userId : 1
+		})
+	}
 
 	componentDidMount(){
 		this.props.getProducts()
@@ -23,8 +35,10 @@ class ProductList extends Component {
 										pathname : `/products/${product.id}`
 									}}> Product Details </Link><br />
 								<button className='btn btn-primary' onClick={(e)=>{
-											e.preventDefault();
-											alert('clicked')
+									e.preventDefault();
+									this.handleAddProduct({
+										productId : product.id
+									})
 									}
 								}>
 										Add to cart

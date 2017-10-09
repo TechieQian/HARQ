@@ -9,17 +9,32 @@ module.exports = router;
 
 // gets all products
 router.get('/', (req, res, next) => {
-  return Product.findAll()
+  Product.findAll()
     .then(products => res.send(products))
     .catch(next);
 });
 
 // gets one product
 router.get('/:id', (req, res, next) => {
-  return Product.findById(req.params.id)
+  Product.findById(req.params.id)
     .then(product => res.send(product))
     .catch(next);
 });
+
+// add product to lineitem
+router.post('/:id/lineitems', (req,res,next)=> {
+	Order.addProductToCart({
+		userId : req.body.userId,
+		productId : req.params.id
+	})
+		.then(()=> {
+			res.send()
+			console.log('posted product lineitem')
+		})
+		.catch((ex)=> {
+			console.log(ex)
+		})
+})
 
 router.delete('/', (req, res, next) => {
 });

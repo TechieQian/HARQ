@@ -15,7 +15,7 @@ export function setCurrentUser(user) {
 
 // THUNK
 export function verifyUser(credential){
-    return axios.post('/api/user/auth', credential)
+    return axios.post('/api/users/auth', credential)
             .then(res => res.data)
             .then(user => {
                 if (user) {

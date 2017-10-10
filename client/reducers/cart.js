@@ -12,21 +12,24 @@ export function getUserLineItems(lineItems) {
 };
 
 //Thunk Creators
-// export function fetchUserLineItems(userId) {
-// 	return function thunk(dispatch){
-// 		axios.get(`/api/users/${userId}`)
-// 		.then(res => res.data)
-// 		.then(user => {
-// 			console.log('thunk user', user)
-// 			return Order.getActiveOrderByUser(user.id)
-// 		})
-// 		.then(lineitems => {
-// 			console.log('thunk lineitems', lineitems)
-// 			const action = getUserLineItems(lineitems);
-// 			dispatch(action);
-// 		})
-// 	};
-// };
+export function fetchUserLineItems(userId) {
+	return function thunk(dispatch){
+		axios.get(`/api/users/${userId}`)
+		.then(res => res.data)
+		.then(user => {
+			const activeOrder = user.orders.filter(order => {
+				return order.active == true
+			})
+
+			console.log('active orders', activeOrder)
+
+			if (activeOrder.length == 1) {
+				console.log('yo', activeOrder[0].lineitems)
+				dispatch(getUserLineItems(activeOrder[0].lineitems))
+			}
+		})
+	};
+};
 
 const cartReducer = function(state = [], action) {
 	switch(action.type) {

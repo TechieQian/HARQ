@@ -14,10 +14,8 @@ router.get('/:id', (req, res, next) => {
     .then(user => res.send(user))
 })
 
-
 router.delete('/:lineItemId', (req, res, next) => {
   User.deleteLineItem(req.params.lineItemId)
        .then(res.redirect('/'))
        .catch(next)
 });
-

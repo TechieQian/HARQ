@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import store, {fetchProducts} from '../store.js'
+import store, {fetchProducts, fetchUserLineItems} from '../store.js'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
 import Cart from './Cart';
@@ -13,30 +13,30 @@ class ProductList extends Component {
 	}
 
 	handleAddProduct (payload) {
-		console.log('payload', payload);
 
 		axios.post(`api/products/${payload.productId}/lineitems`, {
 			userId : payload.userId
 		})
-
-		// store.dispatch(fetchUserLineItems(payload.userId))
+		.then(()=> store.dispatch(fetchUserLineItems(payload.userId)))
 	}
 
 	componentDidMount(){
 		this.props.getProducts()
+		if (this.props.user.id) {
+			store.dispatch(fetchUserLineItems(this.props.user.id))
+		}
 	}
 
 	render(){
-		console.log(this.props.products.length)
-		const { user } = this.props;
-		console.log('logged in user is', user)
+		const { user, products } = this.props;
+
 		return (
 			<div>
 				{
 					user.id ? <h2>{`Hello ${user.name}!`}</h2> : null
 				}
 				{
-					this.props.products.map((product)=> {
+					products.map((product)=> {
 						return (
 							<div className='col-sm-4' key={product.id}>
 								<div className='panel panel-body'>
@@ -59,7 +59,9 @@ class ProductList extends Component {
 						)
 					})
 				}
-				<Cart />
+				<div>
+					<Cart />
+				</div>
 			</div>
 		)
 	}
@@ -76,7 +78,6 @@ function mapDispatch(dispatch) {
 	return {
 		getProducts : ()=> { dispatch(fetchProducts())  }
 	}
-
 }
 
 export default connect(mapState, mapDispatch)(ProductList)

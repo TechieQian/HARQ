@@ -11,11 +11,9 @@ const getProducts = (products) => ({
 
 //Thunk Creators
 export function fetchProducts() {
-	console.log('calling fetchproducts')
 	return function thunk(dispatch) {
 		axios.get(`/api/products`)
 			.then((products)=> {
-				console.log('success get')
 				dispatch(getProducts(products.data))
 			})
 	}

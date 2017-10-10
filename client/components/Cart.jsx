@@ -10,7 +10,7 @@ class Cart extends Component {
 		super(props)
 		this.state = {
 			currentUser : {},
-
+			cart: []
 		}
 		this.handleRemove = this.handleRemove.bind(this)
 	}
@@ -18,29 +18,38 @@ class Cart extends Component {
 		axios.get('/api/users/1')
 			.then(user=>user.data)
 			.then((user)=> {
-				console.log(user)
-				this.setState({currentUser : user})
+				var orders = user.orders[0].lineitems
+				this.setState({currentUser : user, cart: orders})
 			})
 	}
+	
 	handleRemove(ev){
 		ev.preventDefault()
-		this.props.removeLineItem(ev.target.value)
+		const lineItemId = ev.target.value
+		axios.delete(`/api/lineitems/${lineItemId}`)
+			.then(()=>{
+				const newCart = this.state.cart.filter((lineItem) => {
+					return lineItem.id !== lineItemId;
+				});
+				this.setState({ cart: newCart})
+				console.log(this.state);
+			})
 	}
 
 	render(){
-		let lineItems = []
-		const orders = this.state.currentUser.orders
-		if (orders) {
-			const activeOrder = orders.filter((order)=> { return order.active })
-			lineItems = activeOrder[0].lineitems
-			console.log(lineItems.length)
-			console.log(lineItems)
-		}
+		const {cart} = this.state;
+		// const orders = this.state.currentUser.orders
+		// if (orders) {
+		// 	const activeOrder = orders.filter((order)=> { return order.active })
+		// 	lineItems = activeOrder[0].lineitems
+		// 	console.log(lineItems.length)
+		// 	console.log(lineItems)
+		// }
 		return (
 			  <div>
 			      <h1>My Cart </h1>
 							{
-			          lineItems.map(item => {
+			          cart.map(item => {
 			            return (
 										<div className="ui red segment" key={item.product.id} style={{ width: "50%" }} >
 											<h3><Link to={`/product/${item.product.id}`} style={{ color: "black"}}>
@@ -73,10 +82,6 @@ function mapState({ lineItems }) {
 function mapDispatch(dispatch) {
 	return {
     getLineItems: () => { dispatch(fetchLineItems(1,1)) },
-		removeLineItem: (lineItemId) => {
-			dispatch(deleteLineItem(lineItemId))
-			dispatch(fetchLineItems(1,1))
-		}
 	}
 
 }

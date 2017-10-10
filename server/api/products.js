@@ -29,7 +29,6 @@ router.post('/:id/lineitems', (req,res,next)=> {
 	})
 		.then(()=> {
 			res.send()
-			console.log('posted product lineitem')
 		})
 		.catch((ex)=> {
 			console.log(ex)
@@ -39,9 +38,12 @@ router.post('/:id/lineitems', (req,res,next)=> {
 router.delete('/', (req, res, next) => {
 });
 
-router.put('/', (req, res, next) => {
+router.put('/:id', (req, res, next) => {
+	Product.update(req.body, { where : { id : req.params.id }, returning : true, plain : true })
+		.then((result)=> {
+			res.send(result[1].dataValues)
+		})
 });
 
 router.post('/', (req, res, next) => {
-
 });

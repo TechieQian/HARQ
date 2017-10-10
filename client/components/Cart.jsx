@@ -9,15 +9,15 @@ class Cart extends Component {
 	constructor() {
 		super()
 		this.state = {
-			currentUser : {} 
+			currentUser : {}
 		}
 	}
 	componentDidMount(){
 		axios.get('/api/users/1')
-			.then(user=>user.data) 
+			.then(user=>user.data)
 			.then((user)=> {
 				console.log(user)
-				this.setState({currentUser : user})	
+				this.setState({currentUser : user})
 			})
 	}
 
@@ -32,7 +32,7 @@ class Cart extends Component {
 		}
 		return (
 			<div className="container">
-				<h1>My Cart </h1> 
+				<h1>My Cart </h1>
         {
           lineItems.map(item => {
             return <li key={item.product.id}>{item.product.name}</li>

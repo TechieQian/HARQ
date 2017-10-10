@@ -16,6 +16,16 @@ const User = db.define('user',{
     type: Sequelize.STRING,
     len: [8, 40]            //password must be atleast 8 char long
   }
-})
+});
 
+User.login = function(credential){
+  return User.findOne({
+        where: credential
+    }).then(user => {
+        if (user) {
+            return user;
+        }
+        throw 'Invalid Login';
+  });
+};
 module.exports = User;

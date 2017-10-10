@@ -20,3 +20,4 @@ router.delete('/:lineItemId', (req, res, next) => {
        .then(res.redirect('/'))
        .catch(next)
 });
+

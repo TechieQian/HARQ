@@ -1,6 +1,5 @@
 const db = require('./conn');
 const { Sequelize } = db;
-const Order = require('./Order');
 
 const User = db.define('user',{
   name: {
@@ -20,7 +19,14 @@ const User = db.define('user',{
 
 User.login = function(credential){
   return User.findOne({
-        where: credential
+        where: credential,
+        include: [{
+          model: db.models.order,
+          include: [{
+            model: db.models.lineitem,
+            include: [db.models.product]
+          }]
+        }]
     }).then(user => {
         if (user) {
             return user;

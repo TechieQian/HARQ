@@ -6,6 +6,7 @@ import axios from 'axios'
 
 class Cart extends Component {
 
+<<<<<<< HEAD
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -67,16 +68,33 @@ class Cart extends Component {
 			          })
 			        }
 			   </div>
+=======
+	render( ){
+		const { cart } = this.props;
+
+		return (
+			<div className="container">
+				<h1>My Cart </h1>
+					{ cart &&
+						cart.map(item => {
+	            return <li key={item.product.id}>{item.product.name} {item.product.id} {item.qty}</li>
+						})
+					}
+      </div>
+>>>>>>> 07e5bc9a54960ec92a80cfc94614d48c9a22ae79
 		)
 	}
 }
 
-function mapState({ lineItems }) {
+function mapState(state) {
+	console.log('state', state)
+	const cart = state.lineItems;
 	return {
-		lineItems
+		cart
 	}
 }
 
+<<<<<<< HEAD
 // hard-coded the userId and orderId
 // will have to pass in route props probably to get these IDs
 function mapDispatch(dispatch) {
@@ -85,5 +103,7 @@ function mapDispatch(dispatch) {
 	}
 
 }
+=======
+>>>>>>> 07e5bc9a54960ec92a80cfc94614d48c9a22ae79
 
-export default connect(mapState, mapDispatch)(Cart)
+export default connect(mapState)(Cart)

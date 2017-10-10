@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchProducts} from '../store.js'
+import store, {fetchProducts, fetchUserLineItems} from '../store.js'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
+import Cart from './Cart';
 
 class ProductList extends Component {
 
@@ -12,21 +13,30 @@ class ProductList extends Component {
 	}
 
 	handleAddProduct (payload) {
+
 		axios.post(`api/products/${payload.productId}/lineitems`, {
-			userId : 1
+			userId : payload.userId
 		})
+		.then(()=> store.dispatch(fetchUserLineItems(payload.userId)))
 	}
 
 	componentDidMount(){
 		this.props.getProducts()
+		if (this.props.user.id) {
+			store.dispatch(fetchUserLineItems(this.props.user.id))
+		}
 	}
 
 	render(){
-		console.log(this.props.products.length)
+		const { user, products } = this.props;
+
 		return (
 			<div>
 				{
-					this.props.products.map((product)=> {
+					user.id ? <h2>{`Hello ${user.name}!`}</h2> : null
+				}
+				{
+					products.map((product)=> {
 						return (
 							<div className='col-sm-4' key={product.id}>
 								<div className='panel panel-body'>
@@ -37,26 +47,30 @@ class ProductList extends Component {
 								<button className='btn btn-primary' onClick={(e)=>{
 									e.preventDefault();
 									this.handleAddProduct({
-										productId : product.id
+										productId : product.id,
+										userId: user.id
 									})
 									}
 								}>
-										Add to cart
+										Add To Cart
 									</button>
 								</div>
 							</div>
 						)
 					})
 				}
+				<div>
+					<Cart />
+				</div>
 			</div>
 		)
 	}
 }
 
-function mapState({products}) {
-	console.log('PRODUCTS', products)
+function mapState({products, user}) {
 	return {
-		products
+		products,
+		user
 	}
 }
 
@@ -64,7 +78,6 @@ function mapDispatch(dispatch) {
 	return {
 		getProducts : ()=> { dispatch(fetchProducts())  }
 	}
-
 }
 
 export default connect(mapState, mapDispatch)(ProductList)

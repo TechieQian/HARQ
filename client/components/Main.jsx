@@ -29,7 +29,10 @@ class Main extends Component {
 				<Route exact path='/' component={ProductList} />
 				<Route exact path='/products/:productId' component={Product} />
 				<Route path='/login' component={Login} />
+<<<<<<< HEAD
 				<Route path='/yourCart' component={Cart} />
+=======
+>>>>>>> 07e5bc9a54960ec92a80cfc94614d48c9a22ae79
 			</div>
 		)
 	}

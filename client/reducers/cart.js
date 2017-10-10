@@ -1,24 +1,32 @@
 import axios from 'axios';
-
+//import Order from '../../server/db/Order';
 //Action Types
-const GET_LINEITEMS = 'GET_LINEITEMS';
+const GET_USER_LINEITEMS = 'GET_USER_LINEITEMS';
 
 //Action Creators
-export function getLineItems(lineItems) {
+export function getUserLineItems(lineItems) {
 	return {
-		type: GET_LINEITEMS,
+		type: GET_USER_LINEITEMS,
 		lineItems
 	};
 };
 
 //Thunk Creators
-export function fetchLineItems(userId, orderId) {
+export function fetchUserLineItems(userId) {
 	return function thunk(dispatch){
-		axios.get(`/api/lineitems/${userId}/${orderId}`)
+		axios.get(`/api/users/${userId}`)
 		.then(res => res.data)
-		.then(lineitems => {
-			const action = getLineItems(lineitems);
-			dispatch(action);
+		.then(user => {
+			const activeOrder = user.orders.filter(order => {
+				return order.active == true
+			})
+
+			console.log('active orders', activeOrder)
+
+			if (activeOrder.length == 1) {
+				console.log('yo', activeOrder[0].lineitems)
+				dispatch(getUserLineItems(activeOrder[0].lineitems))
+			}
 		})
 	};
 };
@@ -28,7 +36,7 @@ export function fetchLineItems(userId, orderId) {
 
 const cartReducer = function(state = [], action) {
 	switch(action.type) {
-		case GET_LINEITEMS:
+		case GET_USER_LINEITEMS:
 			return action.lineItems
 
 		default: return state

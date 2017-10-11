@@ -6,11 +6,21 @@ import axios from 'axios'
 
 class Cart extends Component {
 
+	constructor() {
+		super()
+		this.state = {
+			lineitems : []
+		}
+	}
+	componentDidMount() {
+		
+	}
+
 	render( ){
 		const { cart } = this.props;
 
 		return (
-			<div className="container">
+			<div className='col-sm-4'>
 				<h1>My Cart </h1>
 					{ cart &&
 						cart.map(item => {
@@ -26,7 +36,7 @@ function mapState(state) {
 	console.log('state', state)
 	const cart = state.lineItems;
 	return {
-		cart
+		order
 	}
 }
 

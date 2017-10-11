@@ -19,14 +19,14 @@ class Main extends Component {
 									<NavLink to="/" activeClassName="active">Home</NavLink>
 								</li>
 								<li>
-									<NavLink to="/yourCart" activeClassName="active">Your Cart</NavLink>
-								</li>
-								<li>
 									<NavLink to="/login" activeClassName="active">Login/Logout</NavLink>
 								</li>
 							</ul>
 					</div>
-				<Route exact path='/' component={ProductList} />
+					<div className="row">
+						<Route exact path='/' component={ProductList} />
+						<Route exact path='/' component={Cart} />
+					</div>
 				<Route exact path='/products/:productId' component={Product} />
 				<Route path='/login' component={Login} />
 			</div>

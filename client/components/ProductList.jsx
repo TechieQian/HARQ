@@ -31,7 +31,7 @@ class ProductList extends Component {
 		const { user, products } = this.props;
 
 		return (
-			<div>
+			<div className='col-sm-8'>
 				{
 					user.id ? <h2>{`Hello ${user.name}!`}</h2> : null
 				}
@@ -59,9 +59,6 @@ class ProductList extends Component {
 						)
 					})
 				}
-				<div>
-					<Cart />
-				</div>
 			</div>
 		)
 	}

@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import store, {fetchProducts, fetchUserLineItems} from '../store.js'
+import store, {fetchProducts, fetchActiveOrder} from '../store.js'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
-import Cart from './Cart';
 
 class ProductList extends Component {
 
@@ -17,13 +16,14 @@ class ProductList extends Component {
 		axios.post(`api/products/${payload.productId}/lineitems`, {
 			userId : payload.userId
 		})
-		.then(()=> store.dispatch(fetchUserLineItems(payload.userId)))
+		.then(()=> store.dispatch(fetchActiveOrder(payload.userId)))
 	}
 
 	componentDidMount(){
 		this.props.getProducts()
 		if (this.props.user.id) {
-			store.dispatch(fetchUserLineItems(this.props.user.id))
+			console.log('PROPS USER ID EXISTS', this.props.user.id)
+			store.dispatch(fetchActiveOrder(this.props.user.id))
 		}
 	}
 

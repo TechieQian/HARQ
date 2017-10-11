@@ -1,30 +1,20 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchProducts, fetchLineItems} from '../store.js'
+import {fetchProducts, fetchActiveOrder} from '../store.js'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
 
 class Cart extends Component {
-
-	constructor() {
-		super()
-		this.state = {
-			lineitems : []
-		}
-	}
-	componentDidMount() {
-		
-	}
-
-	render( ){
-		const { cart } = this.props;
+	render(){
+		const { order } = this.props;
 
 		return (
 			<div className='col-sm-4'>
 				<h1>My Cart </h1>
-					{ cart &&
-						cart.map(item => {
-	            return <li key={item.product.id}>{item.product.name} {item.product.id} {item.qty}</li>
+					{ order &&
+						order.map(lineitem => {
+							{ console.log('map order', order)}
+	            return <li key={lineitem.id}>{lineitem.product.name} {lineitem.qty}</li>
 						})
 					}
       </div>
@@ -32,9 +22,7 @@ class Cart extends Component {
 	}
 }
 
-function mapState(state) {
-	console.log('state', state)
-	const cart = state.lineItems;
+function mapState({ order }) {
 	return {
 		order
 	}

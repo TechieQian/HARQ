@@ -26,7 +26,7 @@ Order.getActiveOrderByUser = (userId) => {
     if(!order) {
       return Order.create({ userId: userId })
     }
-    else {
+		else {
       return order
     }
   })
@@ -41,32 +41,30 @@ Order.createLineItem = ({orderId, productId}) => {
   })
     .then(lineItem => {
       if(lineItem) {
-        lineItem.update({ qty: lineItem.increment() })
+        return lineItem.update({ qty: lineItem.increment() })
       }
       else {
-        LineItem.create()
-          .then(lineItem => {
-            Product.findById(productId)
-              .then(product => lineItem.setProduct(product))
-              .then(() => {
-                Order.findById(orderId)
-                  .then(order => lineItem.setOrder(order))
-              })
-          })
+				return LineItem.create({productId, orderId})
+					.then(()=> {
+						return Order.findById(orderId, {
+							include : [{ model : LineItem, include : [Product] }]
+						})
+					})
       }
     })
 }
 
-Order.addProductToCart = ({userId, productId}) => {
-  return User.findById(userId, { include: Order })
-		.then(user => {
-			console.log('found user', user.id)
-        return Order.getActiveOrderByUser(userId)
-          .then(order => {
-            return Order.createLineItem({ orderId: order.id, productId })
-          })
-      })
-      .then(() => { return Order.getActiveOrderByUser(userId) })
+Order.addProductToCart = ({cartId, productId}) => {
+	return Order.findById(cartId)
+		.then(order => {
+			return Order.createLineItem({ orderId: order.id, productId })
+		})
+		.then(()=> {
+			console.log('addproduct success')
+		})
+		.catch((ex)=> {
+			console.log('addProductToCart fail', ex)
+		})
 }
 
 Order.deleteLineItem = (lineItemId) => {

@@ -1,4 +1,3 @@
-
 const router = require('express').Router();
 const Product = require('../db/Product');
 const User = require('../db/User');
@@ -7,7 +6,6 @@ const LineItem = require('../db/LineItem');
 module.exports = router;
 
 router.get('/:id', (req, res, next) => {
-	console.log('got user find id route')
 	User.findById(req.params.id, {
 		include : [{ model : Order, include : [{ model : LineItem, include : [Product] }] }]
 	})
@@ -25,6 +23,14 @@ router.get('/:id/orders', (req, res, next) => {
 		.catch(next);
 });
 
+router.get('/:id/cart', (req,res,next)=> {
+	Order.getActiveOrderByUser(req.params.id)
+		.then(cart=> {
+			res.send(cart)
+		})
+})
+
+	/*
 router.get('/:id/activeorder', (req, res, next) => {
   User.findById(req.params.id,
 		{include: [
@@ -38,7 +44,7 @@ router.get('/:id/activeorder', (req, res, next) => {
 			else { throw 'Found more than one active order' }
 		})
 		.catch(next);
-});
+});*/
 
 router.delete('/:lineItemId', (req, res, next) => {
   User.deleteLineItem(req.params.lineItemId)

@@ -13,7 +13,6 @@ router.get('/:id', (req, res, next) => {
 
 // create order
 router.post('/', (req, res, next) => {
-	console.log('creating order in api.', req.body)
 	Order.create(req.body)
 		.then(order=> res.send(order))
 		.catch(next)
@@ -22,6 +21,13 @@ router.post('/', (req, res, next) => {
 router.delete('/', (req, res, next) => {
 });
 
-router.put('/', (req, res, next) => {
+// update order
+router.put('/:id', (req, res, next) => {
+	Order.update(req.body, {
+		where : { id : req.params.id }
+	})
+		.then((cart)=> {
+			res.send(cart)
+		})
 });
 

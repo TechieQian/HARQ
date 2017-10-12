@@ -2,12 +2,19 @@ import axios from 'axios';
 
 //Action Types
 const GET_CART = 'GET_CART'
+const CLEAR_CART = 'CLEAR_CART'
 
 //Action Creators
 export function getCart(cart) {
 	return {
 		type : GET_CART,
 		cart
+	}
+}
+
+export function clearCart() {
+	return {
+		type : CLEAR_CART
 	}
 }
 
@@ -40,6 +47,7 @@ export function updateCart(payload) {
 const cartReducer = function(state = {}, action) {
 	switch(action.type) {
 		case GET_CART :	return action.cart
+		case CLEAR_CART : return {}
 		default: return state
 	}
 };

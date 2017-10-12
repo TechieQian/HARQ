@@ -1,10 +1,21 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchCart} from '../store.js'
+import {fetchCart, clearCart} from '../store.js'
 import axios from 'axios'
 
 class Cart extends Component {
-	render(){
+	constructor(){
+		super()
+		this.handleSubmit = this.handleSubmit.bind(this)
+	}
+
+	handleSubmit(e) {
+		axios.put(`/api/orders/${this.props.cart.id}`, {active : false})
+			.then(()=> {
+				this.props.emptyCart()
+			})
+	}
+	render() {
 		const lineitems = this.props.cart.lineitems
 		return (
 			<div className='col-sm-4'>
@@ -14,7 +25,15 @@ class Cart extends Component {
 	            return <li key={lineitem.id}>{lineitem.product.name} {lineitem.qty}</li>
 						})
 					}
-      </div>
+
+					{
+						lineitems &&
+						<button className='btn btn-primary' onClick={this.handleSubmit}>
+							Submit Order
+						</button>
+					}
+			</div>
+
 		)
 	}
 }
@@ -25,5 +44,10 @@ function mapState({ cart }) {
 	}
 }
 
+function mapDispatch(dispatch) {
+	return {
+		emptyCart : ()=> { dispatch(clearCart()) }
+	}
+}
 
-export default connect(mapState)(Cart)
+export default connect(mapState,mapDispatch)(Cart)

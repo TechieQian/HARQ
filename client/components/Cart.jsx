@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchCart, clearCart} from '../store.js'
+import Order from './Order'
 import axios from 'axios'
 
 class Cart extends Component {
@@ -20,10 +21,8 @@ class Cart extends Component {
 		return (
 			<div className='col-sm-4'>
 				<h1>My Cart </h1>
-					{ lineitems &&
-						lineitems.map(lineitem => {
-	            return <li key={lineitem.id}>{lineitem.product.name} {lineitem.qty}</li>
-						})
+					{ 
+						lineitems && <Order lineitems={lineitems} />
 					}
 
 					{

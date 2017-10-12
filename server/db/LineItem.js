@@ -8,6 +8,16 @@ const LineItem = db.define('lineitem', {
     type: Sequelize.INTEGER,
     defaultValue: 1
   }
+},
+{
+  hooks: {
+    afterDestroy: function(lineItem){
+      lineItem.getOrder({
+        include: [LineItem]
+      })
+        .then(order => order.lineitems.length < 1 ? order.destroy() : console.log('lineItem deleted'))
+    }
+  }
 })
 
 LineItem.prototype.increment = function() {

@@ -10,14 +10,22 @@ class Cart extends Component {
 		const { cart } = this.props;
 
 		return (
-			<div className="container">
+			<div className="container" style={{ float: "right", width: "30%" }}>
 				<h1>My Cart </h1>
 					{ cart &&
 						cart.map(item => {
-	            return (
-								<div>
-									<li key={item.product.id}>{item.product.name} {item.product.id} Qty: {item.qty}</li>
-									<button onClick={this.props.removeLineItem} value={item.id}>Remove</button>
+							return (
+								<div className="ui blue segment" key={item.product.id} style={{ width: "100%" }} >
+									<h3><Link to={`/product/${item.product.id}`} style={{ color: "black"}}>
+										{item.product.name}
+									</Link></h3>
+									<b>Qty: {item.qty}</b>
+									<button
+										onClick={ this.props.removeLineItem }
+										className="ui red button"
+										value={ item.id }
+										style={{ marginLeft: "52%" }}
+										>Remove</button>
 								</div>
 							)
 
@@ -29,7 +37,6 @@ class Cart extends Component {
 }
 
 function mapState(state) {
-	console.log('state', state)
 	const cart = state.lineItems;
 	return {
 		cart

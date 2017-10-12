@@ -4,27 +4,20 @@ const Order = require('../db/Order');
 
 module.exports = router;
 
-// gets one product
+// gets one order 
 router.get('/:id', (req, res, next) => {
   Order.findById(req.params.id)
     .then(order => res.send(order))
     .catch(next);
 });
 
-// add product to lineitem
-router.post('/:id/orders/:orderId', (req,res,next)=> {
-	Order.addProductToCart({
-		productId : req.params.id,
-		cartId : req.params.orderId
-	})
-		.then(()=> {
-			res.send()
-			console.log('posted product lineitem')
-		})
-		.catch((ex)=> {
-			console.log(ex)
-		})
-})
+// create order
+router.post('/', (req, res, next) => {
+	console.log('creating order in api.', req.body)
+	Order.create(req.body)
+		.then(order=> res.send(order))
+		.catch(next)
+});
 
 router.delete('/', (req, res, next) => {
 });
@@ -32,6 +25,3 @@ router.delete('/', (req, res, next) => {
 router.put('/', (req, res, next) => {
 });
 
-router.post('/', (req, res, next) => {
-
-});

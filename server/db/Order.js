@@ -11,11 +11,10 @@ const Order = db.define('order',{
   }
 })
 
-Order.getActiveOrderByUser = (userId) => {
-  return Order.findOne({
+Order.getOrdersByUser = (userId) => {
+  return Order.findAll({
     where: {
-      userId: userId,
-      active: true
+      userId: userId
     },
     include: [{
       model: LineItem,
@@ -44,23 +43,12 @@ Order.createLineItem = ({orderId, productId}) => {
 Order.addProductToCart = ({cartId, productId, userId}) => {
 	return Order.findById(cartId)
 		.then(order => {
-			if (!order) {
-				Order.create({userId})
-					.then((order)=> {
-						return Order.createLineItem({ orderId: order.id, productId })
-					})
-			}
-			else {
-				return Order.createLineItem({ orderId: order.id, productId })
-			}
+			return Order.createLineItem({ orderId: order.id, productId })
 		})
 		.then(()=> {
 			return Order.findById(cartId, {
 				include : [{ model : LineItem, include : [Product] }]
 			})
-		})
-		.catch((ex)=> {
-			console.log('addProductToCart fail', ex)
 		})
 }
 

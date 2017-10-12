@@ -11,11 +11,24 @@ export function getCart(cart) {
 	}
 }
 
-
 //Thunk Creators
 export function fetchCart(userId) {
 	return function thunk(dispatch){
 		axios.get(`/api/users/${userId}/cart`)
+			.then(cart=>cart.data)
+			.then(cart=> {
+				dispatch(getCart(cart))
+			})
+	}
+}
+
+export function updateCart(payload) {
+	const {productId, userId, cartId} = payload
+	return function thunk(dispatch) {
+		axios.post(`api/products/${productId}/lineItems`,{
+			userId,
+			cartId
+		})
 			.then(cart=>cart.data)
 			.then(cart=> {
 				dispatch(getCart(cart))
@@ -30,6 +43,5 @@ const cartReducer = function(state = {}, action) {
 		default: return state
 	}
 };
-
 
 export default cartReducer

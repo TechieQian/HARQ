@@ -6,45 +6,25 @@ const LineItem = require('../db/LineItem');
 module.exports = router;
 
 router.get('/:id', (req, res, next) => {
-	User.findById(req.params.id, {
-		include : [{ model : Order, include : [{ model : LineItem, include : [Product] }] }]
-	})
+	User.findById(req.params.id)
     .then(user => res.send(user))
 })
 
-
 router.get('/:id/orders', (req, res, next) => {
-  User.findById(req.params.id,
-		{include: [
-			{model: Order,
-				include: [{model: LineItem, include: [Product] }] } ]
+	Order.getOrdersByUser(req.params.id)
+		.then(orders=> {
+			res.send(orders)
 		})
-		.then(user => res.send(user.orders))
-		.catch(next);
+		.catch(next)
 });
 
 router.get('/:id/cart', (req,res,next)=> {
-	Order.getActiveOrderByUser(req.params.id)
-		.then(cart=> {
-			res.send(cart)
+	Order.getOrdersByUser(req.params.id)
+		.then(orders=> {
+			 res.send(orders.find((order)=> order.active))
 		})
+		.catch(next)
 })
-
-	/*
-router.get('/:id/activeorder', (req, res, next) => {
-  User.findById(req.params.id,
-		{include: [
-			{model: Order, where: {active: true},
-				include: [{model: LineItem, include: [Product] }] } ]
-		})
-		.then(user => {
-			if (user.orders.length == 1){
-				return res.send(user.orders[0])
-			}
-			else { throw 'Found more than one active order' }
-		})
-		.catch(next);
-});*/
 
 router.delete('/:lineItemId', (req, res, next) => {
   User.deleteLineItem(req.params.lineItemId)

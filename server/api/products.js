@@ -21,7 +21,7 @@ router.get('/:id', (req, res, next) => {
     .catch(next);
 });
 
-// add product to lineitem
+// add product to cart
 router.post('/:id/lineItems', (req,res,next)=> {
 	Order.addProductToCart({
 		productId : req.params.id,
@@ -29,13 +29,9 @@ router.post('/:id/lineItems', (req,res,next)=> {
 		userId : req.body.userId
 	})
 		.then((cart)=> {
-			console.log('got cart', cart)
 			res.send(cart)
-			console.log('posted product lineitem')
 		})
-		.catch((ex)=> {
-			console.log(ex)
-		})
+		.catch(next)
 })
 
 router.delete('/', (req, res, next) => {

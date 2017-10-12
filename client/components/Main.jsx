@@ -37,9 +37,12 @@ class Main extends Component {
 								<li>
 									<NavLink to="/login" activeClassName="active">Login/Logout</NavLink>
 								</li>
-								<li>
-									<NavLink to="/history" activeClassName="active">Order History</NavLink>
-								</li>
+								{
+									this.props.user.id &&
+									<li>
+										<NavLink to="/history" activeClassName="active">Order History</NavLink>
+									</li>
+								}
 							</ul>
 					</div>
 					<div className="row">
@@ -60,9 +63,9 @@ class Main extends Component {
 // The following container is needed only to set default user
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = (state) => {
+const mapState = ({user}) => {
   return {
-    user: state.user
+    user
   }
 }
 const mapDispatch = (dispatch) => {

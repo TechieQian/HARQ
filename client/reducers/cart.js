@@ -24,7 +24,7 @@ export function fetchCart(userId) {
 		axios.get(`/api/users/${userId}/cart`)
 			.then(cart=>cart.data)
 			.then(cart=> {
-				dispatch(getCart(cart))
+				cart.id && dispatch(getCart(cart))
 			})
 	}
 }

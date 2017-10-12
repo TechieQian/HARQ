@@ -11,8 +11,11 @@ class ProductList extends Component {
 		this.handleAddProduct = this.handleAddProduct.bind(this)
 	}
 
-	handleAddProduct (payload) {
-		axios.post(`api/products/${payload.productId}/orders/${this.props.cart.id}`)
+	handleAddProduct (productId) {
+		axios.post(`api/products/${productId}/lineItems`,{
+			userId : this.props.user.id,
+			cartId : this.props.cart.id
+		})
 			.then(()=> {
 				this.props.getCart(this.props.user.id)
 			})
@@ -41,7 +44,7 @@ class ProductList extends Component {
 									}}> Product Details </Link><br />
 								<button className='btn btn-primary' onClick={(e)=>{
 									e.preventDefault();
-									this.handleAddProduct({	productId : product.id })
+									this.handleAddProduct(product.id)
 									}
 								}>
 										Add To Cart

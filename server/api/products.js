@@ -22,13 +22,15 @@ router.get('/:id', (req, res, next) => {
 });
 
 // add product to lineitem
-router.post('/:id/orders/:orderId', (req,res,next)=> {
+router.post('/:id/lineItems', (req,res,next)=> {
 	Order.addProductToCart({
 		productId : req.params.id,
-		cartId : req.params.orderId
+		cartId : req.body.cartId,
+		userId : req.body.userId
 	})
-		.then(()=> {
-			res.send()
+		.then((cart)=> {
+			console.log('got cart', cart)
+			res.send(cart)
 			console.log('posted product lineitem')
 		})
 		.catch((ex)=> {

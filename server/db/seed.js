@@ -9,8 +9,8 @@ const User = require('./User');
 
 const seed = () => {
     return Promise.all([
-    Product.create({ name: 'Anger' }),
-    Product.create({ name: 'Joy' }),
+    Product.create({ name: 'Anger', price : 100 }),
+    Product.create({ name: 'Joy', price : 5 }),
     Product.create({ name: 'Sadness' }),
     Product.create({ name: 'Disgust' }),
     Product.create({ name: 'Fear' }),

@@ -37,9 +37,12 @@ router.post('/:id/lineItems', (req,res,next)=> {
 router.delete('/', (req, res, next) => {
 });
 
-router.put('/', (req, res, next) => {
+router.put('/:id', (req, res, next) => {
+	Product.update(req.body, { where : { id : req.params.id }, returning : true, plain : true })
+		.then((result)=> {
+			res.send(result[1].dataValues)
+		})
 });
 
 router.post('/', (req, res, next) => {
-
 });

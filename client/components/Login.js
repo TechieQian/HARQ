@@ -32,7 +32,6 @@ class Login extends React.Component {
 				this.props.getCart(this.props.user.id)
       })
       .catch(err => {
-        console.log('error occurred ', err.response.data);
         this.setState({error: err.response.data});
       });
 

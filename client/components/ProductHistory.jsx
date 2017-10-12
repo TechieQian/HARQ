@@ -11,12 +11,25 @@ class ProductHistory extends Component {
 	}
 
 	componentDidMount() {
-		axios.get(`/api/users/${this.props.user.id}/orders`)
-			.then(orders=>orders.data)
-			.then((orders)=> {
-				orders = orders.filter(order=> !order.active)
-				this.setState({orders})
-			})
+		if (this.props.user.id) {
+			axios.get(`/api/users/${this.props.user.id}/orders`)
+				.then(orders=>orders.data)
+				.then((orders)=> {
+					orders = orders.filter(order=> !order.active)
+					this.setState({orders})
+				})
+		}
+	}
+
+	componentWillReceiveProps(props) {
+		if (props.user.id != this.props.user.id) {
+			axios.get(`/api/users/${props.user.id}/orders`)
+				.then(orders=>orders.data)
+				.then((orders)=> {
+					orders = orders.filter(order=> !order.active)
+					this.setState({orders})
+				})
+		}
 	}
 
 	render(){

@@ -17,11 +17,9 @@ const putProduct = product=> ({
 
 //Thunk Creators
 export function fetchProducts() {
-	console.log('calling fetchproducts')
 	return function thunk(dispatch) {
 		axios.get(`/api/products`)
 			.then((products)=> {
-				console.log('success get')
 				dispatch(getProducts(products.data))
 			})
 	}
@@ -39,7 +37,7 @@ export function updateProduct(product) {
 //Action Reducer
 const productReducer = function(state=[], action) {
 	switch(action.type) {
-		case GET_PRODUCTS : 
+		case GET_PRODUCTS :
 			return action.products
 		case PUT_PRODUCT :
 			const newState = state.slice()

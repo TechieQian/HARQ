@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchProducts} from '../store.js'
+import {fetchProducts, updateCart} from '../store.js'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
 
@@ -11,10 +11,27 @@ class ProductList extends Component {
 		this.handleAddProduct = this.handleAddProduct.bind(this)
 	}
 
-	handleAddProduct (payload) {
-		axios.post(`api/products/${payload.productId}/lineitems`, {
-			userId : 1
-		})
+	handleAddProduct (productId) {
+		if(!this.props.cart.id) {
+			axios.post('/api/orders', {
+				userId : this.props.user.id,
+				active : true
+			})
+				.then(order=> {
+					this.props.putCart({
+						userId : this.props.user.id,
+						cartId : order.data.id,
+						productId
+					})
+				})
+		}
+		else {
+			this.props.putCart({
+				userId : this.props.user.id,
+				cartId : this.props.cart.id,
+				productId
+			})
+		}
 	}
 
 	componentDidMount(){
@@ -22,11 +39,15 @@ class ProductList extends Component {
 	}
 
 	render(){
-		console.log(this.props.products.length)
+		const { user, products } = this.props;
+
 		return (
-			<div>
+			<div className='col-sm-8'>
 				{
-					this.props.products.map((product)=> {
+					user.id ? <h2>{`Hello ${user.name}!`}</h2> : null
+				}
+				{
+					products.map((product)=> {
 						return (
 							<div className='col-sm-4' key={product.id}>
 								<div className='panel panel-body'>
@@ -36,12 +57,10 @@ class ProductList extends Component {
 									}}> Product Details </Link><br />
 								<button className='btn btn-primary' onClick={(e)=>{
 									e.preventDefault();
-									this.handleAddProduct({
-										productId : product.id
-									})
+									this.handleAddProduct(product.id)
 									}
 								}>
-										Add to cart
+										Add To Cart
 									</button>
 								</div>
 							</div>
@@ -53,18 +72,19 @@ class ProductList extends Component {
 	}
 }
 
-function mapState({products}) {
-	console.log('PRODUCTS', products)
+function mapState({user,products, cart}) {
 	return {
-		products
+		user,
+		products,
+		cart
 	}
 }
 
 function mapDispatch(dispatch) {
 	return {
-		getProducts : ()=> { dispatch(fetchProducts())  }
+		getProducts : ()=> { dispatch(fetchProducts()) },
+		putCart : (payload) => { dispatch(updateCart(payload)) }
 	}
-
 }
 
 export default connect(mapState, mapDispatch)(ProductList)

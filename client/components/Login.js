@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { verifyUser, removeCurrentUser } from '../reducers';
+import { verifyUser, removeCurrentUser, fetchCart } from '../reducers';
 import { Redirect } from 'react-router-dom';
 
 /* -----------------    COMPONENT     ------------------ */
@@ -28,7 +28,8 @@ class Login extends React.Component {
     event.preventDefault();
     loginUser({name: this.state.userName})
       .then(() => {
-        this.setState({userName: ''});
+				this.setState({userName: ''});
+				this.props.getCart(this.props.user.id)
       })
       .catch(err => {
         console.log('error occurred ', err.response.data);
@@ -94,7 +95,11 @@ const mapDispatch = (dispatch) => {
 
     logoutUser: function(){
       return dispatch(removeCurrentUser());
-    }
+		},
+
+		getCart : function(id){
+			return dispatch(fetchCart(id))
+		}
   };
 };
 

@@ -7,6 +7,7 @@ import Product from './Product'
 import Cart from './Cart';
 import Login from './Login';
 import ProductHistory from './ProductHistory'
+import Signup from './Signup';
 import { verifyUser, fetchCart } from '../reducers';
 
 class Main extends Component {
@@ -26,6 +27,7 @@ class Main extends Component {
 	}
 
 	render(){
+		const { user } = this.props;
 		return (
 			<div className='container'>
 				<h1> HARQ Store </h1>
@@ -43,6 +45,14 @@ class Main extends Component {
 										<NavLink to="/history" activeClassName="active">Order History</NavLink>
 									</li>
 								}
+
+								{
+									!user.id ? (
+										<li>
+											<NavLink to="/signup" activeClassName="active">Signup</NavLink>
+										</li>
+									) : <span></span>
+								}
 							</ul>
 					</div>
 					<div className="row">
@@ -52,6 +62,7 @@ class Main extends Component {
 				<Route exact path='/products/:productId' component={Product} />
 				<Route path='/login' component={Login} />
 				<Route path='/history' component={ProductHistory} />
+				<Route path='/signup' component={Signup} />
 			</div>
 		)
 	}

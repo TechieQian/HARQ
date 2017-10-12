@@ -8,10 +8,12 @@ class Signup extends Component {
     constructor(){
         super();
         this.state = {
-            userName: ''
-        }
-        this.handleChange = this.handleChange.bind();
-        this.onLoginSubmit = this.onLoginSubmit.bind();
+            userName: '',
+            email: '',
+            password: ''
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.onLoginSubmit = this.onLoginSubmit.bind(this);
     }
 
     handleChange(event){
@@ -21,10 +23,18 @@ class Signup extends Component {
     }
 
     onLoginSubmit(){
-        const { addUser, user } = this.props;
-        addUser({name: this.state.userName})
+        const { signup, user } = this.props;
+        const { userName, email, password } = this.state;
+        signup({
+            name: userName,
+            email, password
+        })
             .then(() =>{
-                this.setState({userName: ''});
+                this.setState({
+                    userName: '',
+                    email: '',
+                    password: ''
+                });
             })
     }
 
@@ -32,7 +42,11 @@ class Signup extends Component {
         const { message, user } = this.props;
 
         if (user.id) {
-            return <Redirect to='/' />
+            // console.log("Got to redirect in signup")
+            // return <Redirect to='/' />
+            return (
+                <div className='alert alert-success'>Sign up successful</div>
+            )
         }
 
         return (
@@ -42,19 +56,45 @@ class Signup extends Component {
 
                 <div className="form-group">
                   <label>Name</label>
-                  {
-                    error.length > 0 ? <div className="form-group alert alert-danger">{error}</div> : <span></span>
-                  }
                   <input
                     name="userName"
-                    type="userName"
+                    type="name"
                     className="form-control"
                     value={this.state.userName}
                     onChange={this.handleChange}
                     required
                   />
+
                 </div>
-                <button type="submit" className="btn btn-block btn-primary">{message}</button>
+
+                 <div className="form-group">
+                  <label>Email</label>
+
+                  <input
+                    name="email"
+                    type="email"
+                    className="form-control"
+                    value={this.state.email}
+                    onChange={this.handleChange}
+                    required
+                  />
+
+                </div>
+
+                 <div className="form-group">
+                  <label>Password</label>
+
+                  <input
+                    name="password"
+                    type="password"
+                    className="form-control"
+                    value={this.state.password}
+                    onChange={this.handleChange}
+                    required
+                  />
+
+                </div>
+                <button type="submit" className="btn btn-block btn-success">{message}</button>
               </form>
             </div>
           </div>
@@ -74,7 +114,11 @@ const mapState = (state) => {
 }
 
 const mapDispatch = (dispatch) => {
-    return { addUser }
+    return {
+        signup: function(userInfo){
+            return dispatch(addUser(userInfo));
+        }
+    }
 }
 
 export default connect(mapState, mapDispatch)(Signup)

@@ -17,6 +17,7 @@ router.post('/', (req, res, next) => {
 });
 
 router.post('/signup', (req, res, next) => {
+    console.log("got request for signup")
     User.create(req.body)
         .then(user => {
             res.send(user);

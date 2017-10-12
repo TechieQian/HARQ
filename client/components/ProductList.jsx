@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchProducts} from '../store.js'
+import {fetchProducts, fetchCart} from '../store.js'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
 
@@ -12,9 +12,10 @@ class ProductList extends Component {
 	}
 
 	handleAddProduct (payload) {
-		axios.post(`api/products/${payload.productId}/lineitems`, {
-			userId : 1
-		})
+		axios.post(`api/products/${payload.productId}/orders/${this.props.cart.id}`)
+			.then(()=> {
+				this.props.getCart(this.props.user.id)
+			})
 	}
 
 	componentDidMount(){
@@ -22,11 +23,15 @@ class ProductList extends Component {
 	}
 
 	render(){
-		console.log(this.props.products.length)
+		const { user, products } = this.props;
+
 		return (
-			<div>
+			<div className='col-sm-8'>
 				{
-					this.props.products.map((product)=> {
+					user.id ? <h2>{`Hello ${user.name}!`}</h2> : null
+				}
+				{
+					products.map((product)=> {
 						return (
 							<div className='col-sm-4' key={product.id}>
 								<div className='panel panel-body'>
@@ -36,12 +41,10 @@ class ProductList extends Component {
 									}}> Product Details </Link><br />
 								<button className='btn btn-primary' onClick={(e)=>{
 									e.preventDefault();
-									this.handleAddProduct({
-										productId : product.id
-									})
+									this.handleAddProduct({	productId : product.id })
 									}
 								}>
-										Add to cart
+										Add To Cart
 									</button>
 								</div>
 							</div>
@@ -53,18 +56,19 @@ class ProductList extends Component {
 	}
 }
 
-function mapState({products}) {
-	console.log('PRODUCTS', products)
+function mapState({user,products, cart}) {
 	return {
-		products
+		user,
+		products,
+		cart
 	}
 }
 
 function mapDispatch(dispatch) {
 	return {
-		getProducts : ()=> { dispatch(fetchProducts())  }
+		getProducts : ()=> { dispatch(fetchProducts())  },
+		getCart : (id) => { dispatch(fetchCart(id)) }
 	}
-
 }
 
 export default connect(mapState, mapDispatch)(ProductList)

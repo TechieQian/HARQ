@@ -1,35 +1,35 @@
 import axios from 'axios';
 
 //Action Types
-const GET_LINEITEMS = 'GET_LINEITEMS';
+const GET_CART = 'GET_CART'
 
 //Action Creators
-export function getLineItems(lineItems) {
+export function getCart(cart) {
 	return {
-		type: GET_LINEITEMS,
-		lineItems
-	};
-};
+		type : GET_CART,
+		cart
+	}
+}
+
 
 //Thunk Creators
-export function fetchLineItems(userId, orderId) {
+export function fetchCart(userId) {
 	return function thunk(dispatch){
-		axios.get(`/api/lineitems/${userId}/${orderId}`)
-		.then(res => res.data)
-		.then(lineitems => {
-			const action = getLineItems(lineitems);
-			dispatch(action);
-		})
-	};
-};
+		axios.get(`/api/users/${userId}/cart`)
+			.then(cart=>cart.data)
+			.then(cart=> {
+				dispatch(getCart(cart))
+			})
+	}
+}
 
-const cartReducer = function(state = [], action) {
+//Cart Reducer
+const cartReducer = function(state = {}, action) {
 	switch(action.type) {
-		case GET_LINEITEMS:
-			return action.lineItems
+		case GET_CART :	return action.cart
 		default: return state
 	}
 };
 
 
-export default cartReducer;
+export default cartReducer

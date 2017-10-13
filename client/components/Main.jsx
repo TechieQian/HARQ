@@ -13,18 +13,18 @@ import { verifyUser, fetchCart } from '../reducers';
 class Main extends Component {
 
 	// componentDidMount is only needed for setting default user
-	componentDidMount() {
-		const { loginUser, getCart } = this.props;
-		console.log("*************************Settng Default User to Rav*****************************");
-		return loginUser({email: 'ravsworld@gmail.com', password: 'password'})
-		      .then(() => {
-					getCart(this.props.user.id);
-		      })
-		      .catch(err => {
-		        console.log('error occurred ', err.response.data);
-		        throw err;
-		      });
-	}
+	// componentDidMount() {
+	// 	const { loginUser, getCart } = this.props;
+	// 	console.log("*************************Settng Default User to Rav*****************************");
+	// 	return loginUser({email: 'ravsworld@gmail.com', password: 'password'})
+	// 	      .then(() => {
+	// 				getCart(this.props.user.id);
+	// 	      })
+	// 	      .catch(err => {
+	// 	        console.log('error occurred ', err.response.data);
+	// 	        throw err;
+	// 	      });
+	// }
 
 	render(){
 		const { user } = this.props;

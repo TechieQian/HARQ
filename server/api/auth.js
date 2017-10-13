@@ -24,4 +24,9 @@ router.post('/signup', (req, res, next) => {
         .catch(next);
 })
 
+router.post('/logout', (req, res, next) => {
+    delete req.session.user;
+    res.send('logged out');
+})
+
 module.exports = router;

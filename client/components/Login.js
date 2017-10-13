@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { verifyUser, removeCurrentUser, fetchCart, clearCart } from '../store';
+import { verifyUser, logout, fetchCart, clearCart } from '../store';
 import { Redirect } from 'react-router-dom';
 
 /* -----------------    COMPONENT     ------------------ */
@@ -111,8 +111,10 @@ const mapDispatch = (dispatch) => {
     },
 
     logoutUser: function(){
-      dispatch(removeCurrentUser());
-      dispatch(clearCart());
+      dispatch(logout())
+        .then(() => {
+          dispatch(clearCart());
+        });
 		},
 
 		getCart : function(id){

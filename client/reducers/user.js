@@ -49,6 +49,16 @@ export function addUser(userInfo){
 	};
 }
 
+export function logout(){
+	return function thunk(dispatch){
+		return axios.post('/api/auth/logout')
+					.then(() => {
+						dispatch(removeCurrentUser());
+					})
+					.catch( err => { throw err; });
+	}
+}
+
 // REDUCER
 export default function reducer (state = {}, action) {
 	switch (action.type) {

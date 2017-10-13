@@ -16,7 +16,7 @@ class Main extends Component {
 	componentDidMount() {
 		const { loginUser, getCart } = this.props;
 		console.log("*************************Settng Default User to Rav*****************************");
-		return loginUser({name: 'Rav'})
+		return loginUser({email: 'ravsworld@gmail.com', password: 'password'})
 		      .then(() => {
 					getCart(this.props.user.id);
 		      })

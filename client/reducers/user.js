@@ -38,12 +38,8 @@ export function addUser(userInfo){
 	return function thunk(dispatch) {
 		return axios.post('/api/auth/signup', userInfo)
 			.then(res => res.data)
-			.then(({email, password}) => {
-				// But calling verifyUser, I will now
-				// log in the signed up user properly, and allow
-				// api route on the server-side to set the user session
-				// to the signed in user.
-				return dispatch(verifyUser({email, password}));
+			.then((user) => {
+				dispatch(setCurrentUser(user));
 			})
 			.catch(err => { throw err; });
 	};

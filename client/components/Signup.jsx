@@ -10,10 +10,19 @@ class Signup extends Component {
         this.state = {
             userName: '',
             email: '',
-            password: ''
+            password: '',
+            user: ''
         };
         this.handleChange = this.handleChange.bind(this);
         this.onLoginSubmit = this.onLoginSubmit.bind(this);
+    }
+
+    componentDidMount(){
+        this.setState({ user: this.props.user});
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.user.id !== this.props.user.id) this.setState({user: nextProps.user})
     }
 
     handleChange(event){
@@ -40,6 +49,8 @@ class Signup extends Component {
 
     render(){
         const { message, user } = this.props;
+        console.log("sign up rendered")
+        console.log("user in signup is: ", user)
 
         if (user.id) {
             // console.log("Got to redirect in signup")
@@ -116,7 +127,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
     return {
         signup: function(userInfo){
-            return dispatch(addUser(userInfo));
+            dispatch(addUser(userInfo));
         }
     }
 }

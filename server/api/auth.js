@@ -5,8 +5,8 @@ router.post('/', (req, res, next) => {
 
     User.login(req.body)
         .then(user => {
-            req.session.user = user;
             delete user.dataValues.password;
+            req.session.user = user;
             // console.log(user);
             res.send(user);
         })
@@ -16,9 +16,11 @@ router.post('/', (req, res, next) => {
 });
 
 router.post('/signup', (req, res, next) => {
-    console.log("got request for signup")
     User.create(req.body)
         .then(user => {
+            console.log(user)
+            // delete user.dataValues.password;
+            req.session.user = user;
             res.send(user);
         })
         .catch(next);

@@ -9,7 +9,8 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: '',
+      email: '',
+      password: '',
       error: ''
     };
     this.onLoginSubmit = this.onLoginSubmit.bind(this);
@@ -17,19 +18,23 @@ class Login extends React.Component {
   }
 
   handleChange(event) {
-    let name = event.target.name;
     this.setState({
-      [name]: event.target.value
+      [event.target.name]: event.target.value
     });
   }
 
   onLoginSubmit(event) {
     const { message, loginUser } = this.props;
+    const { email, password } = this.state;
     event.preventDefault();
-    loginUser({name: this.state.userName})
+    loginUser({ email, password})
       .then(() => {
-				this.setState({userName: ''});
-				this.props.getCart(this.props.user.id)
+				this.setState({
+          email: '',
+          password: ''
+        });
+
+				this.props.getCart(this.props.user.id);
       })
       .catch(err => {
         this.setState({error: err.response.data});
@@ -57,19 +62,32 @@ class Login extends React.Component {
           <form onSubmit={this.onLoginSubmit}>
 
             <div className="form-group">
-              <label>Name</label>
+              <label>Email</label>
               {
                 error.length > 0 ? <div className="form-group alert alert-danger">{error}</div> : <span></span>
               }
               <input
-                name="userName"
-                type="userName"
+                name="email"
+                type="email"
                 className="form-control"
-                value={this.state.userName}
+                value={this.state.email}
                 onChange={this.handleChange}
                 required
               />
             </div>
+
+            <div className="form-group">
+              <label>Password</label>
+              <input
+                name="password"
+                type="password"
+                className="form-control"
+                value={this.state.password}
+                onChange={this.handleChange}
+                required
+              />
+            </div>
+
             <button type="submit" className="btn btn-block btn-primary">{message}</button>
           </form>
         </div>

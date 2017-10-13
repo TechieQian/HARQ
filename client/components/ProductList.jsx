@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import store, {fetchProducts, fetchUserLineItems} from '../store.js'
+import {fetchProducts, updateCart} from '../store.js'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
-import Cart from './Cart';
 
 class ProductList extends Component {
 
@@ -12,29 +11,42 @@ class ProductList extends Component {
 		this.handleAddProduct = this.handleAddProduct.bind(this)
 	}
 
-	handleAddProduct (payload) {
-
-		axios.post(`api/products/${payload.productId}/lineitems`, {
-			userId : payload.userId
-		})
-		.then(()=> store.dispatch(fetchUserLineItems(payload.userId)))
+	handleAddProduct (productId) {
+		if(!this.props.cart.id) {
+			axios.post('/api/orders', {
+				userId : this.props.user.id,
+				active : true
+			})
+				.then(order=> {
+					this.props.putCart({
+						userId : this.props.user.id,
+						cartId : order.data.id,
+						productId
+					})
+				})
+		}
+		else {
+			this.props.putCart({
+				userId : this.props.user.id,
+				cartId : this.props.cart.id,
+				productId
+			})
+		}
 	}
 
 	componentDidMount(){
 		this.props.getProducts()
-		if (this.props.user.id) {
-			store.dispatch(fetchUserLineItems(this.props.user.id))
-		}
 	}
 
 	render(){
 		const { user, products } = this.props;
 
 		return (
-			<div>
+			<div className='col-sm-8'>
 				{
 					user.id ? <h2>{`Hello ${user.name}!`}</h2> : null
 				}
+<<<<<<< HEAD
 					<div id='ProductList' style={{ float: "left", width: "70%"}}>
 					{
 						products.map((product)=> {
@@ -66,21 +78,46 @@ class ProductList extends Component {
 				<div>
 					<Cart />
 				</div>
+=======
+				{
+					products.map((product)=> {
+						return (
+							<div className='col-sm-4' key={product.id}>
+								<div className='panel panel-body'>
+									{product.name}
+									<Link to={{
+										pathname : `/products/${product.id}`
+									}}> Product Details </Link><br />
+								<button className='btn btn-primary' onClick={(e)=>{
+									e.preventDefault();
+									this.handleAddProduct(product.id)
+									}
+								}>
+										Add To Cart
+									</button>
+								</div>
+							</div>
+						)
+					})
+				}
+>>>>>>> 5b513c06daaea6d6de6c4f78340087949de326bc
 			</div>
 		)
 	}
 }
 
-function mapState({products, user}) {
+function mapState({user,products, cart}) {
 	return {
+		user,
 		products,
-		user
+		cart
 	}
 }
 
 function mapDispatch(dispatch) {
 	return {
-		getProducts : ()=> { dispatch(fetchProducts())  }
+		getProducts : ()=> { dispatch(fetchProducts()) },
+		putCart : (payload) => { dispatch(updateCart(payload)) }
 	}
 }
 

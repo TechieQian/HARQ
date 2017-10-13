@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import ProductForm from './ProductForm'
+import axios from 'axios'
 
 class Product extends Component {
 
@@ -12,18 +14,23 @@ class Product extends Component {
 
 	componentDidMount() {
 		const productId = +this.props.match.params.productId
-		this.props.products.find((product)=>{
-			this.setState({product})
-		})
+		axios.get(`/api/products/${productId}`)
+			.then(product=> product.data)
+			.then((product)=> {
+				this.setState({product})
+			})
 	}
 
 	render(){
-		console.log(this.state.product)
 		return (
 			<h1> {this.state.product.name} </h1>
 			<button
 				onClick={() => {  }}
 				style={{ "btn btn-primary" }}>Add To Cart</button>
+			<div>
+				<h3> {this.state.product.name} </h3>
+				{this.state.product.name && <ProductForm product={this.state.product}/>}
+			</div>
 		)
 	}
 }

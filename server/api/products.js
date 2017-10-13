@@ -21,27 +21,28 @@ router.get('/:id', (req, res, next) => {
     .catch(next);
 });
 
-// add product to lineitem
-router.post('/:id/lineitems', (req,res,next)=> {
+// add product to cart
+router.post('/:id/lineItems', (req,res,next)=> {
 	Order.addProductToCart({
-		userId : req.body.userId,
-		productId : req.params.id
+		productId : req.params.id,
+		cartId : req.body.cartId,
+		userId : req.body.userId
 	})
-		.then(()=> {
-			res.send()
-			console.log('posted product lineitem')
+		.then((cart)=> {
+			res.send(cart)
 		})
-		.catch((ex)=> {
-			console.log(ex)
-		})
+		.catch(next)
 })
 
 router.delete('/', (req, res, next) => {
 });
 
-router.put('/', (req, res, next) => {
+router.put('/:id', (req, res, next) => {
+	Product.update(req.body, { where : { id : req.params.id }, returning : true, plain : true })
+		.then((result)=> {
+			res.send(result[1].dataValues)
+		})
 });
 
 router.post('/', (req, res, next) => {
-
 });

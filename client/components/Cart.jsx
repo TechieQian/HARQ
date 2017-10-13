@@ -1,15 +1,30 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+<<<<<<< HEAD
 import {fetchProducts, fetchLineItems, deleteLineItem} from '../store.js'
 import {Link} from 'react-router-dom'
+=======
+import {fetchCart, clearCart} from '../store.js'
+import Order from './Order'
+>>>>>>> 5b513c06daaea6d6de6c4f78340087949de326bc
 import axios from 'axios'
 
 class Cart extends Component {
+	constructor(){
+		super()
+		this.handleSubmit = this.handleSubmit.bind(this)
+	}
 
-	render( ){
-		const { cart } = this.props;
-
+	handleSubmit(e) {
+		axios.put(`/api/orders/${this.props.cart.id}`, {active : false})
+			.then(()=> {
+				this.props.emptyCart()
+			})
+	}
+	render() {
+		const lineitems = this.props.cart.lineitems
 		return (
+<<<<<<< HEAD
 			<div className="container" style={{ float: "right", width: "30%" }}>
 				<h1>My Cart </h1>
 					{ cart &&
@@ -33,14 +48,32 @@ class Cart extends Component {
 							)
 
 						})
+=======
+			<div className='col-sm-4'>
+				<h1>My Cart </h1>
+					{ 
+						lineitems && <Order lineitems={lineitems} />
 					}
-      </div>
+
+					{
+						lineitems &&
+						<button className='btn btn-primary' onClick={this.handleSubmit}>
+							Submit Order
+						</button>
+>>>>>>> 5b513c06daaea6d6de6c4f78340087949de326bc
+					}
+			</div>
+
 		)
 	}
 }
 
+<<<<<<< HEAD
 function mapState(state) {
 	const cart = state.lineItems;
+=======
+function mapState({ cart }) {
+>>>>>>> 5b513c06daaea6d6de6c4f78340087949de326bc
 	return {
 		cart
 	}
@@ -48,6 +81,7 @@ function mapState(state) {
 
 function mapDispatch(dispatch) {
 	return {
+<<<<<<< HEAD
 		removeLineItem: (ev) => {
 			ev.preventDefault();
 			dispatch(deleteLineItem(ev.target.value))
@@ -57,3 +91,10 @@ function mapDispatch(dispatch) {
 
 
 export default connect(mapState, mapDispatch)(Cart)
+=======
+		emptyCart : ()=> { dispatch(clearCart()) }
+	}
+}
+
+export default connect(mapState,mapDispatch)(Cart)
+>>>>>>> 5b513c06daaea6d6de6c4f78340087949de326bc

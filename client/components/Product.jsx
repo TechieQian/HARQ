@@ -21,6 +21,9 @@ class Product extends Component {
 		console.log(this.state.product)
 		return (
 			<h1> {this.state.product.name} </h1>
+			<button
+				onClick={() => {  }}
+				style={{ "btn btn-primary" }}>Add To Cart</button>
 		)
 	}
 }

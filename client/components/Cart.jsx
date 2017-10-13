@@ -16,9 +16,12 @@ class Cart extends Component {
 						cart.map(item => {
 							return (
 								<div className="ui blue segment" key={item.product.id} style={{ width: "100%" }} >
-									<h3><Link to={`/product/${item.product.id}`} style={{ color: "black"}}>
-										{item.product.name}
-									</Link></h3>
+									<Link to={`/product/${item.product.id}`} style={{ color: "black"}}>
+										<h3>
+											{item.product.name}
+										</h3>
+										<img src='https://semantic-ui.com/images/avatar/large/elliot.jpg' className="ui mini rounded image" />
+									</Link>
 									<b>Qty: {item.qty}</b>
 									<button
 										onClick={ this.props.removeLineItem }

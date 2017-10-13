@@ -7,7 +7,7 @@ router.post('/', (req, res, next) => {
         .then(user => {
             // req.session.userId = user.id;
             // user.password = null;
-            delete user.dataValues.password;
+            // delete user.dataValues.password;
             // console.log(user);
             res.send(user);
         })
@@ -15,5 +15,14 @@ router.post('/', (req, res, next) => {
             res.status(401).send(err);
         });
 });
+
+router.post('/signup', (req, res, next) => {
+    console.log("got request for signup")
+    User.create(req.body)
+        .then(user => {
+            res.send(user);
+        })
+        .catch(next);
+})
 
 module.exports = router;

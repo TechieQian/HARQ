@@ -34,6 +34,16 @@ export function verifyUser(credential){
 	};
 }
 
+export function addUser(userInfo){
+	return function thunk(dispatch) {
+		return axios.post('/api/auth/signup', userInfo)
+			.then(res => res.data)
+			.then(user => {
+				dispatch(setCurrentUser(user));
+			})
+			.catch(err => { throw err; });
+	};
+}
 
 // REDUCER
 export default function reducer (state = {}, action) {

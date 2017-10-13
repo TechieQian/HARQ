@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { verifyUser, removeCurrentUser, fetchCart } from '../reducers';
+import { verifyUser, removeCurrentUser, fetchCart, clearCart } from '../store';
 import { Redirect } from 'react-router-dom';
 
 /* -----------------    COMPONENT     ------------------ */
@@ -32,7 +32,6 @@ class Login extends React.Component {
 				this.props.getCart(this.props.user.id)
       })
       .catch(err => {
-        console.log('error occurred ', err.response.data);
         this.setState({error: err.response.data});
       });
 
@@ -94,7 +93,8 @@ const mapDispatch = (dispatch) => {
     },
 
     logoutUser: function(){
-      return dispatch(removeCurrentUser());
+      dispatch(removeCurrentUser());
+      dispatch(clearCart());
 		},
 
 		getCart : function(id){

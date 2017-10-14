@@ -18,8 +18,7 @@ router.post('/', (req, res, next) => {
 router.post('/signup', (req, res, next) => {
     User.create(req.body)
         .then(user => {
-            console.log(user)
-            // delete user.dataValues.password;
+            delete user.dataValues.password;
             req.session.user = user;
             res.send(user);
         })
@@ -29,6 +28,11 @@ router.post('/signup', (req, res, next) => {
 router.post('/logout', (req, res, next) => {
     delete req.session.user;
     res.send('logged out');
+})
+
+router.get('/me', (req, res, next) => {
+    if(req.session.user) return res.send(req.session.user);
+    res.send({});
 })
 
 module.exports = router;

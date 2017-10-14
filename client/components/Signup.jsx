@@ -10,19 +10,10 @@ class Signup extends Component {
         this.state = {
             userName: '',
             email: '',
-            password: '',
-            user: ''
+            password: ''
         };
         this.handleChange = this.handleChange.bind(this);
         this.onLoginSubmit = this.onLoginSubmit.bind(this);
-    }
-
-    componentDidMount(){
-        this.setState({ user: this.props.user});
-    }
-
-    componentWillReceiveProps(nextProps){
-        if(nextProps.user.id !== this.props.user.id) this.setState({user: nextProps.user})
     }
 
     handleChange(event){
@@ -31,9 +22,10 @@ class Signup extends Component {
         })
     }
 
-    onLoginSubmit(){
+    onLoginSubmit(event){
         const { signup, user } = this.props;
         const { userName, email, password } = this.state;
+        event.preventDefault();
         signup({
             name: userName,
             email, password
@@ -127,7 +119,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
     return {
         signup: function(userInfo){
-            dispatch(addUser(userInfo));
+            return dispatch(addUser(userInfo));
         }
     }
 }

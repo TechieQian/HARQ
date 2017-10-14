@@ -8,23 +8,22 @@ import Cart from './Cart';
 import Login from './Login';
 import ProductHistory from './ProductHistory'
 import Signup from './Signup';
-import { verifyUser, fetchCart } from '../reducers';
+import { verifyUser, loadUser, fetchCart } from '../reducers';
 
 class Main extends Component {
 
-	// componentDidMount is only needed for setting default user
-	// componentDidMount() {
-	// 	const { loginUser, getCart } = this.props;
-	// 	console.log("*************************Settng Default User to Rav*****************************");
-	// 	return loginUser({email: 'ravsworld@gmail.com', password: 'password'})
-	// 	      .then(() => {
-	// 				getCart(this.props.user.id);
-	// 	      })
-	// 	      .catch(err => {
-	// 	        console.log('error occurred ', err.response.data);
-	// 	        throw err;
-	// 	      });
-	// }
+	componentDidMount() {
+		const { loginUser, loadSessionUser, getCart } = this.props;
+		console.log("*************************Settng Default User to Rav*****************************");
+		return loadSessionUser()
+		      .then(() => {
+					getCart(this.props.user.id);
+		      })
+		      .catch(err => {
+		        console.log('error occurred ', err.response.data);
+		        throw err;
+		      });
+	}
 
 	render(){
 		const { user } = this.props;
@@ -85,7 +84,10 @@ const mapDispatch = (dispatch) => {
       return dispatch(verifyUser(credential));
     },
 	getCart : function(id){
-		return dispatch(fetchCart(id))
+		return dispatch(fetchCart(id));
+	},
+	loadSessionUser: function(){
+		return dispatch(loadUser());
 	}
   };
 };

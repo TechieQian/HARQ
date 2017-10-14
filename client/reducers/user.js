@@ -55,6 +55,16 @@ export function logout(){
 	}
 }
 
+export function loadUser(){
+	return function thunk(dispatch){
+		return axios.get('/api/auth/me')
+				.then(res => res.data)
+				.then(user => {
+					if (user) dispatch(setCurrentUser(user));
+				})
+	}
+}
+
 // REDUCER
 export default function reducer (state = {}, action) {
 	switch (action.type) {

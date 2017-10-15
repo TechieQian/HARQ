@@ -7,6 +7,7 @@ import axios from 'axios'
 class Cart extends Component {
 	constructor(){
 		super()
+
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
@@ -16,16 +17,21 @@ class Cart extends Component {
 		const cart = this.props.cart.lineitems;
 		const orderId = this.props.cart.id
 
-		console.log('CART', this.props.cart)
 		axios.put(`/api/orders/${orderId}`, {active : false})
 			.then(()=> {
 				this.props.emptyCart()
 			})
 			.then(()=> {
-				axios.post(`/submitted`, { name, email, cart, orderId })
-				.then(()=>console.log('sent email!'));
-				}
-			)
+				if (email) {
+					axios.post(`/submitted`, { name, email, cart, orderId })
+					.then(()=>{
+						res.sendStatus(200)
+					})
+				};
+			})
+			.then(()=>{
+				alert('Order Submitted')
+			})
 	}
 
 	render() {
@@ -36,7 +42,6 @@ class Cart extends Component {
 					{
 						lineitems && <Order lineitems={lineitems} />
 					}
-
 					{
 						lineitems &&
 						<button className='btn btn-primary' onClick={this.handleSubmit}>

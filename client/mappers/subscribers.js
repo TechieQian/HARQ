@@ -1,8 +1,8 @@
 import * as store from '../store.js'
 
 //Cart component
-export function cartStateMap ({cart}) {
-	return { cart }
+export function cartStateMap ({cart, user}) {
+	return { cart, user }
 }
 
 //Product mappers
@@ -23,4 +23,3 @@ export function allStateMap({user, products, cart}) {
 		cart
 	}
 }
-

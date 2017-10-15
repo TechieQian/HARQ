@@ -27,7 +27,7 @@ class Cart extends Component {
 					{ lineitems &&
 						lineitems.map(item => {
 							return (
-								<div className="ui blue segment" key={item.product.id} style={{ width: "100%" }} >
+								<div key={item.product.id} style={{ width: "100%" }} >
 									<Link to={`/product/${item.product.id}`} style={{ color: "black"}}>
 										<h3>
 											{item.product.name}
@@ -35,8 +35,8 @@ class Cart extends Component {
 									</Link>
 									<b>Qty: {item.qty}</b>
 									<button
+										className="ui primary button"
 										onClick={ this.props.removeLineItem }
-										className="ui red button"
 										value={ item.id }
 										style={{ marginLeft: "52%" }}
 										>Remove</button>

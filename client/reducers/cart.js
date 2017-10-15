@@ -33,6 +33,7 @@ export function fetchCart(userId) {
 		axios.get(`/api/users/${userId}/cart`)
 			.then(cart=>cart.data)
 			.then(cart=> {
+				console.log('CART: ', cart);
 				cart.id && dispatch(getCart(cart))
 			})
 	}
@@ -69,9 +70,10 @@ const cartReducer = function(state = {}, action) {
 		case GET_CART :	return action.cart
 		case CLEAR_CART : return {}
 		case REMOVE_LINEITEM:
- 			return state.lineitems.filter((lineItem) => {
+ 			var lineitems = state.lineitems.filter((lineItem) => {
  				return lineItem.id !== +action.lineItemId
  			})
+			return Object.assign({}, state, { lineitems })
 		default: return state
 	}
 };

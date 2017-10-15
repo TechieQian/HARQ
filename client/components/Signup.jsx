@@ -22,9 +22,10 @@ class Signup extends Component {
         })
     }
 
-    onLoginSubmit(){
+    onLoginSubmit(event){
         const { signup, user } = this.props;
         const { userName, email, password } = this.state;
+        event.preventDefault();
         signup({
             name: userName,
             email, password
@@ -40,6 +41,8 @@ class Signup extends Component {
 
     render(){
         const { message, user } = this.props;
+        console.log("sign up rendered")
+        console.log("user in signup is: ", user)
 
         if (user.id) {
             // console.log("Got to redirect in signup")

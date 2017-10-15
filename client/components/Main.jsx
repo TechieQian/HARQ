@@ -8,15 +8,14 @@ import Cart from './Cart';
 import Login from './Login';
 import ProductHistory from './ProductHistory'
 import Signup from './Signup';
-import { verifyUser, fetchCart } from '../reducers';
+import { verifyUser, loadUser, fetchCart } from '../reducers';
 
 class Main extends Component {
 
-	// componentDidMount is only needed for setting default user
 	componentDidMount() {
-		const { loginUser, getCart } = this.props;
+		const { loginUser, loadSessionUser, getCart } = this.props;
 		console.log("*************************Settng Default User to Rav*****************************");
-		return loginUser({email: 'ravsworld@gmail.com', password: 'password'})
+		return loadSessionUser()
 		      .then(() => {
 					getCart(this.props.user.id);
 		      })
@@ -85,7 +84,10 @@ const mapDispatch = (dispatch) => {
       return dispatch(verifyUser(credential));
     },
 	getCart : function(id){
-		return dispatch(fetchCart(id))
+		return dispatch(fetchCart(id));
+	},
+	loadSessionUser: function(){
+		return dispatch(loadUser());
 	}
   };
 };

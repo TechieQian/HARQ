@@ -5,6 +5,8 @@ module.exports = router;
 
 router.delete('/:lineItemId', (req, res, next) => {
   Order.deleteLineItem(req.params.lineItemId)
-       .then(res.redirect('/'))
+       .then(lineItemId => {
+         res.json(lineItemId)
+       })
        .catch(next)
 });

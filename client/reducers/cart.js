@@ -3,6 +3,7 @@ import axios from 'axios';
 //Action Types
 const GET_CART = 'GET_CART'
 const CLEAR_CART = 'CLEAR_CART'
+const REMOVE_LINEITEM = 'REMOVE_LINEITEM';
 
 //Action Creators
 export function getCart(cart) {
@@ -17,6 +18,14 @@ export function clearCart() {
 		type : CLEAR_CART
 	}
 }
+
+
+export function removeLineItem(lineItemId) {
+ 	return {
+ 		type: REMOVE_LINEITEM,
+ 		lineItemId
+ 	};
+ };
 
 //Thunk Creators
 export function fetchCart(userId) {
@@ -43,11 +52,26 @@ export function updateCart(payload) {
 	}
 }
 
+export function deleteLineItem(lineItemId) {
+ 	return function thunk(dispatch){
+ 		axios.delete(`/api/lineitems/${lineItemId}`)
+ 			.then(res => res.data)
+ 			.then(()=>{
+ 				const action = removeLineItem(lineItemId);
+ 				dispatch(action);
+ 			})
+ 	}
+ }
+
 //Cart Reducer
 const cartReducer = function(state = {}, action) {
 	switch(action.type) {
 		case GET_CART :	return action.cart
 		case CLEAR_CART : return {}
+		case REMOVE_LINEITEM:
+ 			return state.lineitems.filter((lineItem) => {
+ 				return lineItem.id !== +action.lineItemId
+ 			})
 		default: return state
 	}
 };

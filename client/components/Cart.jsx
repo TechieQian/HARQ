@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchCart, clearCart} from '../store.js'
+import {deleteLineItem} from '../store.js'
+import {Link} from 'react-router-dom'
 import Order from './Order'
 import axios from 'axios'
 
@@ -17,19 +19,31 @@ class Cart extends Component {
 			})
 	}
 	render() {
-		const lineitems = this.props.cart.lineitems
+		const { lineitems } = this.props.cart
+		console.log(lineitems);
 		return (
-			<div className='col-sm-4'>
+			<div className="container" style={{ float: "right", width: "30%" }}>
 				<h1>My Cart </h1>
-					{ 
-						lineitems && <Order lineitems={lineitems} />
-					}
+					{ lineitems &&
+						lineitems.map(item => {
+							return (
+								<div className="ui blue segment" key={item.product.id} style={{ width: "100%" }} >
+									<Link to={`/product/${item.product.id}`} style={{ color: "black"}}>
+										<h3>
+											{item.product.name}
+										</h3>
+									</Link>
+									<b>Qty: {item.qty}</b>
+									<button
+										onClick={ this.props.removeLineItem }
+										className="ui red button"
+										value={ item.id }
+										style={{ marginLeft: "52%" }}
+										>Remove</button>
+								</div>
+							)
 
-					{
-						lineitems &&
-						<button className='btn btn-primary' onClick={this.handleSubmit}>
-							Submit Order
-						</button>
+						})
 					}
 			</div>
 
@@ -45,7 +59,11 @@ function mapState({ cart }) {
 
 function mapDispatch(dispatch) {
 	return {
-		emptyCart : ()=> { dispatch(clearCart()) }
+		emptyCart : ()=> { dispatch(clearCart()) },
+		removeLineItem: (ev) => {
+			ev.preventDefault();
+			dispatch(deleteLineItem(ev.target.value))
+	 	}
 	}
 }
 

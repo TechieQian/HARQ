@@ -1,19 +1,24 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {updateProduct} from '../store.js'
+import {productsDispatchMap, productsStateMap} from '../mappers'
 
 class ProductForm extends Component {
 
 	constructor() {
 		super()
-		this.state = {id : 0, name : '', price : 0}
+		this.state = {id : 0, name : '', price : 0, description : ''}
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
-	componentDidMount() {
-		const { name, price, id } = this.props.product
-		this.setState({name, price, id})
+	componentWillReceiveProps(props) {
+		if (!props.product.id) {
+			this.setState({id : 0, name : '', price : 0, description : ''})
+		}
+		else if (props.product.id != this.props.product.id) {
+			const { name, price, id, description } = props.product
+			this.setState({name, price, id, description})
+		}
 	}
 
 	handleChange(e) {
@@ -22,62 +27,64 @@ class ProductForm extends Component {
 
   handleSubmit(event) {
 		event.preventDefault()
-    const newProduct = Object.assign(this.props.product, this.state)
-    this.props.putProduct(newProduct)
+		const {name, price, description} = this.state
+		const existing = this.props.product.id ? this.props.product : {}
+		const newProduct = Object.assign(existing, {name, price, description})
+		if (existing.id) {
+			this.props.putProduct(newProduct)
+		}
+		else {
+			this.props.postProduct(newProduct)
+		}
   }
 
 	render(){
 		return (
-      <div className='col-sm-4'>
-        <div className='panel panel-primary'>
-          <div className='panel-heading'>
-            Edit Product 
-          </div>
-          <div className='panel-body'>
-            <form onSubmit={this.handleSubmit}>
-              <div className='form-group'>
-                <label>Name</label>
-                <input 
-                  name='name' 
-                  className='form-control' 
-                  onChange={this.handleChange}
-                  value={this.state.name}
-                />
-              </div>          
-              <div className='form-group'>
-                <label>Price</label>
-								<input
-									name='price'
-									type='number'
-                  className='form-control'
-                  value={this.state.price} 
-                  onChange={this.handleChange}
-                />
-              </div>
-              <div className='form-group'>
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-block"
-                >Save</button>
-              </div>          
-            </form>
-          </div>
-        </div>
-      </div>
+			<div className='panel panel-primary'>
+				<div className='panel-heading'>
+					{this.props.product.id ? 'Edit Product' : 'New Product'}
+				</div>
+				<div className='panel-body'>
+					<form onSubmit={this.handleSubmit}>
+						<div className='form-group'>
+							<label>Name</label>
+							<input 
+								name='name' 
+								className='form-control' 
+								onChange={this.handleChange}
+								value={this.state.name}
+							/>
+						</div>          
+						<div className='form-group'>
+							<label>Price</label>
+							<input
+								name='price'
+								type='number'
+								className='form-control'
+								value={this.state.price} 
+								onChange={this.handleChange}
+							/>
+						</div>
+						<div className='form-group'>
+							<label>Description</label>
+							<textarea
+								name='description'
+								className='form-control'
+								value={this.state.description} 
+								onChange={this.handleChange}
+							/>
+						</div>
+						<div className='form-group'>
+							<button
+								type="submit"
+								className="btn btn-primary btn-block"
+							>Save</button>
+						</div>          
+					</form>
+				</div>
+			</div>
 		)
 	}
 }
 
-function mapState({products}) {
-	return {
-		products
-	}
-}
-
-function mapDispatch(dispatch) {
-	return {
-		putProduct : (product)=> { dispatch(updateProduct(product)) }
-	}
-}
-
-export default connect(mapState,mapDispatch)(ProductForm)
+export default connect(productsStateMap,productsDispatchMap)(ProductForm)

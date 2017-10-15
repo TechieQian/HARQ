@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchCart, clearCart} from '../store.js'
+import {cartStateMap, cartDispatchMap} from '../mappers'
 import Order from './Order'
 import axios from 'axios'
 
@@ -37,16 +37,4 @@ class Cart extends Component {
 	}
 }
 
-function mapState({ cart }) {
-	return {
-		cart
-	}
-}
-
-function mapDispatch(dispatch) {
-	return {
-		emptyCart : ()=> { dispatch(clearCart()) }
-	}
-}
-
-export default connect(mapState,mapDispatch)(Cart)
+export default connect(cartStateMap,cartDispatchMap)(Cart)

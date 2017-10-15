@@ -32,7 +32,7 @@ class Cart extends Component {
 					<button className='btn btn-primary' onClick={this.handleSubmit} style={{marginTop: "2%"}}>
 						Submit Order
 					</button>
-				}
+				} 
 			</div>
 
 		)

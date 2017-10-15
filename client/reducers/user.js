@@ -38,11 +38,31 @@ export function addUser(userInfo){
 	return function thunk(dispatch) {
 		return axios.post('/api/auth/signup', userInfo)
 			.then(res => res.data)
-			.then(user => {
+			.then((user) => {
 				dispatch(setCurrentUser(user));
 			})
 			.catch(err => { throw err; });
 	};
+}
+
+export function logout(){
+	return function thunk(dispatch){
+		return axios.post('/api/auth/logout')
+					.then(() => {
+						dispatch(removeCurrentUser());
+					})
+					.catch( err => { throw err; });
+	}
+}
+
+export function loadUser(){
+	return function thunk(dispatch){
+		return axios.get('/api/auth/me')
+				.then(res => res.data)
+				.then(user => {
+					if (user) dispatch(setCurrentUser(user));
+				})
+	}
 }
 
 // REDUCER

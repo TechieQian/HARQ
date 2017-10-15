@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {deleteLineItem} from '../store.js'
+import {Link} from 'react-router-dom'
 import {cartStateMap, cartDispatchMap} from '../mappers'
 import Order from './Order'
 import axios from 'axios'
@@ -35,19 +37,20 @@ class Cart extends Component {
 	}
 
 	render() {
-		const lineitems = this.props.cart.lineitems
+		const { lineitems, active } = this.props.cart;
+		const { removeLineItem } = this.props;
 		return (
-			<div className='col-sm-4'>
+			<div className="ui segment" style={{ float: "right", width: "30%" }}>
 				<h1>My Cart </h1>
-					{
-						lineitems && <Order lineitems={lineitems} />
-					}
-					{
-						lineitems &&
-						<button className='btn btn-primary' onClick={this.handleSubmit}>
-							Submit Order
-						</button>
-					}
+          {
+            lineitems && <Order active={active} lineitems={lineitems} removeLineItem={removeLineItem} />
+          }
+          {
+            lineitems &&
+            <button className='btn btn-primary' onClick={this.handleSubmit} style={{marginTop: "2%"}}>
+              Submit Order
+            </button>
+          }
 			</div>
 
 		)

@@ -40,12 +40,12 @@ class Cart extends Component {
 		const { cart, removeLineItem, putCart } = this.props;
 		const { lineitems } = cart;
 		return (
-			<div className="ui segment" style={{ float: "right", width: "30%" }}>
+			<div className="ui segment cartObject">
 				<h1>My Cart </h1>
           {
             lineitems && <Order cart={cart} removeLineItem={removeLineItem} putCart={putCart} />
           }
-					<button disabled={!lineitems || !lineitems.length} className='btn btn-primary' onClick={this.handleSubmit} style={{marginTop: "2%"}}>
+					<button disabled={!lineitems || !lineitems.length} className='btn btn-primary submitButton' onClick={this.handleSubmit}>
 						Submit Order
 					</button>
 			</div>

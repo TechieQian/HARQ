@@ -11,8 +11,8 @@ function Order(props) {
 			{ lineitems &&
 				lineitems.map(item => {
 					return (
-						<div key={item.product.id} className="ui blue segment" style={{ width: "100%" }} >
-							<h4 className="ui image header" style={{display:"inline", width:"70%"}}>
+						<div key={item.product.id} className="ui blue segment cartLineItem" >
+							<h4 className="ui image header" style={{display:"inline"}} >
 			          <img src="https://semantic-ui.com/images/avatar/large/joe.jpg" style={{ width: "15%" }} className="ui mini rounded image" />
 			          <div className="content">
 									<Link to={`/product/${item.product.id}`} style={{ color: "black"}}>
@@ -40,10 +40,10 @@ function Order(props) {
 															userId,
 															cartId : item.orderId,
 															productId: item.productId,
-															action: 'decrement'
+															option: 'decrement'
 														})
 													}></i>
-										</div>
+											</div>
 									}
 			        	</div>
 			      </h4>

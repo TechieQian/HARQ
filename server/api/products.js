@@ -24,7 +24,7 @@ router.post('/:id/lineItems', (req,res,next)=> {
 		productId : req.params.id,
 		cartId : req.body.cartId,
 		userId : req.body.userId,
-    action: req.body.action
+    option: req.body.option
 	})
 		.then((cart)=> {
 			res.send(cart)

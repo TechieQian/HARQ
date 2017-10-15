@@ -13,8 +13,8 @@ const LineItem = db.define('lineitem', {
   }
 })
 
-LineItem.prototype.increment = function(action) {
-  action==='decrement' ? this.qty-- : this.qty++
+LineItem.prototype.modifyQty = function(option) {
+  option==='decrement' ? this.qty-- : this.qty++
   return this.qty
 }
 

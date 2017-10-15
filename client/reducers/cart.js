@@ -33,19 +33,18 @@ export function fetchCart(userId) {
 		axios.get(`/api/users/${userId}/cart`)
 			.then(cart=>cart.data)
 			.then(cart=> {
-				console.log('CART: ', cart);
 				cart.id && dispatch(getCart(cart))
 			})
 	}
 }
 
 export function updateCart(payload) {
-	const {productId, userId, cartId, action} = payload
+	const {productId, userId, cartId, option} = payload
 	return function thunk(dispatch) {
 		axios.post(`api/products/${productId}/lineItems`,{
 			userId,
 			cartId,
-			action
+			option
 		})
 			.then(cart=>cart.data)
 			.then(cart=> {

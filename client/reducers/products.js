@@ -3,6 +3,7 @@ import axios from 'axios'
 //Actions Types
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const PUT_PRODUCT = 'PUT_PRODUCT'
+const POST_PRODUCT = 'POST_PRODUCT'
 
 //Action Creators
 const getProducts = (products) => ({
@@ -12,6 +13,11 @@ const getProducts = (products) => ({
 
 const putProduct = product=> ({
 	type : PUT_PRODUCT,
+	product : product
+})
+
+const postProduct = product=> ({
+	type : POST_PRODUCT,
 	product : product
 })
 
@@ -34,6 +40,15 @@ export function updateProduct(product) {
 	}
 }
 
+export function createProduct(product) {
+	return function thunk(dispatch) {
+		axios.post(`/api/products`, product)
+			.then((product)=> {
+				dispatch(postProduct(product.data))
+			})
+	}
+}
+
 //Action Reducer
 const productReducer = function(state=[], action) {
 	switch(action.type) {
@@ -46,8 +61,9 @@ const productReducer = function(state=[], action) {
 					product = Object.assign(product, action.product)
 				}
 			})
-			console.log('newstate', newState)
 			return newState
+		case POST_PRODUCT : 
+			return [...state, action.product]
 		default: return state
 	}
 }

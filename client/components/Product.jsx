@@ -25,7 +25,8 @@ class Product extends Component {
 		return (
 			<div> 
 				<h3> {this.state.product.name} </h3>
-				{this.state.product.name && <ProductForm product={this.state.product}/>}
+				<br />
+				<p> {this.state.product.description} </p>
 			</div> 
 		)
 	}

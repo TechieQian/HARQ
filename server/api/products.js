@@ -4,12 +4,9 @@ const Order = require('../db/Order');
 
 module.exports = router;
 
-// routes don't currently add new products
-// or delete current products in db
-
 // gets all products
 router.get('/', (req, res, next) => {
-  Product.findAll()
+  Product.findAll({order : ['id']})
     .then(products => res.send(products))
     .catch(next);
 });
@@ -34,15 +31,28 @@ router.post('/:id/lineItems', (req,res,next)=> {
 		.catch(next)
 })
 
-router.delete('/', (req, res, next) => {
+// delete product
+router.delete('/:id', (req, res, next) => {
+	Product.destroy({ where : { id : req.params.id } })
+		.then(()=> {
+			res.sendStatus(200)
+		})
+		.catch(next)
 });
 
+// edit product
 router.put('/:id', (req, res, next) => {
 	Product.update(req.body, { where : { id : req.params.id }, returning : true, plain : true })
 		.then((result)=> {
 			res.send(result[1].dataValues)
 		})
+		.catch(next)
 });
 
+// create product
 router.post('/', (req, res, next) => {
+	console.log('api post', req.body)
+	Product.create(req.body)
+		.then(product=> res.send(product))
+		.catch(next)
 });

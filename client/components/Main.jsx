@@ -6,6 +6,7 @@ import ProductList from './ProductList'
 import Product from './Product'
 import Cart from './Cart';
 import Login from './Login';
+import Admin from './Admin'
 import ProductHistory from './ProductHistory'
 import Signup from './Signup';
 import { verifyUser, loadUser, fetchCart } from '../reducers';
@@ -45,6 +46,10 @@ class Main extends Component {
 									</li>
 								}
 
+									<li>
+										<NavLink to="/admin" activeClassName="active">Admin</NavLink>
+									</li>
+
 								{
 									!user.id ? (
 										<li>
@@ -62,6 +67,7 @@ class Main extends Component {
 				<Route path='/login' component={Login} />
 				<Route path='/history' component={ProductHistory} />
 				<Route path='/signup' component={Signup} />
+				<Route path='/admin' component={Admin} />
 			</div>
 		)
 	}

@@ -3,7 +3,8 @@ import * as store from '../store.js'
 export function cartDispatchMap (dispatch) {
 	return {
 		emptyCart : ()=> { dispatch(store.clearCart()) },
-		putCart : (payload) => { dispatch(store.updateCart(payload)) }
+		putCart : (payload) => { dispatch(store.updateCart(payload)) },
+		removeLineItem : (ev) => { dispatch(store.deleteLineItem(ev.target.value)) }
 	}
 }
 

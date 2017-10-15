@@ -4,7 +4,8 @@ import axios from 'axios'
 import {Link} from 'react-router-dom'
 
 function Order(props) {
-	const { lineitems, active, removeLineItem } = props
+	const { removeLineItem, putCart } = props
+	const { lineitems, active, userId } = props.cart
 	return (
 		<div>
 			{ lineitems &&
@@ -20,6 +21,30 @@ function Order(props) {
 				           <div className="sub header">
 											Qty: {item.qty}
 				          </div>
+									{
+										active &&
+										<div>
+											<i
+												className="add square icon"
+												value={item.id}
+												onClick={ ()=> putCart({
+														userId,
+														cartId : item.orderId,
+														productId: item.productId
+													})
+												}></i>
+												<i
+													className="minus square icon"
+													value={item.id}
+													onClick={ ()=> putCart({
+															userId,
+															cartId : item.orderId,
+															productId: item.productId,
+															action: 'decrement'
+														})
+													}></i>
+										</div>
+									}
 			        	</div>
 			      </h4>
 						{

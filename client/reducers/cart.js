@@ -40,11 +40,12 @@ export function fetchCart(userId) {
 }
 
 export function updateCart(payload) {
-	const {productId, userId, cartId} = payload
+	const {productId, userId, cartId, action} = payload
 	return function thunk(dispatch) {
 		axios.post(`api/products/${productId}/lineItems`,{
 			userId,
-			cartId
+			cartId,
+			action
 		})
 			.then(cart=>cart.data)
 			.then(cart=> {

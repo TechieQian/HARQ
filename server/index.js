@@ -8,6 +8,7 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const session = require('express-session');
 const nodemailer = require('nodemailer');
+const passport = require('passport');
 
 // database
 const db = require('./db');
@@ -44,6 +45,12 @@ app.use(session({
 //   console.log('session', req.session);
 //   next();
 // });
+
+// passport
+// Since passport sessions rely on an existing session architecture,
+// make sure these middleware declarations come after the express session middleware.
+app.use(passport.initialize());
+app.use(passport.session());
 
 // static middleware
 app.use(express.static(path.join(__dirname, '..', 'node_modules')))

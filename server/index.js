@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 1337
 const app = express()
 const path = require('path')
 const bodyParser = require('body-parser')
+const nodemailer = require('nodemailer');
 
 // database
 const db = require('./db');
@@ -21,7 +22,6 @@ db.sync({ force: true })
 		})
 	})
 
-
 // logging
 app.use(morgan('dev'))
 
@@ -32,6 +32,52 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // static middleware
 app.use(express.static(path.join(__dirname, '..', 'node_modules')))
 app.use(express.static(path.join(__dirname, '..', 'public')))
+
+app.post('/submitted', (req, res, next) => {
+	const name = req.body.name;
+	const email = req.body.email;
+	const cart = req.body.cart;
+	const orderId = req.body.orderId;
+
+	const cartHtml = (name, cart, orderId) => {
+		const html = cart.map(cart => {
+			return `<li>${cart.product.name} x${cart.qty}</li>`
+		})
+
+		return `<h1>${name}, this is your order confirmation:</h1><p>Order ID: ${orderId}</p>` + html.join('');
+	}
+
+	let transporter = nodemailer.createTransport({
+			host: 'smtp.ethereal.email',
+			port: 587,
+			secure: false, // true for 465, false for other ports
+			auth: {
+					user: 'tzzs5oinndr4qwc3@ethereal.email', // generated ethereal user
+					pass: 'JNSZxxuSaB9FsQ2ANV'  // generated ethereal password
+			}
+	});
+
+	// setup email data with unicode symbols
+	let mailOptions = {
+			from: '"HARQ 👻" <HARQ@gmail.com>',
+			to: email, // list of receivers
+			subject: 'Thank you for your order, ' + name,
+			html: cartHtml(name, cart, orderId)
+	};
+
+	// send mail with defined transport object
+	transporter.sendMail(mailOptions, (error, info) => {
+			if (error) {
+					return console.log(error);
+			}
+			console.log('Message sent: %s', info.messageId);
+			// Preview only available when sending through an Ethereal account
+			console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+
+			// Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@blurdybloop.com>
+			// Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+		})
+});
 
 // api routing
 app.use('/api', require('./api'))

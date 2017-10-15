@@ -42,6 +42,10 @@ class Cart extends Component {
 		return (
 			<div className="ui segment" style={{ float: "right", width: "30%" }}>
 				<h1>My Cart </h1>
+				{
+					!lineitems &&
+					<b>Your Cart Is Empty</b>
+				}
           {
             lineitems && <Order active={active} lineitems={lineitems} removeLineItem={removeLineItem} />
           }

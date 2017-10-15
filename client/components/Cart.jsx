@@ -46,7 +46,7 @@ class Cart extends Component {
             lineitems && <Order active={active} lineitems={lineitems} removeLineItem={removeLineItem} />
           }
           {
-            lineitems &&
+            lineitems && lineitems.length>0 &&
             <button className='btn btn-primary' onClick={this.handleSubmit} style={{marginTop: "2%"}}>
               Submit Order
             </button>

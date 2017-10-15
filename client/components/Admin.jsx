@@ -32,9 +32,9 @@ class Admin extends Component {
 	render(){
 		return (
 			<div className='row'>
-				<h3> Product </h3>
+				<h3> Admin Control Panel </h3>
 				<div className='col-sm-4'>
-					<h2> Product Management </h2>
+					<h4> Product Management </h4>
 					<select name='product' className='form-control' onChange={this.handleChange}>
 						<option key={0} value={0}> Add New Product </option>
 						{

@@ -4,7 +4,7 @@ import axios from 'axios'
 import {Link} from 'react-router-dom'
 
 function Order(props) {
-	const { lineitems, removeLineItem } = props
+	const { lineitems, active, removeLineItem } = props
 	return (
 		<div>
 			{ lineitems &&
@@ -22,12 +22,15 @@ function Order(props) {
 				          </div>
 			        	</div>
 			      </h4>
-						<button
-							className="ui primary button"
-							onClick={ removeLineItem }
-							value={ item.id }
-							style={{ float: "right" }}
-							>Remove</button>
+						{
+							active &&
+							<button
+								className="ui primary button"
+								onClick={ removeLineItem }
+								value={ item.id }
+								style={{ float: "right" }}
+								>Remove</button>
+						}
 					</div>
 					)
 

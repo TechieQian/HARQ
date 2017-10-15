@@ -19,32 +19,20 @@ class Cart extends Component {
 			})
 	}
 	render() {
-		const { lineitems } = this.props.cart
-		console.log(lineitems);
+		const { lineitems } = this.props.cart;
+		const { removeLineItem } = this.props;
 		return (
 			<div className="container" style={{ float: "right", width: "30%" }}>
 				<h1>My Cart </h1>
-					{ lineitems &&
-						lineitems.map(item => {
-							return (
-								<div key={item.product.id} style={{ width: "100%" }} >
-									<Link to={`/product/${item.product.id}`} style={{ color: "black"}}>
-										<h3>
-											{item.product.name}
-										</h3>
-									</Link>
-									<b>Qty: {item.qty}</b>
-									<button
-										className="ui primary button"
-										onClick={ this.props.removeLineItem }
-										value={ item.id }
-										style={{ marginLeft: "52%" }}
-										>Remove</button>
-								</div>
-							)
-
-						})
-					}
+				{
+					lineitems && <Order lineitems={lineitems} removeLineItem={removeLineItem} />
+				}
+				{
+					lineitems &&
+					<button className='btn btn-primary' onClick={this.handleSubmit}>
+						Submit Order
+					</button>
+				}
 			</div>
 
 		)

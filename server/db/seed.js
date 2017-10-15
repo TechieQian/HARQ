@@ -15,7 +15,8 @@ const seed = () => {
     Product.create({ name: 'Disgust' }),
     Product.create({ name: 'Fear' }),
     User.create({ name: 'Rav', email: 'ravsworld@gmail.com', password: 'password' }),
-    User.create({ name: 'Annie', email: 'annielovescode@gmail.com', password: 'password' })
+    User.create({ name: 'Annie', email: 'annielovescode@gmail.com', password: 'password' }),
+    User.create({ name: 'admin', email: 'admin@gmail.com', password: 'admin', admin: true })
   ])
 		.then(([anger, joy, sadness, disgust, fear, Rav, Annie]) => {
 			Order.create({userId : Rav.id, active : true}) // creates an initial cart for Rav

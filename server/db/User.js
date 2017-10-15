@@ -15,6 +15,10 @@ const User = db.define('user',{
   password: {
     type: Sequelize.STRING,
     len: [8, 40]            //password must be atleast 8 char long
+  },
+  admin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 });
 

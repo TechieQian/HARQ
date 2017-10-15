@@ -18,7 +18,8 @@ class Main extends Component {
 		console.log("*************************Settng Default User to Rav*****************************");
 		return loadSessionUser()
 		      .then(() => {
-					getCart(this.props.user.id);
+		      		const {user} = this.props;
+		      		if (user.id) getCart(user.id);
 		      })
 		      .catch(err => {
 		        console.log('error occurred ', err.response.data);
@@ -46,16 +47,18 @@ class Main extends Component {
 									</li>
 								}
 
-									<li>
+								{
+									user.admin && (<li>
 										<NavLink to="/admin" activeClassName="active">Admin</NavLink>
-									</li>
+									</li>)
+								}
 
 								{
-									!user.id ? (
+									!user.id && (
 										<li>
 											<NavLink to="/signup" activeClassName="active">Signup</NavLink>
 										</li>
-									) : <span></span>
+									)
 								}
 							</ul>
 					</div>

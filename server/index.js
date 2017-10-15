@@ -40,10 +40,10 @@ app.use(session({
 }));
 
 // Session logging for easier debugging
-app.use(function (req, res, next) {
-  console.log('session', req.session);
-  next();
-});
+// app.use(function (req, res, next) {
+//   console.log('session', req.session);
+//   next();
+// });
 
 // static middleware
 app.use(express.static(path.join(__dirname, '..', 'node_modules')))

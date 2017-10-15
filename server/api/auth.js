@@ -1,5 +1,6 @@
 var router = require('express').Router();
 const User = require('../db/User');
+const passport = require('passport');
 
 router.post('/', (req, res, next) => {
 
@@ -35,4 +36,15 @@ router.get('/me', (req, res, next) => {
     res.send({});
 })
 
+// Google authentication and login
+// Where the user requests login through Google
+router.get('/google', passport.authenticate('google', { scope: 'email' }));
+
+// handle the callback after Google has authenticated the user
+router.get('/google/callback',
+  passport.authenticate('google', {
+    successRedirect: '/login',
+    failureRedirect: '/login'
+  })
+);
 module.exports = router;

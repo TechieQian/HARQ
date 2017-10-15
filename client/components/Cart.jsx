@@ -47,12 +47,11 @@ class Cart extends Component {
           }
           {
             lineitems &&
-            <button className='btn btn-primary' onClick={this.handleSubmit} style={{marginTop: "2%"}}>
+            <button disabled={!lineitems.length} className='btn btn-primary' onClick={this.handleSubmit} style={{marginTop: "2%"}}>
               Submit Order
             </button>
           }
 			</div>
-
 		)
 	}
 }

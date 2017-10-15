@@ -23,10 +23,14 @@ class Product extends Component {
 
 	render(){
 		return (
-			<div> 
+			<h1> {this.state.product.name} </h1>
+			<button
+				onClick={() => {  }}
+				style={{ "btn btn-primary" }}>Add To Cart</button>
+			<div>
 				<h3> {this.state.product.name} </h3>
 				{this.state.product.name && <ProductForm product={this.state.product}/>}
-			</div> 
+			</div>
 		)
 	}
 }

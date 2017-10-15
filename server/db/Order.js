@@ -53,12 +53,9 @@ Order.addProductToCart = ({cartId, productId, userId}) => {
 }
 
 Order.deleteLineItem = (lineItemId) => {
-  return LineItem.destroy({
-    where: {
-      id: lineItemId
-    }
-  })
-    .then(lineItem => { return lineItem } )
+  return LineItem.findById(lineItemId)
+    .then(lineItem => lineItem.destroy())
+    .then(lineItem => { return lineItem })
 }
 
 

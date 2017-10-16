@@ -12,10 +12,10 @@ function Order(props) {
 				lineitems.map(item => {
 					return (
 						<div key={item.product.id} className="ui blue segment cartLineItem" >
-							<h4 className="ui image header" style={{display:"inline"}} >
-			          <img src="https://semantic-ui.com/images/avatar/large/joe.jpg" style={{ width: "15%" }} className="ui mini rounded image" />
+							<h4 className="ui image header" >
+			          <img src="https://semantic-ui.com/images/avatar/large/joe.jpg" className="ui mini rounded image" />
 			          <div className="content">
-									<Link to={`/product/${item.product.id}`} style={{ color: "black"}}>
+									<Link to={`/product/${item.product.id}`}>
 				            {item.product.name}
 									</Link>
 				           <div className="sub header">
@@ -50,10 +50,9 @@ function Order(props) {
 						{
 							active &&
 							<button
-								className="ui primary button"
+								className="ui primary button removeLIButton"
 								onClick={ removeLineItem }
 								value={ item.id }
-								style={{ float: "right" }}
 								>Remove</button>
 						}
 					</div>

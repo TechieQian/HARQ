@@ -11,6 +11,28 @@
   margin-top: 2%;
 }
 
-.mini {
-  width: 15%
+#productList {
+  float: left;
+  width: 100%
+}
+
+.cartLineItem a {
+  color: black;
+}
+
+.cartLineItem.ui img {
+  transform: scale(2);
+  margin: auto 2%;
+}
+
+.cartLineItem h4 {
+  display: inline !important;
+}
+
+.removeLIButton {
+  float: right;
+}
+
+.listedProduct {
+  width: 66%;
 }

@@ -14,7 +14,8 @@ const User = db.define('user',{
   },
   password: {
     type: Sequelize.STRING,
-    len: [8, 40]            //password must be atleast 8 char long
+    len: [8, 40],            //password must be atleast 8 char long
+    allowNull: true // This is for users that logs into thru google
   },
   admin: {
     type: Sequelize.BOOLEAN,

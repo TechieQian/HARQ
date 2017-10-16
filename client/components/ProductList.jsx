@@ -38,17 +38,21 @@ class ProductList extends Component {
 		}
 	}
 
-	render(props){
-		const products = this.props.products
+	render(){
+		const { products, user } = this.props
 
 		return (
-			<div className='container pull-left' id='product'>
+			<div className='container pull-left col-md-8' id='product'>
+
+				{
+					user.id ? <h2>{`Hello ${user.name}!`}</h2> : null
+				}
+
 				{
 					products.map((product)=> {
 						return (
-							<div key={product.id} style={{ width: "66%" }}>
-								<div className='col-sm-4' key={product.id}>
-										{product.name}
+							<div key={product.id} className="col-md-4">
+								{product.name}
 									<div>
 										<Link to={{
 											pathname : `/products/${product.id}`
@@ -60,8 +64,7 @@ class ProductList extends Component {
 										}
 									}>
 										Add To Cart
-										</button>
-								</div>
+									</button>
 							</div>
 						)
 					})

@@ -40,7 +40,7 @@ class Cart extends Component {
 		const { lineitems, active } = this.props.cart;
 		const { removeLineItem } = this.props;
 		return (
-			<div className="ui segment" style={{ float: "right", width: "30%" }}>
+			<div className="ui segment pull-right col-md-4">
 				<h1>My Cart </h1>
           {
             lineitems && <Order active={active} lineitems={lineitems} removeLineItem={removeLineItem} />

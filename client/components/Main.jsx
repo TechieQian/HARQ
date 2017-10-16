@@ -62,7 +62,7 @@ class Main extends Component {
 								}
 							</ul>
 					</div>
-					<div className="row">
+					<div className="col-md-12 container row">
 						<Route exact path='/' component={ProductSearch} />
 						<Route exact path='/' component={Cart} />
 					</div>

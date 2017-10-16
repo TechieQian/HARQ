@@ -31,16 +31,12 @@ class ProductSearch extends Component {
     });
 
 		return (
-			<div className='col-sm-8'>
-				{
-					user.id ? <h2>{`Hello ${user.name}!`}</h2> : null
-				}
-
-				<div className='col-sm-8'>
+			<div className='container pull-left col-md-8'>
+        <div className='col-md-5 pull-right'>
 					<form className="navbar-form" role="search">
 						<div className="input-group add-on">
 							<input className="form-control"
-								     placeholder="Enter Product Name"
+								     placeholder="Search Product Name"
 										 id="search"
 										 type="text"
 										 onChange={ this.handleChange }/>
@@ -52,21 +48,19 @@ class ProductSearch extends Component {
 							</div>
 						</div>
 					</form>
-				</div>
-				<div className='clearfix'></div>
+        </div>
 
+				<div className='clearfix'></div>
 				{
 					product.length ? <ProductList products={product} /> : <ProductList products={products} />
 				}
-
 			</div>
 		)
 	}
 }
 
-function mapState({ user,products }) {
+function mapState({ products }) {
 	return {
-		user,
 		products
   }
 }

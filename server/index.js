@@ -52,6 +52,12 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// passport debugging
+// app.use(function (req, res, next) {
+//   console.log('req.user ', req.user);
+//   next();
+// });
+
 // static middleware
 app.use(express.static(path.join(__dirname, '..', 'node_modules')))
 app.use(express.static(path.join(__dirname, '..', 'public')))

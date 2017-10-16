@@ -1,7 +1,7 @@
 var router = require('express').Router();
 const User = require('../db/User');
 const passport = require('passport');
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy; // for defining google strategy
 
 router.post('/', (req, res, next) => {
 
@@ -34,11 +34,12 @@ router.post('/logout', (req, res, next) => {
 
 router.get('/me', (req, res, next) => {
     if(req.session.user) return res.send(req.session.user);
+    if(req.user) return res.send(req.user);
     res.send({});
 })
 
-// Google authentication and login
 
+// Defining What google strategy is, so passport knows what to do.
 passport.use(
   new GoogleStrategy({
     clientID: '481143342506-5vfrcabli7kg8ja9l94q4d3d13395i65.apps.googleusercontent.com',
@@ -59,21 +60,37 @@ passport.use(
     })
     .then(function (result) { // findOrCreate returns an array [user, boolean(true: created, false: existing)]
         // console.log('----------In the then of findOrCreate--------------------')
-      done(null, result[0]);
+        user = result[0];
+        delete user.dataValues.password;
+      done(null, user);
     })
     .catch(err => {
         // console.log('----------In the error of findOrCreate-------------------')
         // console.log('err is ', err)
         done(err);
     });
-
-    // console.log('---', 'in verification callback', profile, '---');
-    // done();
   })
 );
 
+// Getting user info into req.user
+passport.serializeUser(function (user, done) {
+    done(null, user);
+});
 
+passport.deserializeUser(function (user, done) {
+  User.findOne({
+    where: {
+        googleId: user.googleId
+    }
+  })
+  .then(function (user) {
+    delete user.dataValues.password;
+    done(null, user);
+  })
+  .catch(done);
+});
 
+// Google authentication and login
 // Where the user requests login through Google
 router.get('/google', passport.authenticate('google', { scope: 'email' }));
 

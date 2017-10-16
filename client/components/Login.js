@@ -57,8 +57,8 @@ class Login extends React.Component {
     }
 
     return (
-      <div className="signin-container">
-        <div className="buffer local">
+      <div>
+        <div>
           <form onSubmit={this.onLoginSubmit}>
 
             <div className="form-group">
@@ -90,6 +90,19 @@ class Login extends React.Component {
 
             <button type="submit" className="btn btn-block btn-primary">{message}</button>
           </form>
+        </div>
+
+        <hr/>
+
+        <div>
+          <p>
+            <a
+              href="/api/auth/google"
+              className="btn btn-danger">
+              <i className="fa fa-google" />
+              <span>{message} with Google</span>
+            </a>
+          </p>
         </div>
       </div>
     );

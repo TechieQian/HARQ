@@ -47,4 +47,5 @@ router.get('/google/callback',
     failureRedirect: '/login'
   })
 );
+
 module.exports = router;

@@ -1,10 +1,11 @@
 const router = require('express').Router();
 const User = require('../db/User');
-const googleConfig = require('../../googleAuthCfg');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy; // for defining google strategy
 
+require('dotenv').config();
 
+// console.log("process.env.GOOGLE_CLIENT_SECRET=", process.env.GOOGLE_CLIENT_SECRET);
 
 router.post('/', (req, res, next) => {
 
@@ -54,12 +55,12 @@ router.get('/me', (req, res, next) => {
 
 // Defining What google strategy is, so passport knows what to do.
 passport.use(
-  new GoogleStrategy(googleConfig,
-  // {
-  //   clientID: '481143342506-5vfrcabli7kg8ja9l94q4d3d13395i65.apps.googleusercontent.com',
-  //   clientSecret: 'TLsJrmWDwu5BT4GDBRVkErom',
-  //   callbackURL: '/api/auth/google/callback' // This is the route for handling post-auth from google
-  // },
+  new GoogleStrategy(
+  {
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.GOOGLE_CALLBACK // This is the route for handling post-auth from google
+  },
   // Google will send back the token and profile
   function (token, refreshToken, profile, done) {
     // the callback will pass back user profile information and each service (Facebook, Twitter, and Google) will pass it back a different way. Passport standardizes the information that comes back in its profile object.

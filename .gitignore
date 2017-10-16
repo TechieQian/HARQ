@@ -15,5 +15,5 @@ public/bundle.js.map
 
 # han
 tests/*
-googleAuthCfg.js
+.env
 

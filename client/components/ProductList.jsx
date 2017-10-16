@@ -9,6 +9,7 @@ class ProductList extends Component {
 
 	constructor() {
 		super()
+
 		this.handleAddProduct = this.handleAddProduct.bind(this)
 	}
 
@@ -37,59 +38,49 @@ class ProductList extends Component {
 		}
 	}
 
-	componentDidMount(){
-		this.props.getProducts()
-	}
-
-	render(){
-		const { user, products } = this.props;
+	render(props){
+		const products = this.props.products
 
 		return (
-			<div className='col-sm-8'>
+			<div className='container pull-left' id='product'>
 				{
-					user.id ? <h2>{`Hello ${user.name}!`}</h2> : null
-				}
-				<div id='ProductList' style={{ float: "left", width: "70%"}}>
-					{
-						products.map((product)=> {
-							return (
-								<div key={product.id} style={{ width: "66%" }}>
-									<div className='col-sm-4' key={product.id}>
-										<div className='panel panel-body'>
-											{product.name}
-											<Link to={{
-												pathname : `/products/${product.id}`
-											}}> Product Details </Link><br />
-										<button className='btn btn-primary' onClick={(e)=>{
-											e.preventDefault();
-											this.handleAddProduct(product.id)
-											}
-										}>
-												Add To Cart
-											</button>
-										</div>
-									</div>
+					products.map((product)=> {
+						return (
+							<div key={product.id} style={{ width: "66%" }}>
+								<div className='col-sm-4' key={product.id}>
+										{product.name}
+									<div>
+										<Link to={{
+											pathname : `/products/${product.id}`
+										}}> Product Details </Link><br />
+								  </div>
+									<button className='btn btn-sm btn-primary' onClick={(e)=>{
+										e.preventDefault();
+										this.handleAddProduct(product.id)
+										}
+									}>
+										Add To Cart
+										</button>
 								</div>
-							)
-						})
-					}
-					</div>
+							</div>
+						)
+					})
+				}
 			</div>
 		)
 	}
 }
 
-function mapState({user,products, cart}) {
+function mapState({ cart, user }) {
 	return {
-		user,
-		products,
-		cart
-	}
+		cart,
+		user
+  }
 }
+
 
 function mapDispatch(dispatch) {
 	return {
-		getProducts : ()=> { dispatch(fetchProducts()) },
 		putCart : (payload) => { dispatch(updateCart(payload)) }
 	}
 }

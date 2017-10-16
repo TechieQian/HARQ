@@ -81,7 +81,10 @@ function mapState({ cart, user }) {
 
 function mapDispatch(dispatch) {
 	return {
-		putCart : (payload) => { dispatch(updateCart(payload)) }
+		putCart : (payload) => { dispatch(updateCart(payload)) },
+		getProducts : ()=> {
+			console.log('getProducts');
+			dispatch(fetchProducts()) },
 	}
 }
 

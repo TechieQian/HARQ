@@ -23,7 +23,7 @@ Order.getOrdersByUser = (userId) => {
   })
 }
 
-Order.createLineItem = ({orderId, productId}) => {
+Order.createLineItem = ({orderId, productId, option }) => {
   return LineItem.findOne({
     where: {
       productId,
@@ -32,7 +32,7 @@ Order.createLineItem = ({orderId, productId}) => {
   })
     .then(lineItem => {
       if(lineItem) {
-        return lineItem.update({ qty: lineItem.increment() })
+        return lineItem.update({ qty: lineItem.modifyQty(option) })
       }
       else {
 				return LineItem.create({productId, orderId})
@@ -40,10 +40,10 @@ Order.createLineItem = ({orderId, productId}) => {
     })
 }
 
-Order.addProductToCart = ({cartId, productId, userId}) => {
+Order.addProductToCart = ({cartId, productId, userId, option}) => {
 	return Order.findById(cartId)
 		.then(order => {
-			return Order.createLineItem({ orderId: order.id, productId })
+			return Order.createLineItem({ orderId: order.id, productId, option })
 		})
 		.then(()=> {
 			return Order.findById(cartId, {

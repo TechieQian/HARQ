@@ -6,20 +6,16 @@ const { Sequelize } = db;
 const LineItem = db.define('lineitem', {
   qty: {
     type: Sequelize.INTEGER,
-    defaultValue: 1
+    defaultValue: 1,
+    validate: {
+      min: 1
+    }
   }
 })
 
-LineItem.prototype.increment = function() {
-  this.qty++
+LineItem.prototype.modifyQty = function(option) {
+  option==='decrement' ? this.qty-- : this.qty++
   return this.qty
 }
-// originally thought we could use a hook to update quantity
-// but realized that the only reason I am updating a lineItem
-// is when I update the quantity so seemed superfluous
-
-// LineItem.hook('beforeUpdate', (item) => {
-//   item.quantity++;
-// });
 
 module.exports = LineItem;

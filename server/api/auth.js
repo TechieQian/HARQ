@@ -1,7 +1,10 @@
-var router = require('express').Router();
+const router = require('express').Router();
 const User = require('../db/User');
+const googleConfig = require('../../googleAuthCfg');
 const passport = require('passport');
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy; // for defining google strategy
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy; // for defining google strategy
+
+
 
 router.post('/', (req, res, next) => {
 
@@ -51,11 +54,12 @@ router.get('/me', (req, res, next) => {
 
 // Defining What google strategy is, so passport knows what to do.
 passport.use(
-  new GoogleStrategy({
-    clientID: '481143342506-5vfrcabli7kg8ja9l94q4d3d13395i65.apps.googleusercontent.com',
-    clientSecret: 'TLsJrmWDwu5BT4GDBRVkErom',
-    callbackURL: '/api/auth/google/callback' // This is the route for handling post-auth from google
-  },
+  new GoogleStrategy(googleConfig,
+  // {
+  //   clientID: '481143342506-5vfrcabli7kg8ja9l94q4d3d13395i65.apps.googleusercontent.com',
+  //   clientSecret: 'TLsJrmWDwu5BT4GDBRVkErom',
+  //   callbackURL: '/api/auth/google/callback' // This is the route for handling post-auth from google
+  // },
   // Google will send back the token and profile
   function (token, refreshToken, profile, done) {
     // the callback will pass back user profile information and each service (Facebook, Twitter, and Google) will pass it back a different way. Passport standardizes the information that comes back in its profile object.
@@ -84,15 +88,11 @@ passport.use(
 
 // Getting user info into req.user
 passport.serializeUser(function (user, done) {
-    done(null, user);
+    done(null, user.id);
 });
 
-passport.deserializeUser(function (user, done) {
-  User.findOne({
-    where: {
-        id: user.id
-    }
-  })
+passport.deserializeUser(function (userId, done) {
+  User.findById(userId)
   .then(function (user) {
     delete user.dataValues.password;
     done(null, user);

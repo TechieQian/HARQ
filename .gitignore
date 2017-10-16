@@ -1,8 +1,7 @@
-<<<<<<< HEAD
 node_modules
 test/
 dist/
-=======
+
 # Ignore all node_modules
 node_modules/*
 
@@ -16,5 +15,5 @@ public/bundle.js.map
 
 # han
 tests/*
+googleAuthCfg.js
 
->>>>>>> b611ab890c2ca3ef98d2e78f2d07f22114cccef9

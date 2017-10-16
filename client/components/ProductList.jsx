@@ -14,7 +14,6 @@ class ProductList extends Component {
 
 	handleAddProduct (productId) {
 		if(!this.props.cart.id) {
-			console.log('no id');
 			axios.post('/api/orders', {
 				userId : this.props.user.id,
 				active : true
@@ -28,7 +27,6 @@ class ProductList extends Component {
 				})
 		}
 		else {
-			console.log('w/id');
 			this.props.putCart({
 				userId : this.props.user.id,
 				cartId : this.props.cart.id,
@@ -89,8 +87,12 @@ function mapState({user,products, cart}) {
 
 function mapDispatch(dispatch) {
 	return {
-		getProducts : ()=> { dispatch(fetchProducts()) },
-		putCart : (payload) => { dispatch(updateCart(payload)) }
+		getProducts : ()=> {
+			console.log('getProducts');
+			dispatch(fetchProducts()) },
+		putCart : (payload) => {
+			console.log('putCart');
+			dispatch(updateCart(payload)) }
 	}
 }
 

@@ -49,11 +49,11 @@ class ProductList extends Component {
 				{
 					user.id ? <h2>{`Hello ${user.name}!`}</h2> : null
 				}
-				<div id='ProductList' style={{ float: "left", width: "70%"}}>
+				<div id='productList'>
 					{
 						products.map((product)=> {
 							return (
-								<div key={product.id} style={{ width: "66%" }}>
+								<div key={product.id} className="listedProduct" >
 									<div className='col-sm-4' key={product.id}>
 										<div className='panel panel-body'>
 											{product.name}

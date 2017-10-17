@@ -40,7 +40,7 @@ class Cart extends Component {
 		const { cart, removeLineItem, putCart } = this.props;
 		const { lineitems } = cart;
 		return (
-			<div className="ui segment cartObject">
+			<div className="ui segment pull-right col-md-4 cartObject">
 				<h1>My Cart </h1>
           {
             lineitems && <Order cart={cart} removeLineItem={removeLineItem} putCart={putCart} />

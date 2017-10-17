@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchProducts} from '../store.js'
 import {BrowserRouter, Route, NavLink, withRouter} from 'react-router-dom'
-import ProductList from './ProductList'
+import ProductSearch from './ProductSearch'
 import Product from './Product'
 import Cart from './Cart';
 import Login from './Login';
@@ -62,8 +62,8 @@ class Main extends Component {
 								}
 							</ul>
 					</div>
-					<div className="row">
-						<Route exact path='/' component={ProductList} />
+					<div className="col-md-12 container row">
+						<Route exact path='/' component={ProductSearch} />
 						<Route exact path='/' component={Cart} />
 					</div>
 				<Route exact path='/products/:productId' component={Product} />

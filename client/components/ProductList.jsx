@@ -15,7 +15,6 @@ class ProductList extends Component {
 
 	handleAddProduct (productId) {
 		if(!this.props.cart.id) {
-			console.log('no id');
 			axios.post('/api/orders', {
 				userId : this.props.user.id,
 				active : true
@@ -29,7 +28,6 @@ class ProductList extends Component {
 				})
 		}
 		else {
-			console.log('w/id');
 			this.props.putCart({
 				userId : this.props.user.id,
 				cartId : this.props.cart.id,
@@ -42,12 +40,10 @@ class ProductList extends Component {
 		const { products, user } = this.props
 
 		return (
-			<div className='container pull-left col-md-8' id='product'>
-
+			<div id='product'>
 				{
-					user.id ? <h2>{`Hello ${user.name}!`}</h2> : null
+					user.id ? <h3>{`Hello ${user.name}!`}</h3> : null
 				}
-
 				{
 					products.map((product)=> {
 						return (

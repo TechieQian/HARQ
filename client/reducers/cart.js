@@ -32,10 +32,7 @@ export function removeLineItem(lineItemId) {
 export function fetchCart(userId) {
 	return function thunk(dispatch){
 		axios.get(`/api/users/${userId}/cart`)
-			.then(cart=>{
-				cart.data
-				console.log('CART', cart.data);
-			})
+			.then(cart=>{cart.data})
 			.then(cart=> {
 				cart.id && dispatch(getCart(cart))
 			})

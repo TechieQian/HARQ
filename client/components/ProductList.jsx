@@ -80,6 +80,8 @@ function mapState({ cart, user }) {
 
 function mapDispatch(dispatch) {
 	return {
+
+		getProducts : ()=> { dispatch(fetchProducts()) },
 		putCart : (payload) => { dispatch(updateCart(payload)) }
 	}
 }

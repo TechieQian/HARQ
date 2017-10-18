@@ -15,7 +15,7 @@ class Main extends Component {
 
 	componentDidMount() {
 		const { loginUser, loadSessionUser, getCart } = this.props;
-		console.log("*************************Settng Default User to Rav*****************************");
+		// console.log("*************************Settng Default User to Rav*****************************");
 		return loadSessionUser()
 		      .then(() => {
 		      		const {user} = this.props;

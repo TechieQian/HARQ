@@ -23,7 +23,7 @@ class Main extends Component {
 		      		if (user.id) getCart(user.id);
 		      })
 		      .catch(err => {
-		        console.log('error occurred ', err.response.data);
+		        // console.log('error occurred ', err.response.data);
 		        throw err;
 		      });
 	}

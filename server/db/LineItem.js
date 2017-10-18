@@ -14,7 +14,7 @@ LineItem.prototype.modifyQty = function(option) {
   option==='decrement' ? this.qty-- : this.qty++
   if(this.qty===0) {
     return this.destroy()
-               .then(()=>console.log('LI Deleted'))
+               .catch(ex => console.log('Error: ', ex.message))
   } else{ return this.qty }
 }
 

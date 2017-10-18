@@ -31,8 +31,8 @@ class ProductSearch extends Component {
     });
 
 		return (
-			<div className='container pull-left col-md-8'>
-        <div className='col-md-5 pull-right'>
+			<div className='col-sm-8'>
+        <div className='col-sm-6 pull-right'>
 					<form className="navbar-form" role="search">
 						<div className="input-group add-on">
 							<input className="form-control"

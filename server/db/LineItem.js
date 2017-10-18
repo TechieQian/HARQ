@@ -13,7 +13,8 @@ const LineItem = db.define('lineitem', {
 LineItem.prototype.modifyQty = function(option) {
   option==='decrement' ? this.qty-- : this.qty++
   if(this.qty===0) {
-    return this.destroy();
+    return this.destroy()
+               .then(()=>console.log('LI Deleted'))
   } else{ return this.qty }
 }
 

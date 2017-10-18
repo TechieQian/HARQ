@@ -15,7 +15,7 @@ class Main extends Component {
 
 	componentDidMount() {
 		const { loginUser, loadSessionUser, getCart } = this.props;
-		console.log("*************************Settng Default User to Rav*****************************");
+		// console.log("*************************Settng Default User to Rav*****************************");
 		return loadSessionUser()
 		      .then(() => {
 		      		const {user} = this.props;
@@ -31,8 +31,9 @@ class Main extends Component {
 		const { user } = this.props;
 		return (
 			<div className='container'>
-				<h1> HARQ Store </h1>
-					<div className="container pull-right">
+					<div className="row">
+						<div className='col-sm-8'>
+							<h1> Harq Store </h1>
 							<ul className="nav navbar-nav">
 								<li>
 									<NavLink to="/" activeClassName="active">Home</NavLink>
@@ -61,8 +62,9 @@ class Main extends Component {
 									)
 								}
 							</ul>
+						</div>
 					</div>
-					<div className="col-md-12 container row">
+					<div className="row">
 						<Route exact path='/' component={ProductSearch} />
 						<Route exact path='/' component={Cart} />
 					</div>

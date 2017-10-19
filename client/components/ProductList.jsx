@@ -49,6 +49,7 @@ class ProductList extends Component {
 						return (
 							<div key={product.id} className="col-md-4">
 								{product.name}
+								${product.price}
 									<div>
 										<Link to={{
 											pathname : `/products/${product.id}`

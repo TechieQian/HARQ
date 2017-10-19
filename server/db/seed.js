@@ -10,10 +10,10 @@ const User = require('./User');
 const seed = () => {
     return Promise.all([
     Product.create({ name: 'Anger', price : 100 }),
-    Product.create({ name: 'Joy', price : 5 }),
-    Product.create({ name: 'Sadness' }),
-    Product.create({ name: 'Disgust' }),
-    Product.create({ name: 'Fear' }),
+    Product.create({ name: 'Joy', price : 52 }),
+    Product.create({ name: 'Sadness', price : 5 }),
+    Product.create({ name: 'Disgust', price : 94 }),
+    Product.create({ name: 'Fear', price : 88 }),
     User.create({ name: 'Rav', email: 'ravsworld@gmail.com', password: 'password' }),
     User.create({ name: 'Annie', email: 'annielovescode@gmail.com', password: 'password' }),
     User.create({ name: 'admin', email: 'admin@gmail.com', password: 'admin', admin: true })

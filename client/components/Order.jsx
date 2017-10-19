@@ -19,7 +19,8 @@ function Order(props) {
 				            {item.product.name}
 									</Link>
 				           <div className="sub header">
-											Qty: {item.qty}
+											Qty: {item.qty}<br/>
+											Price: ${item.totalPrice}
 				          </div>
 									{
 										active &&

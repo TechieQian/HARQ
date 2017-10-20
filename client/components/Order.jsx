@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 
 function Order(props) {
 	const { removeLineItem, putCart } = props
-	const { lineitems, active, userId } = props.cart
+	const { lineitems, active, userId, price } = props.cart
 	return (
 		<div>
 			{ lineitems &&
@@ -58,9 +58,11 @@ function Order(props) {
 						}
 					</div>
 					)
-
 				})
 		}
+			<div>
+				<h5>Order Total: ${ price }</h5>
+			</div>
 		</div>
 	)
 }

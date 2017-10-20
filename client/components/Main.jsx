@@ -78,7 +78,7 @@ class Main extends Component {
 					</div>
 				<Route exact path='/products/:productId' component={Product} />
 				<Route path='/login' component={Login} />
-				<Route path='/history' component={ProductHistory} />
+				<Route path='/history' render={()=><ProductHistory user={this.props.user}/>} />
 				<Route path='/signup' component={Signup} />
 				<Route path='/admin' component={Admin} />
 				<Route path='/analytic' component={Analytic} />

@@ -5,6 +5,12 @@ const Order = require('../db/Order');
 const LineItem = require('../db/LineItem');
 module.exports = router;
 
+
+router.get('/', (req, res, next) => {
+	User.findAll()
+    .then(users => res.send(users))
+})
+
 router.get('/:id', (req, res, next) => {
 	User.findById(req.params.id)
     .then(user => res.send(user))

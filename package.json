@@ -38,6 +38,7 @@
     "passport-google-oauth": "^1.0.0",
     "path": "^0.12.7",
     "pg": "^6.4.2",
+    "randomcolor": "^0.5.3",
     "react": "^16.0.0",
     "react-clearfix": "^1.0.0",
     "react-dom": "^16.0.0",

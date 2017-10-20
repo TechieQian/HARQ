@@ -13,6 +13,7 @@ LineItem.belongsTo(Order);
 Order.hasMany(LineItem);
 User.hasMany(Order);
 Order.belongsTo(User);
+Product.hasMany(LineItem);
 
 
 module.exports = db;

@@ -1,13 +1,12 @@
 const router = require('express').Router();
 const Product = require('../db/Product');
 const Order = require('../db/Order');
-const LineItem = require('../db/LineItem');
 
 module.exports = router;
 
 // gets all products
 router.get('/', (req, res, next) => {
-  Product.findAll({include: [LineItem], order : ['id']})
+  Product.findAll({order : ['id']})
     .then(products => res.send(products))
     .catch(next);
 });

@@ -9,6 +9,7 @@ import Login from './Login';
 import Admin from './Admin'
 import ProductHistory from './ProductHistory'
 import Signup from './Signup';
+import Analytic from './Analytic';
 import { verifyUser, loadUser, fetchCart } from '../reducers';
 
 class Main extends Component {
@@ -22,7 +23,7 @@ class Main extends Component {
 		      		if (user.id) getCart(user.id);
 		      })
 		      .catch(err => {
-		        console.log('error occurred ', err.response.data);
+		        // console.log('error occurred ', err.response.data);
 		        throw err;
 		      });
 	}
@@ -30,10 +31,10 @@ class Main extends Component {
 	render(){
 		const { user } = this.props;
 		return (
-			<div className='container'>
-					<div className="row">
-						<div className='col-sm-8'>
-							<h1> Harq Store </h1>
+			<div className='container header'>
+						<img src="http://www.disneystore.co.uk/on/demandware.static/-/Sites-disneyuk-Library/default/dw677972c5/assets/franchise/full/2015/5372_insideOut_07052015/5372_fp_FWB_InsideOut_characters_07052015.png"
+							className="img-fluid" height="200px" max-width="100%"/>
+						<div className='row'>
 							<ul className="nav navbar-nav">
 								<li>
 									<NavLink to="/" activeClassName="active">Home</NavLink>
@@ -55,6 +56,12 @@ class Main extends Component {
 								}
 
 								{
+									user.admin && (<li>
+										<NavLink to="/analytic" activeClassName="active">Analytic</NavLink>
+									</li>)
+								}
+
+								{
 									!user.id && (
 										<li>
 											<NavLink to="/signup" activeClassName="active">Signup</NavLink>
@@ -63,7 +70,8 @@ class Main extends Component {
 								}
 							</ul>
 						</div>
-					</div>
+						<br />
+						<hr />
 					<div className="row">
 						<Route exact path='/' component={ProductSearch} />
 						<Route exact path='/' component={Cart} />
@@ -73,6 +81,7 @@ class Main extends Component {
 				<Route path='/history' component={ProductHistory} />
 				<Route path='/signup' component={Signup} />
 				<Route path='/admin' component={Admin} />
+				<Route path='/analytic' component={Analytic} />
 			</div>
 		)
 	}

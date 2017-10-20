@@ -6,18 +6,18 @@ class ProductForm extends Component {
 
 	constructor() {
 		super()
-		this.state = {id : 0, name : '', price : 0, description : ''}
+		this.state = {id : 0, name : '', price : 0, description : '', image: ''}
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
 	componentWillReceiveProps(props) {
 		if (!props.product.id) {
-			this.setState({id : 0, name : '', price : 0, description : ''})
+			this.setState({id : 0, name : '', price : 0, description : '', name: ''})
 		}
 		else if (props.product.id != this.props.product.id) {
-			const { name, price, id, description } = props.product
-			this.setState({name, price, id, description})
+			const { name, price, id, description, image } = props.product
+			this.setState({name, price, id, description, image})
 		}
 	}
 
@@ -27,9 +27,9 @@ class ProductForm extends Component {
 
   handleSubmit(event) {
 		event.preventDefault()
-		const {name, price, description} = this.state
+		const {name, price, description, image} = this.state
 		const existing = this.props.product.id ? this.props.product : {}
-		const newProduct = Object.assign(existing, {name, price, description})
+		const newProduct = Object.assign(existing, {name, price, description, image})
 		if (existing.id) {
 			this.props.putProduct(newProduct)
 		}
@@ -48,20 +48,20 @@ class ProductForm extends Component {
 					<form onSubmit={this.handleSubmit}>
 						<div className='form-group'>
 							<label>Name</label>
-							<input 
-								name='name' 
-								className='form-control' 
+							<input
+								name='name'
+								className='form-control'
 								onChange={this.handleChange}
 								value={this.state.name}
 							/>
-						</div>          
+						</div>
 						<div className='form-group'>
 							<label>Price</label>
 							<input
 								name='price'
 								type='number'
 								className='form-control'
-								value={this.state.price} 
+								value={this.state.price}
 								onChange={this.handleChange}
 							/>
 						</div>
@@ -70,7 +70,17 @@ class ProductForm extends Component {
 							<textarea
 								name='description'
 								className='form-control'
-								value={this.state.description} 
+								value={this.state.description}
+								onChange={this.handleChange}
+							/>
+						</div>
+						<div className='form-group'>
+							<label>Image URL</label>
+							<input
+								name='image'
+								type='text'
+								className='form-control'
+								value={this.state.image}
 								onChange={this.handleChange}
 							/>
 						</div>
@@ -79,7 +89,7 @@ class ProductForm extends Component {
 								type="submit"
 								className="btn btn-primary btn-block"
 							>Save</button>
-						</div>          
+						</div>
 					</form>
 				</div>
 			</div>

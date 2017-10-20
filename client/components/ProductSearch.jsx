@@ -32,7 +32,7 @@ class ProductSearch extends Component {
 
 		return (
 			<div className='col-sm-8'>
-        <div className='col-sm-6 pull-right'>
+        <div className='col-sm-6 col-md-offset-3'>
 					<form className="navbar-form" role="search">
 						<div className="input-group add-on">
 							<input className="form-control"
@@ -43,7 +43,7 @@ class ProductSearch extends Component {
 							<div className="input-group-btn">
 								<button className="btn btn-default"
 									      type="submit">
-									<i className="glyphicon glyphicon-search"></i>
+												Search
 					      </button>
 							</div>
 						</div>

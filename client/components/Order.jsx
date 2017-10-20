@@ -13,7 +13,7 @@ function Order(props) {
 					return (
 						<div key={item.product.id} className="ui blue segment cartLineItem" >
 							<h4 className="ui image header" >
-			          <img src="https://semantic-ui.com/images/avatar/large/joe.jpg" className="ui mini rounded image" />
+			          <img src={item.product.image} className="ui mini rounded image" />
 			          <div className="content">
 									<Link to={`/product/${item.product.id}`}>
 				            {item.product.name}

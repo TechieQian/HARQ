@@ -26,7 +26,7 @@ LineItem.prototype.modifyQty = function(option) {
   this.setPrice();
   if(this.qty===0) {
     this.destroy()
-        .catch(ex => console.log('Error: ', ex.message))
+    	.catch(ex => console.log('Error: ', ex.message))
   } else{ return this.qty }
 }
 

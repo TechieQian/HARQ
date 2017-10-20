@@ -7,7 +7,6 @@ const REMOVE_LINEITEM = 'REMOVE_LINEITEM';
 
 //Action Creators
 export function getCart(cart) {
-	cart.lineitems.sort((a, b)=>{return b.id - a.id})
 	return {
 		type : GET_CART,
 		cart
@@ -32,9 +31,9 @@ export function removeLineItem(lineItemId) {
 export function fetchCart(userId) {
 	return function thunk(dispatch){
 		axios.get(`/api/users/${userId}/cart`)
-			.then(cart=>{cart.data})
+			.then(cart=>cart.data)
 			.then(cart=> {
-				cart && dispatch(getCart(cart))
+				cart.id && dispatch(getCart(cart))
 			})
 	}
 }
@@ -68,7 +67,7 @@ export function deleteLineItem(lineItemId) {
 //Cart Reducer
 const cartReducer = function(state = {}, action) {
 	switch(action.type) {
-		case GET_CART : return action.cart
+		case GET_CART :	return action.cart
 		case CLEAR_CART : return {}
 		case REMOVE_LINEITEM:
  			var lineitems = state.lineitems.filter((lineItem) => {

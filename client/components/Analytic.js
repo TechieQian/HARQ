@@ -44,7 +44,6 @@ export default class Analytic extends Component {
                     return Object.keys(period).map(key => {
                         if (key !== 'name') {
                             seed += 10;
-                            console.log(`<Bar dataKey=${key} fill=${randomColor({seed, hue: 'blue'})} />`)
                             return (
                                 <Bar dataKey={key} fill={randomColor({seed})} />
                             )

@@ -4,6 +4,13 @@ const Order = require('../db/Order');
 
 module.exports = router;
 
+// gets all orders 
+router.get('/', (req, res, next) => {
+  Order.findAll()
+    .then(orders => res.send(orders))
+    .catch(next);
+});
+
 // gets one order 
 router.get('/:id', (req, res, next) => {
   Order.findById(req.params.id)

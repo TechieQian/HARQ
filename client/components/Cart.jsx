@@ -43,7 +43,7 @@ class Cart extends Component {
 			<div className="ui segment pull-right col-md-4 cartObject">
 				<h1>My Cart </h1>
           {
-            lineitems && <Order cart={cart} removeLineItem={removeLineItem} putCart={putCart} />
+            lineitems && <Order order={cart} removeLineItem={removeLineItem} putCart={putCart} />
           }
 					<button disabled={!lineitems || !lineitems.length} className='btn btn-primary submitButton' onClick={this.handleSubmit}>
 						Submit Order

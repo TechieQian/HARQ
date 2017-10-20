@@ -15,3 +15,4 @@ export function productsDispatchMap (dispatch) {
 		putProduct : (product)=> { dispatch(store.updateProduct(product)) }
 	}
 }
+

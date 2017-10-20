@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 
 function Order(props) {
 	const { removeLineItem, putCart } = props
-	const { lineitems, active, userId } = props.cart
+	const { lineitems, active, userId } = props.order
 	return (
 		<div>
 			{ lineitems &&

@@ -50,8 +50,8 @@ class Admin extends Component {
 
 	render(){
 		return (
-			<div className='row'>
-				<h3> Admin Control Panel </h3>
+			<div className='container row'>
+				<h3 className="container"> Admin Control Panel </h3>
 				<div className='col-sm-4'>
 					<h4> Product Management </h4>
 					<select name='product' className='form-control' onChange={this.handleChange}>
@@ -69,7 +69,7 @@ class Admin extends Component {
 				</div>
 				<div className='col-sm-4'>
 					<h4> User Management </h4>
-					<select name='user' className='form-control' onChange={this.handleChange}> 
+					<select name='user' className='form-control' onChange={this.handleChange}>
 						{
 							this.state.users && this.state.users.map((user)=> {
 								return (

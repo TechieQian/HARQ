@@ -30,47 +30,51 @@ class Main extends Component {
 	render(){
 		const { user } = this.props;
 		return (
-			<div className='container header'>
-						<img src="http://www.disneystore.co.uk/on/demandware.static/-/Sites-disneyuk-Library/default/dw677972c5/assets/franchise/full/2015/5372_insideOut_07052015/5372_fp_FWB_InsideOut_characters_07052015.png"
-							className="img-fluid" height="200px" max-width="100%"/>
-						<div className='col-sm-8'>
-							<ul className="nav navbar-nav">
+			<div className="container row">
+
+				<nav className="navbar navbar-toggleable-md navbar-light bg-faded">
+					<a className="navbar-brand" href="#">harq store</a>
+
+				  <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+						<ul className="nav navbar-nav mr-auto mt-2 mt-lg-0">
+							<li>
+								<NavLink to="/" activeClassName="active">home</NavLink>
+							</li>
+							<li>
+								<NavLink to="/login" activeClassName="active">login | logout</NavLink>
+							</li>
+							{
+								this.props.user.id &&
 								<li>
-									<NavLink to="/" activeClassName="active">Home</NavLink>
+									<NavLink to="/history" activeClassName="active">order history</NavLink>
 								</li>
-								<li>
-									<NavLink to="/login" activeClassName="active">Login/Logout</NavLink>
-								</li>
-								{
-									this.props.user.id &&
+							}
+
+							{
+								user.admin && (<li>
+									<NavLink to="/admin" activeClassName="active">admin</NavLink>
+								</li>)
+							}
+
+							{
+								user.admin && (<li>
+									<NavLink to="/analytic" activeClassName="active">analytics</NavLink>
+								</li>)
+							}
+
+							{
+								!user.id && (
 									<li>
-										<NavLink to="/history" activeClassName="active">Order History</NavLink>
+										<NavLink to="/signup" activeClassName="active">sign-up</NavLink>
 									</li>
-								}
-
-								{
-									user.admin && (<li>
-										<NavLink to="/admin" activeClassName="active">Admin</NavLink>
-									</li>)
-								}
-
-								{
-									user.admin && (<li>
-										<NavLink to="/analytic" activeClassName="active">Analytic</NavLink>
-									</li>)
-								}
-
-								{
-									!user.id && (
-										<li>
-											<NavLink to="/signup" activeClassName="active">Signup</NavLink>
-										</li>
-									)
-								}
-							</ul>
-						</div>
-						<br />
-						<hr />
+								)
+							}
+						</ul>
+						<span className="navbar-text pull-right" color="white">
+							get to know your e m o t i o n s
+						</span>
+				  </div>
+				</nav>
 					<div className="row">
 						<Route exact path='/' component={ProductSearch} />
 						<Route exact path='/' component={Cart} />

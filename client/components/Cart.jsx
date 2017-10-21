@@ -10,6 +10,8 @@ class Cart extends Component {
 	constructor(){
 		super()
 
+		this.state = {submitted:false}
+
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
@@ -32,12 +34,12 @@ class Cart extends Component {
 				};
 			})
 			.then(()=>{
-				alert('Order Submitted')
+				this.setState({ submitted: true })
 			})
 	}
 
 	render() {
-		const { cart, removeLineItem, putCart } = this.props;
+		const { cart, removeLineItem, putCart, user } = this.props;
 		const { lineitems } = cart;
 		return (
 			<div className="ui segment pull-right col-md-4 cartObject">
@@ -45,6 +47,10 @@ class Cart extends Component {
           {
             lineitems && <Order order={cart} removeLineItem={removeLineItem} putCart={putCart} />
           }
+					{
+						!lineitems && this.state.submitted == true ? <p>Order Submitted.
+							Confirmation email sent to {user.email}.</p> : null
+					}
 					<button disabled={!lineitems || !lineitems.length} className='btn btn-primary submitButton' onClick={this.handleSubmit}>
 						Submit Order
 					</button>

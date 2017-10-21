@@ -18,7 +18,7 @@ export default class Analytic extends Component {
             .then(products => {
                 let data = [],
                     period = {
-                        name: 'Total Order Placed To Date'
+                        name: 'Total Orders Placed To Date'
                     };
                 products.forEach(product => {
                     period[product.name] = product.lineitems.length;

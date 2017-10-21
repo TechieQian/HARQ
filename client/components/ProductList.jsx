@@ -40,14 +40,17 @@ class ProductList extends Component {
 		const { products, user } = this.props
 
 		return (
-			<div id='product'>
-				{
-					user.id ? <h3>{`Hello ${user.name}!`}</h3> : null
-				}
+			<div>
+				<div className="container">
+					{
+						user.id ? <h3>{`Hello ${user.name}!`}</h3> : null
+					}
+				</div>
+
 				{
 					products.map((product)=> {
 						return (
-							<div key={product.id} className="col-md-6 panel row">
+							<div key={product.id} className="col-md-6 panel">
 								<div className="col-md-6">
 									<img src={ product.image } className="rounded"
 	                	width="150" height="200" />

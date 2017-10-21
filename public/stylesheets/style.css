@@ -1,6 +1,13 @@
 * { font-family: 'Raleway', cursive !important;
     font-size: 15px;}
 
+body {
+  background-image: url("http://img2.wikia.nocookie.net/__cb20141212013646/pixar/images/a/a6/Inside-Out-Q%26A-Joy-Sadness.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: right bottom;
+}
+
 .cartLineItem {
   width: 100%
 }

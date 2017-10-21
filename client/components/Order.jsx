@@ -7,7 +7,7 @@ import Autocomplete from 'react-google-autocomplete';
 
 function Order(props) {
 	const { removeLineItem, putCart } = props
-	const { lineitems, active, userId } = props.cart
+	const { lineitems, active, userId, price } = props.order
 	return (
 		<div>
 			{ lineitems &&
@@ -21,7 +21,8 @@ function Order(props) {
 				            {item.product.name}
 									</Link>
 				           <div className="sub header">
-											Qty: {item.qty}
+											Qty: {item.qty}<br/>
+											Price: ${item.totalPrice}
 				          </div>
 									{
 										active &&
@@ -59,19 +60,22 @@ function Order(props) {
 						}
 					</div>
 					)
-
 				})
 		  }
 
 			<Autocomplete
 			    style={{width: '90%'}}
-			    onPlaceSelected={(place) => {
-			      console.log(place);
-			    }}
+			    onPlaceSelected={(place) => {}}
 			    types={['(regions)']}
 			    componentRestrictions={{country: "ru"}}
 			/>
-
+      
+		  }
+      
+			<div>
+				<h5>Order Total: ${ price }</h5>
+			</div>
+      
 		</div>
 	)
 }

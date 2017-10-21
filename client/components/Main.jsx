@@ -9,13 +9,13 @@ import Login from './Login';
 import Admin from './Admin'
 import ProductHistory from './ProductHistory'
 import Signup from './Signup';
+import Analytic from './Analytic';
 import { verifyUser, loadUser, fetchCart } from '../reducers';
 
 class Main extends Component {
 
 	componentDidMount() {
 		const { loginUser, loadSessionUser, getCart } = this.props;
-		// console.log("*************************Settng Default User to Rav*****************************");
 		return loadSessionUser()
 		      .then(() => {
 		      		const {user} = this.props;
@@ -55,6 +55,12 @@ class Main extends Component {
 								}
 
 								{
+									user.admin && (<li>
+										<NavLink to="/analytic" activeClassName="active">Analytic</NavLink>
+									</li>)
+								}
+
+								{
 									!user.id && (
 										<li>
 											<NavLink to="/signup" activeClassName="active">Signup</NavLink>
@@ -71,9 +77,10 @@ class Main extends Component {
 					</div>
 				<Route exact path='/products/:productId' component={Product} />
 				<Route path='/login' component={Login} />
-				<Route path='/history' component={ProductHistory} />
+				<Route path='/history' render={()=><ProductHistory user={this.props.user}/>} />
 				<Route path='/signup' component={Signup} />
 				<Route path='/admin' component={Admin} />
+				<Route path='/analytic' component={Analytic} />
 			</div>
 		)
 	}

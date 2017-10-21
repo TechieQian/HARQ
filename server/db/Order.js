@@ -8,6 +8,10 @@ const Order = db.define('order',{
   active: {
     type: Sequelize.BOOLEAN,
     defaultValue: true
+  },
+  price: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
   }
 })
 
@@ -38,12 +42,13 @@ Order.createLineItem = ({orderId, productId, option }) => {
 				return LineItem.create({productId, orderId})
       }
     })
+    .then(lineitem => { lineitem.setPrice() })
 }
 
 Order.addProductToCart = ({cartId, productId, userId, option}) => {
 	return Order.findById(cartId)
 		.then(order => {
-			return Order.createLineItem({ orderId: order.id, productId, option })
+			return Order.createLineItem({ orderId: order.id, productId, option }).then(()=>order.setTotal())
 		})
 		.then(()=> {
 			return Order.findById(cartId, {
@@ -61,5 +66,18 @@ Order.deleteLineItem = (lineItemId) => {
     .then(lineItem => { return lineItem } )
 }
 
+Order.prototype.setTotal = function(){
+  return LineItem.findAll({
+    where: {
+      orderId: this.id
+    }
+  })
+    .then(lineitems => {
+      this.price = lineitems.reduce((sum, item)=>{
+        return item.totalPrice + sum;
+      }, 0)
+    })
+    .then(()=> this.save())
+}
 
 module.exports = Order;

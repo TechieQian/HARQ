@@ -56,7 +56,10 @@ class ProductList extends Component {
 								<div className="col-md-6">
 									<Link to={{
 										pathname : `/products/${product.id}`
-									}}> <h2 className="text-capitalize">{ product.name }</h2></Link><br/>
+									}}> <h2 className="text-capitalize">{ product.name }</h2>
+                    <p>${product.price} </p>
+                  </Link>
+                  <br/>
 									<button className='btn btn-sm btn-primary' onClick={(e)=>{
 										e.preventDefault();
 										this.handleAddProduct(product.id)

@@ -2,30 +2,49 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {allStateMap, productsDispatchMap} from '../mappers'
 import ProductForm from './ProductForm'
+import User from './User'
+import axios from 'axios'
 
 class Admin extends Component {
 
 	constructor(){
 		super()
 		this.state = {
-			product : {}
+			product : {},
+			selectedUser : {},
+			users : []
 		}
 		this.handleChange = this.handleChange.bind(this)
 	}
 
 	componentDidMount(){
 		this.props.getProducts()
+		axios.get('/api/users')
+			.then(users=>users.data)
+			.then(users=> {
+				console.log(users)
+				this.setState({users})
+			})
 	}
 
 	handleChange(e){
-		console.log(e.target.value)
-		const product = this.props.products.find(product=>product.id === +e.target.value)
-		console.log(product)
-		if (product) {
-			this.setState({product})
+		if (e.target.name === 'product') {
+			const product = this.props.products.find(product=>product.id === +e.target.value)
+			if (product) {
+				this.setState({product})
+			}
+			else {
+				this.setState({product : {}})
+			}
 		}
 		else {
-			this.setState({product : {}})
+			const selectedUser = this.state.users.find(order=>order.id === +e.target.value)
+			if (selectedUser) {
+				this.setState({selectedUser})
+			}
+			else {
+				this.setState({selectedUser : {}})
+			}
 		}
 	}
 
@@ -47,6 +66,20 @@ class Admin extends Component {
 					</select>
 					<br />
 					<ProductForm product={this.state.product} />
+				</div>
+				<div className='col-sm-4'>
+					<h4> User Management </h4>
+					<select name='user' className='form-control' onChange={this.handleChange}> 
+						{
+							this.state.users && this.state.users.map((user)=> {
+								return (
+									<option key={user.id} value={user.id}>{ user.name }</option>
+								)
+							})
+						}
+					</select>
+					<br />
+					{this.state.selectedUser.id && <User user={this.state.selectedUser}/> }
 				</div>
 			</div>
 		)

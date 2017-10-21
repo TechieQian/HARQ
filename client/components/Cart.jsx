@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {deleteLineItem} from '../store.js'
+import store, {deleteLineItem, fetchCart} from '../store.js'
 import {Link} from 'react-router-dom'
 import {cartStateMap, cartDispatchMap} from '../mappers'
 import Order from './Order'

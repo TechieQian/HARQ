@@ -30,6 +30,8 @@ router.post('/:id/lineItems', (req,res,next)=> {
 		.then((cart)=> {
 			res.send(cart)
 		})
+		.catch((err)=> { 
+			console.log(err)})
 		.catch(next)
 })
 

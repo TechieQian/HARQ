@@ -47,7 +47,6 @@ class Cart extends Component {
           {
             lineitems && <Order order={cart} removeLineItem={removeLineItem} putCart={putCart} />
 					}
-
 					<button disabled={!lineitems || !lineitems.length} className='btn btn-primary submitButton' onClick={this.handleSubmit}>
 						Submit Order
 					</button>

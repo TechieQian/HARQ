@@ -10,7 +10,6 @@ const LineItem = db.define('lineitem', {
 
 LineItem.prototype.modifyQty = function(option) {
   option==='decrement' ? this.qty-- : this.qty++
-  this.setPrice();
   if(this.qty===0) {
     this.destroy()
         .catch(ex => console.log('Error: ', ex.message))

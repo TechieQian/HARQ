@@ -21,6 +21,7 @@ router.get('/:id', (req, res, next) => {
 
 // add product to cart
 router.post('/:id/lineItems', (req,res,next)=> {
+	console.log('adding prod to cart')
 	Order.addProductToCart({
 		productId : req.params.id,
 		cartId : req.body.cartId,
@@ -30,6 +31,8 @@ router.post('/:id/lineItems', (req,res,next)=> {
 		.then((cart)=> {
 			res.send(cart)
 		})
+		.catch((err)=> { 
+			console.log(err)})
 		.catch(next)
 })
 

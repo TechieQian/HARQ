@@ -43,7 +43,7 @@ class ProductSearch extends Component {
 							<div className="input-group-btn">
 								<button className="btn btn-default"
 									      type="submit">
-									<i className="glyphicon glyphicon-search"></i>
+												Search
 					      </button>
 							</div>
 						</div>

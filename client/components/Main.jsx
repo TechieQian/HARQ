@@ -30,10 +30,10 @@ class Main extends Component {
 	render(){
 		const { user } = this.props;
 		return (
-			<div className='container'>
-					<div className="row">
+			<div className='container header'>
+						<img src="http://www.disneystore.co.uk/on/demandware.static/-/Sites-disneyuk-Library/default/dw677972c5/assets/franchise/full/2015/5372_insideOut_07052015/5372_fp_FWB_InsideOut_characters_07052015.png"
+							className="img-fluid" height="200px" max-width="100%"/>
 						<div className='col-sm-8'>
-							<h1> Harq Store </h1>
 							<ul className="nav navbar-nav">
 								<li>
 									<NavLink to="/" activeClassName="active">Home</NavLink>
@@ -69,7 +69,8 @@ class Main extends Component {
 								}
 							</ul>
 						</div>
-					</div>
+						<br />
+						<hr />
 					<div className="row">
 						<Route exact path='/' component={ProductSearch} />
 						<Route exact path='/' component={Cart} />

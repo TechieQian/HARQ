@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
+import Autocomplete from 'react-google-autocomplete';
+
 
 function Order(props) {
 	const { removeLineItem, putCart } = props
@@ -13,7 +15,7 @@ function Order(props) {
 					return (
 						<div key={item.product.id} className="ui blue segment cartLineItem" >
 							<h4 className="ui image header" >
-			          <img src="https://semantic-ui.com/images/avatar/large/joe.jpg" className="ui mini rounded image" />
+			          <img src={item.product.image} className="ui mini rounded image" />
 			          <div className="content">
 									<Link to={`/product/${item.product.id}`}>
 				            {item.product.name}
@@ -59,10 +61,21 @@ function Order(props) {
 					</div>
 					)
 				})
-		}
+		  }
+
+			<Autocomplete
+			    style={{width: '90%'}}
+			    onPlaceSelected={(place) => {}}
+			    types={['(regions)']}
+			    componentRestrictions={{country: "ru"}}
+			/>
+      
+		  }
+      
 			<div>
 				<h5>Order Total: ${ price }</h5>
 			</div>
+      
 		</div>
 	)
 }

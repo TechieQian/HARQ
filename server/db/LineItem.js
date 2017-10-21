@@ -12,8 +12,9 @@ LineItem.prototype.modifyQty = function(option) {
   option==='decrement' ? this.qty-- : this.qty++
   if(this.qty===0) {
     this.destroy()
-        .catch(ex => console.log('Error: ', ex.message))
-  } else{ return this.qty }
+     .catch(ex => console.log('Error: ', ex.message))
+    } 
+  else{ return this.qty }
 }
 
 module.exports = LineItem;

@@ -49,15 +49,15 @@ class Login extends React.Component {
     if(user.id) {
       console.log("The logged in user is ", user);
       return (
-              <div>
-                <h2>Welcome back {user.name}</h2>
+              <div className="container col-sm-4 panel">
+                <h2>Welcome back, {user.name}!</h2>
                 <button onClick={logoutUser} className='btn btn-primary'>Logout</button>
               </div>
       );
     }
 
     return (
-      <div>
+      <div className="container col-sm-4 panel">
         <div>
           <form onSubmit={this.onLoginSubmit}>
 

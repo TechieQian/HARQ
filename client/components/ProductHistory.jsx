@@ -35,12 +35,12 @@ class ProductHistory extends Component {
 	render(){
 		console.log('product history for', this.props.user)
 		return (
-			<div>
+			<div className="container">
 				{
 					this.state.orders.map(order=> {
 						return (
-							<div key={order.id}> 
-								Order Id {order.id} 
+							<div key={order.id} className="container panel"> 
+								Order Id {order.id}
 								{
 									order.lineitems.map(lineitem => {
 										return (
@@ -49,7 +49,7 @@ class ProductHistory extends Component {
 									})
 								}
 							</div>
-						) 
+						)
 					})
 				}
 			</div>

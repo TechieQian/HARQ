@@ -53,7 +53,7 @@ class Signup extends Component {
         }
 
         return (
-          <div className="signin-container">
+          <div className="signin-container container col-sm-4 panel">
             <div className="buffer local">
               <form onSubmit={this.onLoginSubmit}>
 
@@ -97,7 +97,7 @@ class Signup extends Component {
                   />
 
                 </div>
-                <button type="submit" className="btn btn-block btn-success">{message}</button>
+                <button type="submit" className="btn btn-block btn-primary">{message}</button>
               </form>
             </div>
           </div>

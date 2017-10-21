@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Product = require('../db/Product');
 const Order = require('../db/Order');
+const LineItem = require('../db/LineItem.js')
 
 module.exports = router;
 
@@ -13,7 +14,12 @@ router.get('/', (req, res, next) => {
 
 // gets one order 
 router.get('/:id', (req, res, next) => {
-  Order.findById(req.params.id)
+  Order.findById(req.params.id, {
+    include: [{
+      model: LineItem,
+      include: [Product]
+		}]
+	})
     .then(order => res.send(order))
     .catch(next);
 });

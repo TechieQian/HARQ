@@ -19,9 +19,13 @@ const seed = () => {
     User.create({ name: 'admin', email: 'admin@gmail.com', password: 'admin', admin: true })
   ])
 		.then(([anger, joy, sadness, disgust, fear, Rav, Annie]) => {
-			Order.create({userId : Rav.id, active : true}) // creates an initial cart for Rav
-				.then((order)=> {
-					LineItem.create({ orderId: order.id, productId: fear.id }) //adds fear to Rav's cart
+			Promise.all([
+				Order.create({userId : Rav.id, active : false}),
+				Order.create({active : false})
+			])
+				.then(([ravorder, anonorder])=> {
+					LineItem.create({ orderId	: ravorder.id, productId: fear.id })
+					LineItem.create({ orderId : anonorder.id, productId : fear.id })
 				})
     })
     .then(console.log('seeded!'))

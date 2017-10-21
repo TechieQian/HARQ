@@ -30,12 +30,20 @@ class ProductHistory extends Component {
 					this.setState({orders})
 				})
 		}
+		else {
+			axios.get(`/api/orders`)
+				.then(orders=>orders.data)
+				.then((orders)=> {
+					orders = orders.filter(order=> !order.active && !order.userId)
+					this.setState({orders})
+				})
+		}
 	}
 
 	render(){
+		console.log('product history for', this.props.user)
 		return (
 			<div>
-				<h3> Product History </h3>
 				{
 					this.state.orders.map(order=> {
 						return (
@@ -57,10 +65,4 @@ class ProductHistory extends Component {
 	}
 }
 
-function mapState({user}) {
-	return {
-		user
-	}	
-}
-
-export default connect(mapState)(ProductHistory)
+export default ProductHistory

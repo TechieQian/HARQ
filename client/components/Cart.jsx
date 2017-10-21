@@ -41,9 +41,6 @@ class Cart extends Component {
 	render() {
 		const { cart, removeLineItem, putCart } = this.props;
 		const { lineitems } = cart;
-		const totalPrice = lineitems.reduce(item=> {
-			lineitem.qty
-		},0)
 		return (
 			<div className="ui segment pull-right col-md-4 cartObject">
 				<h1>My Cart </h1>

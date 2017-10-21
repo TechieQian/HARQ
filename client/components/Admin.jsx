@@ -106,7 +106,14 @@ class Admin extends Component {
 						<button type='submit' className='btn btn-primary'>Search</button>
 					</form>
 					<br />
-					{this.state.order.id && <Order order={this.state.order}/> }
+					{
+						this.state.order.id && 
+						<div>
+							<h4> Order Id : {this.state.order.id} </h4>
+							Customer Id : {this.state.order.userId ? this.state.order.userId : 'Anonymous'}
+							<Order order={this.state.order}/> 
+						</div>
+					}
 				</div>
 			</div>
 		)

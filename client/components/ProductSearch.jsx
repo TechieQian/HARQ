@@ -31,7 +31,7 @@ class ProductSearch extends Component {
     });
 
 		return (
-			<div className='col-sm-8'>
+			<div className='container pull-left col-sm-8'>
         <div className='col-sm-6 pull-right'>
 					<form className="navbar-form" role="search">
 						<div className="input-group add-on">
@@ -49,7 +49,6 @@ class ProductSearch extends Component {
 						</div>
 					</form>
         </div>
-
 				<div className='clearfix'></div>
 				{
 					product.length ? <ProductList products={product} /> : <ProductList products={products} />

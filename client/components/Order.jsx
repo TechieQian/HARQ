@@ -62,20 +62,18 @@ function Order(props) {
 					)
 				})
 		  }
-
+			<div>
+				Address:
+			</div>
 			<Autocomplete
-			    style={{width: '90%'}}
-			    onPlaceSelected={(place) => {}}
-			    types={['(regions)']}
-			    componentRestrictions={{country: "ru"}}
+			    style={{width: '100%'}}
+					types={['(cities)']}
 			/>
-      
-		  }
-      
+		<br></br>
 			<div>
 				<h5>Order Total: ${ price }</h5>
 			</div>
-      
+
 		</div>
 	)
 }

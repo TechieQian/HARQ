@@ -8,7 +8,6 @@ import Autocomplete from 'react-google-autocomplete';
 function Order(props) {
 	const { removeLineItem, putCart } = props
 	const { lineitems, active, userId, price } = props.order
-	console.log('rendering order with', props.order)
 	return (
 		<div>
 			{ lineitems &&

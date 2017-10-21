@@ -12,7 +12,7 @@ class Admin extends Component {
 		super()
 		this.state = {
 			product : {},
-			selectedUser : {},
+			selectedUser : {}, 
 			users : [],
 			orderId : 0,
 			order : {}
@@ -42,7 +42,6 @@ class Admin extends Component {
 				selectedUser ? this.setState({selectedUser}) : this.setState({selectedUser : {}})
 				break
 			case 'orderId' :
-				console.log('setting state orderid', e.target.value)
 				this.setState({orderId : +e.target.value})
 				break 
 		}
@@ -80,6 +79,7 @@ class Admin extends Component {
 				<div className='col-sm-4'>
 					<h4> User Management </h4>
 					<select name='user' className='form-control' onChange={this.handleChange}> 
+						<option key={0} value={0}> -- Please select user -- </option>
 						{
 							this.state.users && this.state.users.map((user)=> {
 								return (

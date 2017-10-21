@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
+import Autocomplete from 'react-google-autocomplete';
+
 
 function Order(props) {
 	const { removeLineItem, putCart } = props
@@ -59,7 +61,17 @@ function Order(props) {
 					)
 
 				})
-		}
+		  }
+
+			<Autocomplete
+			    style={{width: '90%'}}
+			    onPlaceSelected={(place) => {
+			      console.log(place);
+			    }}
+			    types={['(regions)']}
+			    componentRestrictions={{country: "ru"}}
+			/>
+
 		</div>
 	)
 }

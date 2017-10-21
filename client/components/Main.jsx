@@ -33,7 +33,7 @@ class Main extends Component {
 			<div className='container header'>
 						<img src="http://www.disneystore.co.uk/on/demandware.static/-/Sites-disneyuk-Library/default/dw677972c5/assets/franchise/full/2015/5372_insideOut_07052015/5372_fp_FWB_InsideOut_characters_07052015.png"
 							className="img-fluid" height="200px" max-width="100%"/>
-						<div className='row'>
+						<div className='col-sm-8'>
 							<ul className="nav navbar-nav">
 								<li>
 									<NavLink to="/" activeClassName="active">Home</NavLink>

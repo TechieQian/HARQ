@@ -32,7 +32,7 @@ class ProductSearch extends Component {
 
 		return (
 			<div className='col-sm-8'>
-        <div className='col-sm-6 col-md-offset-3'>
+        <div className='col-sm-6 pull-right'>
 					<form className="navbar-form" role="search">
 						<div className="input-group add-on">
 							<input className="form-control"

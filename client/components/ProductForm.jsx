@@ -91,16 +91,19 @@ class ProductForm extends Component {
 								className="btn btn-primary btn-block"
 							>Save</button>
 						</div>
-						<div className='form-group'>
-							<button
-								type='button'
-								onClick={()=> {
-									this.props.removeProduct(this.state.id);
-									this.props.refresh('product')
-								}}
-								className="btn btn-danger btn-block"
-							>Delete</button>
-						</div>
+						{
+							this.props.product.id &&
+							<div className='form-group'>
+								<button
+									type='button'
+									onClick={()=> {
+										this.props.removeProduct(this.state.id);
+										this.props.refresh('product')
+									}}
+									className="btn btn-danger btn-block"
+								>Delete</button>
+							</div>
+						}
 					</form>
 				</div>
 			</div>

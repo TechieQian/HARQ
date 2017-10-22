@@ -12,6 +12,7 @@ export function productsDispatchMap (dispatch) {
 	return {
 		getProducts : ()=> { dispatch(store.fetchProducts()) },
 		postProduct : (product)=> { dispatch(store.createProduct(product)) },
-		putProduct : (product)=> { dispatch(store.updateProduct(product)) }
+		putProduct : (product)=> { dispatch(store.updateProduct(product)) },
+		removeProduct : (productId)=> { dispatch(store.deleteProduct(productId)) }
 	}
 }

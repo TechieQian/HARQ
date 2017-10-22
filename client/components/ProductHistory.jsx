@@ -30,14 +30,6 @@ class ProductHistory extends Component {
 					this.setState({orders})
 				})
 		}
-		else {
-			axios.get(`/api/orders`)
-				.then(orders=>orders.data)
-				.then((orders)=> {
-					orders = orders.filter(order=> !order.active && !order.userId)
-					this.setState({orders})
-				})
-		}
 	}
 
 	render(){

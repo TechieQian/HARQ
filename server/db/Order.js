@@ -42,13 +42,12 @@ Order.createLineItem = ({orderId, productId, option }) => {
 				return LineItem.create({productId, orderId})
       }
     })
-    .then(lineitem => { lineitem.setPrice() })
 }
 
 Order.addProductToCart = ({cartId, productId, userId, option}) => {
 	return Order.findById(cartId)
 		.then(order => {
-			return Order.createLineItem({ orderId: order.id, productId, option }).then(()=>order.setTotal())
+			return Order.createLineItem({ orderId: order.id, productId, option })
 		})
 		.then(()=> {
 			return Order.findById(cartId, {
@@ -64,20 +63,6 @@ Order.deleteLineItem = (lineItemId) => {
     }
   })
     .then(lineItem => { return lineItem } )
-}
-
-Order.prototype.setTotal = function(){
-  return LineItem.findAll({
-    where: {
-      orderId: this.id
-    }
-  })
-    .then(lineitems => {
-      this.price = lineitems.reduce((sum, item)=>{
-        return item.totalPrice + sum;
-      }, 0)
-    })
-    .then(()=> this.save())
 }
 
 module.exports = Order;

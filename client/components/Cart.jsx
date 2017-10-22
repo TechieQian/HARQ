@@ -9,9 +9,7 @@ import axios from 'axios'
 class Cart extends Component {
 	constructor(){
 		super()
-
 		this.state = {submitted:false}
-
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 

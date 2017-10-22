@@ -14,7 +14,8 @@ const Product = db.define('product',{
 		defaultValue : 'This product has no description'
 	},
   image: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue: "https://www.wired.com/wp-content/uploads/2015/05/ap_insideout_ff1.jpg"
   }
 })
 

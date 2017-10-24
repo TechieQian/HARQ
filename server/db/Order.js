@@ -15,6 +15,20 @@ const Order = db.define('order',{
   }
 })
 
+Order.prototype.setTotal = function() {
+    return LineItem.findAll({
+      where: {
+        orderId: this.id
+      }
+    })
+    .then(lineitems => {
+      this.price = lineitems.reduce((sum, item)=>{
+        return sum + item.price
+      }, 0)
+    })
+    .then(()=>this.save())
+}
+
 Order.getOrdersByUser = (userId) => {
   return Order.findAll({
     where: {
@@ -48,21 +62,24 @@ Order.addProductToCart = ({cartId, productId, userId, option}) => {
 	return Order.findById(cartId)
 		.then(order => {
 			return Order.createLineItem({ orderId: order.id, productId, option })
-		})
-		.then(()=> {
-			return Order.findById(cartId, {
-				include : [{ model : LineItem, include : [Product] }]
-			})
+      .then((lineItem)=>{
+        return lineItem.setPrice().then(()=> order.setTotal().then(()=>{
+          Order.findById(cartId).then(cart => console.log('CART', cart))
+      			return Order.findById(cartId, {
+      				include : [{ model : LineItem, include : [Product] }]
+      			})
+          }))
+        })
 		})
 }
 
-Order.deleteLineItem = (lineItemId) => {
+Order.prototype.deleteLineItem = function(lineItemId) {
   return LineItem.destroy({
     where: {
       id: lineItemId
     }
   })
-    .then(lineItem => { return lineItem } )
+    .then(() => { this.setTotal() } )
 }
 
 module.exports = Order;

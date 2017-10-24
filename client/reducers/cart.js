@@ -49,6 +49,7 @@ export function updateCart(payload) {
 		})
 			.then(cart=>cart.data)
 			.then(cart=> {
+				console.log('CART', cart);
 				dispatch(getCart(cart))
 			})
 	}

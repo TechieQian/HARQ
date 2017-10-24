@@ -19,6 +19,7 @@ class Admin extends Component {
 		}
 		this.handleChange = this.handleChange.bind(this)
 		this.searchOrder = this.searchOrder.bind(this)
+		this.refresh = this.refresh.bind(this)
 	}
 
 	componentDidMount(){
@@ -29,6 +30,12 @@ class Admin extends Component {
 				console.log(users)
 				this.setState({users})
 			})
+	}
+
+	refresh(field) {
+		const obj = {}
+		obj[field] = {}
+		this.setState(obj)
 	}
 
 	handleChange(e){
@@ -74,7 +81,7 @@ class Admin extends Component {
 						}
 					</select>
 					<br />
-					<ProductForm product={this.state.product} />
+					<ProductForm product={this.state.product} refresh={this.refresh}/>
 				</div>
 				<div className='col-sm-4'>
 					<h4> User Management </h4>

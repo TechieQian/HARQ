@@ -27,18 +27,17 @@ class Cart extends Component {
 				if (email) {
 					axios.post(`/submitted`, { name, email, cart, orderId })
 					.then(()=>{
-						res.sendStatus(200)
+						this.setState({ submitted: true })
 					})
 				};
-			})
-			.then(()=>{
-				this.setState({ submitted: true })
 			})
 	}
 
 	render() {
 		const { cart, removeLineItem, putCart, user } = this.props;
 		const { lineitems } = cart;
+		const message = ( user.email ? `Order Submitted! Confirmation sent to ${user.email}` : "Order Submitted!" )
+
 		return (
 			<div className="ui segment pull-right col-md-4 cartObject">
 				<h1>My Cart </h1>
@@ -46,8 +45,7 @@ class Cart extends Component {
             lineitems && <Order order={cart} removeLineItem={removeLineItem} putCart={putCart} />
           }
 					{
-						!lineitems && this.state.submitted == true ? <p>Order Submitted.
-							Confirmation email sent to {user.email}.</p> : null
+						!cart.active && this.state.submitted ? <p>{ message }</p> : null
 					}
 					<button disabled={!lineitems || !lineitems.length} className='btn btn-primary submitButton' onClick={this.handleSubmit}>
 						Submit Order

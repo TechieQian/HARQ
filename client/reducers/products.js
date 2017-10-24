@@ -49,6 +49,15 @@ export function createProduct(product) {
 	}
 }
 
+export function deleteProduct(id) {
+	return function thunk(dispatch) {
+		axios.delete(`/api/products/${id}`)
+			.then(()=> {
+				dispatch(fetchProducts())
+			})
+	}
+}
+
 //Action Reducer
 const productReducer = function(state=[], action) {
 	switch(action.type) {

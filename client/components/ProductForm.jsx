@@ -13,7 +13,7 @@ class ProductForm extends Component {
 
 	componentWillReceiveProps(props) {
 		if (!props.product.id) {
-			this.setState({id : 0, name : '', price : 0, description : '', name: ''})
+			this.setState({id : 0, name : '', price : 0, description : '', image: ''})
 		}
 		else if (props.product.id != this.props.product.id) {
 			const { name, price, id, description, image } = props.product
@@ -25,16 +25,17 @@ class ProductForm extends Component {
 		this.setState({[e.target.name] : e.target.value})
 	}
 
-  handleSubmit(event) {
+	handleSubmit(event) {
+		console.log('submit is handled')
 		event.preventDefault()
 		const {name, price, description, image} = this.state
 		const existing = this.props.product.id ? this.props.product : {}
-		const newProduct = Object.assign(existing, {name, price, description, image})
+
 		if (existing.id) {
-			this.props.putProduct(newProduct)
+			this.props.putProduct(Object.assign(existing, {name, price, description, image}))
 		}
 		else {
-			this.props.postProduct(newProduct)
+			this.props.postProduct(Object.assign(existing, {name, price, description}))
 		}
   }
 
@@ -90,6 +91,19 @@ class ProductForm extends Component {
 								className="btn btn-primary btn-block"
 							>Save</button>
 						</div>
+						{
+							this.props.product.id &&
+							<div className='form-group'>
+								<button
+									type='button'
+									onClick={()=> {
+										this.props.removeProduct(this.state.id);
+										this.props.refresh('product')
+									}}
+									className="btn btn-danger btn-block"
+								>Delete</button>
+							</div>
+						}
 					</form>
 				</div>
 			</div>

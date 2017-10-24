@@ -10,6 +10,7 @@ import Admin from './Admin'
 import ProductHistory from './ProductHistory'
 import Signup from './Signup';
 import Analytic from './Analytic';
+import Payment from './Payment';
 import { verifyUser, loadUser, fetchCart } from '../reducers';
 
 class Main extends Component {
@@ -85,6 +86,7 @@ class Main extends Component {
 				<Route path='/signup' component={Signup} />
 				<Route path='/admin' component={Admin} />
 				<Route path='/analytic' component={Analytic} />
+				<Route path='/payment' component={Payment} cart={Cart}/>
 			</div>
 		)
 	}

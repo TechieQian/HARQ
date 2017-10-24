@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import {cartStateMap, cartDispatchMap} from '../mappers'
 import Order from './Order'
 import axios from 'axios'
+import Autocomplete from 'react-google-autocomplete';
 
 class Cart extends Component {
 	constructor(){
@@ -47,6 +48,13 @@ class Cart extends Component {
 					{
 						!cart.active && this.state.submitted ? <p>{ message }</p> : null
 					}
+				<div>
+					Address:
+				</div>
+				<Autocomplete
+						style={{width: '100%'}}
+						types={['(cities)']}
+				/>
 					<button disabled={!lineitems || !lineitems.length} className='btn btn-primary submitButton' onClick={this.handleSubmit}>
 						Submit Order
 					</button>

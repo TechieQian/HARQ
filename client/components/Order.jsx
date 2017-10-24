@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
-import Autocomplete from 'react-google-autocomplete';
 
 
 function Order(props) {
@@ -62,13 +61,6 @@ function Order(props) {
 					)
 				})
 		  }
-			<div>
-				Address:
-			</div>
-			<Autocomplete
-			    style={{width: '100%'}}
-					types={['(cities)']}
-			/>
 		<br></br>
 			<div>
 				<h5>Order Total: ${ price }</h5>

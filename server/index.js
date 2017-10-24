@@ -106,6 +106,9 @@ app.post('/submitted', (req, res, next) => {
 			// Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@blurdybloop.com>
 			// Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 		})
+
+	res.sendStatus(200);
+	
 });
 
 // api routing

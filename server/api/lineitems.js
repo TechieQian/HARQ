@@ -4,9 +4,13 @@ const Order = require('../db/Order');
 module.exports = router;
 
 router.delete('/:lineItemId', (req, res, next) => {
-  Order.deleteLineItem(req.params.lineItemId)
-       .then(lineItemId => {
-         res.json(lineItemId)
-       })
-       .catch(next)
+  LineItem.findById(req.params.lineItemId)
+          .then(lineItem => {
+            lineItem.getOrder()
+            .then(order => order.deleteLineItem(req.params.lineItemId)
+            .then(lineItemId => {
+              res.json(lineItemId)
+            })
+            .catch(next))
+          })
 });

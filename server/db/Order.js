@@ -36,7 +36,7 @@ Order.createLineItem = ({orderId, productId, option }) => {
   })
     .then(lineItem => {
       if(lineItem) {
-        return lineItem.update({ qty: lineItem.modifyQty(option) })
+        return lineItem.update({ qty: lineItem.modifyQty(option) }).then(lineItem => lineItem.setPrice())
       }
       else {
 				return LineItem.create({productId, orderId})

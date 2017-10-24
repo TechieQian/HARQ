@@ -45,6 +45,7 @@
     "react-google-autocomplete": "^1.0.15",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
+    "react-stripe-checkout": "^2.6.3",
     "recharts": "^1.0.0-alpha.6",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
